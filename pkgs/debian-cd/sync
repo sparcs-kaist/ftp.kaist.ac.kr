@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+./debian-cd-mirror $source data debian-cd-mirror.conf
