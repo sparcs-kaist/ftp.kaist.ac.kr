@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -e
+
+# command-line interface for Geoul
+FROM=$1 TO=$2
+! [ -f "$3" ] || . "$3"
+
+if [ -n "$RSYNC_USER" ]; then
+    case "$FROM" in
+        *@*) ;;
+        rsync://*) FROM=${FROM/:\/\//:\/\/$RSYNC_USER@} ;;
+        *::*) FROM="$RSYNC_USER@$FROM" ;;
+    esac
+fi
+export RSYNC_PASSWORD
+
+#-----------------------------------------------------------------------------#
+HOSTNAME=`hostname -f`
+
+# Get in the right directory and set the umask to be group writable
+# FIXED: We must stay here -netj
+#cd $HOME
+umask 002
+
+# FIXED: Geoul handles locking -netj
+#LOCK="${TO}/Archive-Update-in-Progress-${HOSTNAME}"
+#
+## Check to see if another sync is in progress
+#if [ -f "$LOCK" ]; then
+#  if [ "`find $LOCK -maxdepth 1 -amin -360`" = "" ]; then
+#    echo "stale lock found (not accessed in the last 6 hours), forcing update!"
+#    rm -f $LOCK
+#  else
+#    echo "current lock file exists, unable to start rsync!"
+#    exit 1
+#  fi
+#fi
+#
+#
+#touch $LOCK
+
+rsync --recursive --times --links --hard-links \
+      --exclude "Packages*" --exclude "Sources*" \
+      --exclude "Release*" --exclude "ls-lR*" \
+      --verbose --stats \
+      $FROM $TO
+# FIXED: We handle loging with Geoul -netj
+#      $FROM $TO > $LOGFILE 2>&1
+
+rsync --recursive --times --links --hard-links --max-delete=40000 \
+      --delete --delete-after \
+      --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
+      --exclude "project/trace/${HOSTNAME}" \
+      --verbose --stats \
+       $FROM $TO
+# FIXED: We handle loging with Geoul -netj
+#      $FROM $TO > $LOGFILE.2nd 2>&1
+#
+#cat $LOGFILE.2nd >> $LOGFILE
+#rm $LOGFILE.2nd
+#
+#savelog $LOGFILE > /dev/null 2>&1
+
+date -u >"${TO}/project/trace/${HOSTNAME}"
+
+# FIXED: Geoul handles locking -netj
+#rm $LOCK
+
+#./push
