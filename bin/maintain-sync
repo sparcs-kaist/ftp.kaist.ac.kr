@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# maintain-sync -- Trigger regular sync
+# 
+# Created: 2006-01-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. /mirror/lib/geoul.sh
+
+trysync() {
+    [ -x sync ] && $PWD/sync regularly &
+}
+foreachpkg trysync
+
+wait

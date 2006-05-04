@@ -1,0 +1,89 @@
+#! /bin/sh
+#
+# skeleton      example file to build /etc/init.d/ scripts.
+#               This file should be used to construct scripts for /etc/init.d.
+#
+#               Written by Miquel van Smoorenburg <miquels@cistron.nl>.
+#               Modified for Debian GNU/Linux
+#               by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#
+# Version:      @(#)skeleton  1.8  03-Mar-1998  miquels@cistron.nl
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/cvsupd
+NAME=cvsupd
+DESC="CVSup server"
+
+ROOT=/cvsup
+USER=cvsupd
+GROUP=mirror
+MODE=a=r,ug+w
+LOG=/mirror/log/cvsupd.log
+
+test -f $ROOT/$DAEMON || exit 0
+
+set -e
+
+start() {
+    [ -f $LOG ] || touch $LOG
+    chmod $MODE $LOG
+    chown $USER:$GROUP $LOG
+    chroot $ROOT sudo -u $USER $DAEMON \
+    -C 30 -l $LOG -b /mirror/cvsup \
+    -s sup -c sup-freebsd:sup-netbsd:sup-openbsd
+}
+
+fullstop() {
+    pids=`ps ax | grep $DAEMON | grep -v grep | awk '{print $1}'`
+    [ -n "$pids" ] && kill $pids
+}
+
+stop() {
+    pids=`pgrep -P1 $(basename $DAEMON)`
+    [ -n "$pids" ] && kill $pids || fullstop
+}
+
+case "$1" in
+  start)
+        echo -n "Starting $DESC: "
+        start
+        echo "$NAME."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        fullstop
+        echo "$NAME."
+        ;;
+  reload)
+        #
+        #       If the daemon can reload its config files on the fly
+        #       for example by sending it SIGHUP, do it here.
+        #
+        #       If the daemon responds to changes in its config file
+        #       directly anyway, make this a do-nothing entry.
+        #
+        echo "Reloading $DESC configuration files."
+        stop && sleep 1 || true
+        start
+        ;;
+  restart|force-reload)
+        #
+        #       If the "reload" option is implemented, move the "force-reload"
+        #       option to the "reload" entry above. If not, "force-reload" is
+        #       just the same as "restart".
+        #
+        echo -n "Restarting $DESC: "
+        fullstop && sleep 1 || true
+        start
+        echo "$NAME."
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        # echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

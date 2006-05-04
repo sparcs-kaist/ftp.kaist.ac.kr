@@ -1,0 +1,115 @@
+#!/usr/bin/perl
+# measure-sizes -- Collect disk usages (using ls -lR) and sizes
+# 
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+use strict;
+
+our %Prefixes;
+our %InLSLR;
+our $DU = {};
+our $DIRS = {};
+our $FILES = {};
+
+# how to collect du, dirs, files (from output of `ls -lR`)
+sub collect {
+    my $Root = shift;
+    my $Source = shift;
+    if (open my $LSLR, $Source) {
+        my $pkg; my $pfx;
+        while (defined (my $line = <$LSLR>)) {
+            if ($line =~ /^(.*):$/) { # a new directory
+                # determine which package
+                my $path = "$Root$1";
+                $path =~ s#/\.$##;
+                if (not defined $pfx or $path !~ m#^$pfx(/|$)#) { # at another package
+                    my $found = 0;
+                    foreach (keys %Prefixes) {
+                        $pkg = $_;
+                        $pfx = quotemeta $Prefixes{$pkg};
+                        if ($path =~ m#^$pfx(/|$)#) {
+                            $found = 1;
+                            $InLSLR{$pkg} = 1;
+                            last;
+                        }
+                    }
+                    if (not $found) {
+                        # listing belongs to some unknown package
+                        $pkg = undef;
+                    }
+                }
+                # next line contains the disk usage
+                $line = <$LSLR>;
+                next unless defined $pkg;
+                $DIRS->{$pkg}++;
+                if ($line =~ /total (\d+)/) {
+                    $DU->{$pkg} += $1;
+                } else {
+                    die "malformed ls-lR";
+                }
+            } elsif (defined $pkg) {
+                if ($line =~ /^(d|\s*$)/) { # directory or empty line
+                    next;
+                } else {
+                    $FILES->{$pkg}++;
+                }
+            }
+        }
+        close $LSLR;
+    }
+}
+
+###############################################################################
+
+$ENV{LC_ALL} = "C";
+
+our $PWD = "/mirror/pkgs";
+chdir $PWD;
+
+# gather path prefixes of packages
+if (opendir my $PKGS, ".") {
+    for my $pkg (readdir $PKGS) {
+        next if $pkg =~ /^\./ or not -d $pkg;
+        my $pfx = readlink "$pkg/data";
+        next unless defined $pfx;
+        $pfx = "$PWD/$pkg/$pfx" unless $pfx =~ m#^/#;
+        $Prefixes{$pkg} = $pfx;
+        $DU->{$pkg} = 0;
+        $DIRS->{$pkg} = 0;
+        $FILES->{$pkg} = 0;
+    }
+    closedir $PKGS;
+}
+
+# collect from pre-generated ls-lR
+collect("/mirror/ftp/", "< /mirror/ftp/ls-lR");
+
+# collect ones not found from it
+for my $pkg (keys %Prefixes) {
+    next if exists $InLSLR{$pkg};
+    collect("", "ls -lR $Prefixes{$pkg} |");
+}
+
+# record data using rrdupdate
+for my $pkg (keys %InLSLR) {
+    my $rrd = "$pkg/du.rrd";
+    next unless -f $rrd;
+    system "rrdupdate $rrd -t du:dirs:files N:$DU->{$pkg}:$DIRS->{$pkg}:$FILES->{$pkg}";
+}
+
+# record df
+my @FS = qw(/mirror);
+my $blocks = 0;
+my $used = 0;
+my $available = 0;
+foreach (split "\n", `df -k @FS | tail +2`) {
+    my ($dev, $b, $u, $a) = split /\s+/;
+    $blocks += $b;
+    $used += $u;
+    $available += $a;
+}
+my $rrd = "/mirror/www/ftp.kaist.ac.kr/size/df.rrd";
+system "rrdupdate $rrd -t blocks:used:available N:$blocks:$used:$available";

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# publish-pkgstat.xml -- Publish package status index on the web
+# 
+# Created: 2006-04-08
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+cd /tmp
+tmp=`mktemp .geoul.index.xml.XXXXXX`
+trap "rm -f $tmp" EXIT ERR HUP INT TERM
+
+pkgs.xml >$tmp
+chmod a+r $tmp
+
+mv -f $tmp geoul.index.xml
+ln -sf /tmp/geoul.index.xml /mirror/www/ftp.kaist.ac.kr/pkgstat.xml
+
+# vim:ft=sh

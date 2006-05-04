@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# publish-pkgindex -- Publish package index in XML and HTML
+# 
+# Created: 2006-04-08
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+trap 'rm -f $tmp' ERR HUP INT TERM
+cd /mirror/www/ftp.kaist.ac.kr
+
+# update pkgindex.xml
+tmp=`mktemp /tmp/pkgindex.xml.XXXXXX`
+pkgs.xml -f >$tmp
+chmod a+r $tmp
+mv -f $tmp pkgindex.xml
+
+# publish HTMLs
+set +e
+for lang in ko en; do
+    (
+    set -e
+    tmp=`mktemp /tmp/status.shtml.XXXXXX`
+    xsltproc --param lang "'$lang'" status2html.xsl pkgindex.xml >$tmp
+    chmod a+r $tmp
+    mv -f $tmp status.shtml.$lang
+    )
+done
+
+# vim:ft=sh

@@ -1,0 +1,10 @@
+<!--#set var="urlpath" value="$SCRIPT_NAME" -->
+<!--#set var="author" value="ftp@ftp.kaist.ac.kr" -->
+<!--#set var="titleprefix" value="" -->
+<!--#set var="titlesuffix" value=" - ftp.kaist.ac.kr" -->
+<!--#set var="sitetitle" value="ftp.kaist.ac.kr" -->
+<!--#set var="keywords" value="" -->
+<meta name="keywords" content="KAIST,FTP,Archive,mirror,ftp.kaist.ac.kr,mirror.kaist.ac.kr<!--#if expr="$keywords" -->,<!--#echo var="keywords" --><!--#endif -->"/>
+<!--#if expr="$expires" -->
+<meta http-equiv="Expires" content="<!--#echo var="expires" -->"/>
+<!--#endif -->

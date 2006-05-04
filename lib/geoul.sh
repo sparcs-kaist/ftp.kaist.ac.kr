@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# geoul.sh -- Common pieces
+# 
+# Created: 2006-04-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+# named constants
+MirrorAdmin=mirror
+FTPRootPath=/mirror/ftp/
+FTPRootURL=ftp://ftp.kaist.ac.kr/
+HTTPRootURL=http://ftp.kaist.ac.kr/pub/
+
+# environment
+LC_ALL=C
+LANG=C
+LANGUAGE=C
+PATH="/mirror/bin:$PATH"
+
+# iterator
+foreachpkg() {
+    . /mirror/bin/foreachpkg
+}
+
+# switch running user to mirror admin
+running_as_mirror_admin() {
+    [ `whoami` = $MirrorAdmin ] || exec sudo -u $MirrorAdmin "$0" "$@"
+}
+
+# for readability
+now() {
+    date "$@" +%s
+}
+
+# ISO8601:2000 date format
+isodate() {
+    local zone=`date "$@" +%z`
+    local hr=${zone%??}
+    local zone=$hr:${zone#$hr}
+    [ "$zone" = "+00:00" ] && zone=Z
+    date "$@" +%FT%T$zone
+}
+
+# human friendly date
+humandate() {
+    date "$@" +'%Y-%m-%d %H:%M:%S %z'
+}
+
+# convert interval specifier to seconds
+secondsof() {
+    local period=$1; shift
+    local scale=
+    case $period in
+        daily)  period=1d ;;
+        hourly) period=1h ;;
+        weekly) period=1w ;;
+    esac
+    case $period in
+        *w) scale=$((86400 * 7)) ;;
+        *d) scale=86400 ;;
+        *h) scale=3600 ;;
+        *M|*"'") scale=60 ;;
+        *s|*'"') scale=1 ;;
+        *[0-9]) scale=1; period=${period}x ;;
+    esac
+    if [ -n "$scale" ]; then
+        echo $((${period%?} * $scale))
+    else
+        echo "unknown period: $period" >&2
+        false
+    fi
+}
+
+# convert seconds to human friendly interval
+humaninterval() {
+    local interval=${1:-0}
+    if [ $interval = 0 ]; then
+        echo '0"'
+    else
+        if [ $interval -lt 0 ]; then
+            printf '-'
+            interval=-$interval
+        fi
+        local H=$(( $interval / 3600 ))
+        local d=$(( $H / 24 )); H=$(( $H % 24 ))
+        local w=$(( $d / 7 ));  d=$(( $d % 7 ))
+        local M=$(( $interval % 3600 / 60 ))
+        local S=$(( $interval % 3600 % 60 ))
+        [ $w = 0 ] || printf '%dw' $w
+        [ $d = 0 ] || printf '%dd' $d
+        [ $H = 0 ] || printf '%dh' $H
+        [ $M = 0 ] || printf '%d'\' $M
+        [ $S = 0 ] || printf '%d'\" $S
+        echo
+    fi
+}

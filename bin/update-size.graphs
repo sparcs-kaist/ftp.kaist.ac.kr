@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# update-size.graphs -- Update size/*.png out of du.rrds and df.rrds
+# 
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+HOSTNAME=`hostname -f`
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+# See rrdgraph, rrdgraph_graph, rrdgraph_rpn, rrdgraph_examples
+graph() {
+    local defs; defs=()
+    while read; do
+        defs=("${defs[@]}" "$REPLY")
+    done
+    rrdtool graph --slope-mode --imgformat PNG --interlaced --lazy \
+        --lower-limit 0 "$@" "${defs[@]}" >/dev/null
+}
+
+defs() {
+    ( . /mirror/lib/pkg.sh
+    echo "DEF:du_$pkg=/mirror/pkgs/$pkg/du.rrd:du:AVERAGE:$@"
+    echo "DEF:dirs_$pkg=/mirror/pkgs/$pkg/du.rrd:dirs:AVERAGE:$@"
+    echo "DEF:files_$pkg=/mirror/pkgs/$pkg/du.rrd:files:AVERAGE:$@"
+    )
+}
+
+graphdu() {
+    ( . /mirror/lib/pkg.sh
+    echo "CDEF:du_bytes_$pkg=du_$pkg,1024,*"
+    echo "AREA:du_bytes_$pkg#$color:$name:STACK"
+    )
+}
+
+
+cd /mirror/www/ftp.kaist.ac.kr/size
+{
+    foreachpkg defs
+    foreachpkg graphdu
+    echo "DEF:df=df.rrd:blocks:AVERAGE"
+    echo "DEF:used=df.rrd:used:AVERAGE"
+    echo "CDEF:df_bytes=df,1024,*"
+    echo "LINE2:df_bytes#ff0000"
+    echo "CDEF:used_bytes=used,1024,*"
+    echo "LINE:used_bytes#000000"
+} | \
+graph total.png --width 600 --height 400 \
+    --title "Total disk usage of $HOSTNAME" \
+    --end now --start end-3m --base 1024 \
+    --upper-limit `df -k /mirror | tail +2 | awk '{print $2*1024}'` --rigid
+
+# TODO: more graphs for each package

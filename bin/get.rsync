@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# get.rsync -- Rsync driver
+# 
+# Created: 2006-04-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+# simply run rsync
+# TODO: how about --delay-updates? --partial-dir?
+rsync -rtlHzv --stats --ignore-errors --delete-after \
+    --temp-dir=/mirror/ftp/.tmp "$@"
+
+# and check its EXIT VALUES if somethings wrong
+code=$?
+case $code in
+    # treat some partial complete situations OK
+    24|25) true ;;
+    # see rsync(1) for more EXIT VALUES
+    *) exit $code ;;
+esac

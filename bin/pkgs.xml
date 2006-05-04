@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# pkgs.xml -- Index of packages in XML
+# 
+# Created: 2006-04-14
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. /mirror/lib/geoul.sh
+
+echo '<packages lastupdated="'`isodate`'">'
+foreachpkg pkg.xml "$@"
+echo "</packages>"
+
+# vim:ft=sh

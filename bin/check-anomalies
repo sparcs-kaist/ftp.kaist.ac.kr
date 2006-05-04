@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# check-anomalies -- Check and report anything wrong with our packages
+# 
+# Created: 2006-04-11
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+MAILTO=${MAILTO:-ftp}
+ReportFailedSyncsAfter=1d
+ReportLongSyncsEvery=12h
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+ReportFailedSyncsAfter=`secondsof $ReportFailedSyncsAfter`
+ReportLongSyncsEvery=`secondsof $ReportLongSyncsEvery`
+HOSTNAME=`hostname -f`
+items=()
+item() { items=("${items[@]}" "$@"); }
+
+check() {
+    . /mirror/lib/pkg.sh
+    local timepast interval failures penalty delay
+    compute_times # defines: timepast interval failures penalty delay remaining
+    # failed syncs
+    if [ -f fail.log -a $timepast -ge $ReportFailedSyncsAfter ]; then
+        local when="soon"
+        [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
+        item "$pkg: sync failed $failures times; will retry $when"
+        echo "== $pkg failed =="
+        echo "-->8--"
+        cat fail.log
+        rm -f fail.log  # remove it not to report twice
+        echo "--8<--"
+        echo
+    # too long syncs
+    elif sync_in_progress; then
+        local synctime=$(( `now` - `mtime lock` ))
+        local reports=`cat lock.reported 2>/dev/null || echo 0`
+        let ++reports
+        # report every time exceeding $ReportLongSyncsEvery
+        local nextreport=$(( $ReportLongSyncsEvery * $reports ))
+        # if sync is taking too much time and we have been quiet for a while,
+        if [ $synctime -gt $nextreport ]; then
+            # report
+            item "$pkg: sync too long; `humaninterval $synctime`"
+            echo "== $pkg too long =="
+            echo "-->8--"
+            head log
+            echo "..."
+            tail log
+            echo "--8<--"
+            echo
+            # schedule next report
+            local reports_lb=$(( $synctime / $ReportLongSyncsEvery + 1 ))
+            [ $reports -ge $reports_lb ] || reports=$reports_lb
+            echo $reports >lock.reported
+        fi
+    fi
+    # TODO: more anomalies?
+}
+
+send_report() {
+    local exitcode=$?
+    trap "exit $exitcode" EXIT ERR HUP INT TERM
+    # report anything exists
+    if [ -s $report -o ${#items[@]} -gt 0 ]; then
+        {
+            echo "= Summary ="
+            local i
+            for i in "${items[@]}"; do
+                echo "* $i"
+            done
+            echo
+            echo "= Log ="
+            cat $report
+        } | mail -s "$HOSTNAME STATUS ALERT" "$MAILTO"
+    fi
+    rm -f $report
+    exit $exitcode
+}
+report=`mktemp /tmp/check-anomalies.XXXXXX`
+trap send_report EXIT ERR HUP INT TERM
+
+foreachpkg check >$report 2>&1

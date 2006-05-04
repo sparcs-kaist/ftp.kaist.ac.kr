@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# get -- Get data from URL to "data/"
+# 
+# Created: 2006-04-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+url=$1; shift
+proto=${url%%://*}
+driver=/mirror/bin/get."$proto"
+
+if [ -x "$driver" ]; then
+    exec "$driver" "$url" data/ "$@"
+else
+    echo "get: no driver available for $url" >&2
+    exit 64
+fi

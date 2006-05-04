@@ -1,0 +1,8 @@
+<!--#set var="id" value="motd" -->
+<!--#set var="title" value="" -->
+<!--#include virtual="/include/head.shtml" -->
+
+<pre><!--#include file="motd" --></pre>
+
+<!--#set var="urlpath" value="/motd" -->
+<!--#include virtual="/include/foot.shtml" -->

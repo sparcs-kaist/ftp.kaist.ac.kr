@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# get.ftp.wget -- FTP/HTTP driver (implemented with wget)
+# 
+# Created: 2006-04-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# parse arguments
+notrailingslash() { echo "$1" | sed -e 's:/*$::'; }
+url=`notrailingslash "$1"` dest=`notrailingslash "$2"`; shift 2
+site=${url#*://}
+site=${site%%/*}
+dir=${url#*://$site}
+dirdepth=`echo $dir | sed -e 's:/*$\|^/*::g' | tr / '\n' | wc -l`
+
+# run wget in $dest
+# XXX: wget can't delete files disappeared from source :(
+cd "$dest"
+exec wget --mirror --no-verbose \
+     --no-host-directories --cut-dirs=$dirdepth $url

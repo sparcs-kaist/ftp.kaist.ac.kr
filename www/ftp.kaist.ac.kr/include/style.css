@@ -1,0 +1,185 @@
+/*
+    CSS stylesheet for ftp.kaist.ac.kr
+    Author: Jaeho Shin <netj@sparcs.kaist.ac.kr>
+    Created: 2003/01/30
+*/
+
+body {
+    font-family: Bitstream Vera Sans, Tahoma, 돋움, 은 돋움, sans-serif;
+    background-color: #fff;
+    color: #003;
+}
+#body {
+    font-family: Georgia, Bitstream Vera Serif, 바탕, 은 바탕, serif;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+#foot {
+    font-size: 0.8em;
+}
+#head h1 {
+    font-family: Verdana, HY견고딕, 돋움, 은 돋움, sans-serif;
+    margin: 0.1em;
+    font-size: 2.2em;
+    font-weight: bold;
+}
+
+pre { font-family: Andale Mono, 돋움체, 은 돋움, monospace; }
+a:link, a:visited { text-decoration: none; }
+a:link    { color: #33f; }
+a:visited { color: #039; }
+a:hover, a:active { text-decoration: underline; }
+a:hover, a:active { text-decoration: underline; }
+
+
+body { /* for IE */
+    border-right: 3px double #208;
+    margin: 0em;
+    margin-right: 13em;
+    padding: 0.5em;
+}
+#nav { /* for IE */
+    color: #208;
+    margin: 0em;
+    padding: 0em;
+    position: absolute;
+    width: 10em;
+    right: 1em;
+    top: 1em;
+}
+html>body {
+    border-right: none;
+    margin: 0em;
+    margin-right: 12.5em;
+    padding: 0.5em;
+}
+html>body #nav {
+    color: #208;
+    border-left: 3px double;
+    position: fixed;
+    padding: 1em;
+    width: 10.5em;
+    right: 0em;
+    top: 0em;
+    bottom: 0em;
+}
+
+#sponsors {
+    display: block;
+    text-align: center;
+    position: fixed;
+    bottom: 0em;
+    font-size: 1em;
+    width: 9.5em;
+    margin: 1em !important;
+    padding: 0em !important;
+}
+#tools {
+    font-size: 0.5em !important;
+}
+#tools li {
+    display: inline;
+}
+#tools * {
+    color: #ccc !important;
+}
+
+
+#nav h2 {
+    /*border-bottom: 1px solid;*/
+    margin: 0em;
+    font-size: 1.3em;
+}
+#nav h2 a {
+    color: #208 !important;
+}
+#nav ul {
+    font-size: 0.9em;
+    margin: 1em;
+    padding: 0em;
+    list-style: none;
+}
+#nav a:link    { color: #f20; }
+#nav a:visited { color: #f22; }
+#sponsors img {
+    border-style: none;
+    margin: 0.3em;
+}
+
+
+/* borders */
+#head, #foot {
+    color: #208;
+    border-style: solid;
+    border-width: 0px;
+}
+#head {
+    border-bottom-width: 2px;
+    padding-bottom: 0.1em;
+    margin-bottom: 0.4em;
+}
+#foot {
+    border-top-width: 2px;
+    padding-top: 0.1em;
+    margin-top: 0.4em;
+}
+
+/* package index */
+#pkgs {
+    font-family: Bitstream Vera Sans, Tahoma, 굴림, 은 그래픽, sans-serif;
+    font-size: 0.8em;
+    margin-left: auto;
+    margin-right: auto;
+}
+#pkgs.updating {
+    background-color: #ff3 !important;
+/*    opacity: .5;*/
+}
+#pkgs thead {
+    text-align: center;
+}
+
+.pkg {
+    border: 2px solid;
+    width: 11em;
+    margin: 0.3em;
+    padding: 0.2em;
+}
+.pkg:hover {
+    border-color: #f33 !important;
+}
+.sync    { border-style: dashed; }
+.good    { color: #000; background-color: #bfb; border-color: #000; }
+.old     { color: #efe; background-color: #363; border-color: #693; }
+.bad     { color: #fc9; background-color: #531; border-color: #842; }
+.dead    { color: #ece; background-color: #315; border-color: #999; }
+.down    { color: #999; background-color: #eee; border-color: #ccc; }
+.unknown { color: #fee; background-color: #f33; border-color: #000; }
+.pkgsync    { display: none;  }
+.pkgsync.up { display: inline !important; color: #fc3; font-weight: bold; }
+
+.pkglastupdated, .pkgage, .pkgsyncage, .pkgsyncfailures { font-size: 0.8em; }
+.pkgsyncfailures {
+    color: #888 !important;
+}
+.pkg a { color: inherit; }
+.pkg h3 {
+    font-size: 1.1em;
+    margin: 0em;
+}
+
+.pkg:hover .pkginfo {
+    display: block;
+}
+.pkginfo {
+    display: none;
+    font-size: 0.9em;
+    position: absolute;
+    background-color: #fff;
+    color: #004;
+    border: 3px double;
+    margin: 0em;
+    padding: 1em;
+    padding-left: 2em;
+    min-height: 4em;
+}

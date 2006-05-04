@@ -1,0 +1,10 @@
+<!--#set var="urlpath" value="$SCRIPT_NAME" -->
+<!--#set var="author" value="ftp@ftp.kaist.ac.kr" -->
+<!--#set var="titleprefix" value="" -->
+<!--#set var="titlesuffix" value=" - ftp.kaist.ac.kr" -->
+<!--#set var="sitetitle" value="ftp.kaist.ac.kr" -->
+<!--#set var="sitekeywords" value="" -->
+<meta name="keywords" content="한국과학기술원,카이스트,KAIST,FTP,Archive,아카이브,미러,mirror,ftp.kaist.ac.kr,mirror.kaist.ac.kr,<!--#if expr="$pagekeywords" -->,<!--#echo var="pagekeywords" --><!--#endif -->"/>
+<!--#if expr="$expires" -->
+<meta http-equiv="Expires" content="<!--#echo var="expires" -->"/>
+<!--#endif -->

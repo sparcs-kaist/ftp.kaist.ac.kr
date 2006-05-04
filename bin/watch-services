@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# watch-services -- Watch running services
+# 
+# Created: 2006-04-11
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+process_is_running() {
+    local pspatt=$1
+    [ -n "`ps ax | grep "$pspatt" | grep -v grep`" ]
+}
+
+check() {
+    local knob=/etc/init.d/$1; shift
+    if ! process_is_running "$@"; then
+        $knob restart
+    fi
+}
+
+cd /mirror/etc
+
+#check proftpd   "proftpd: (accepting connections)"
+check inetd     "/usr/sbin/inetd"
+check ssh       "/usr/sbin/sshd"
+check vsftpd    "/usr/sbin/vsftpd"
+check apache2   "/usr/sbin/apache2"
+check rsync     "rsync .*--daemon" 
+check cvsupd    "/usr/sbin/cvsupd"

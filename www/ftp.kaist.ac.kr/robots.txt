@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /pub/
+Disallow: /pkgs/
+Disallow: /usage/
+Disallow: /debian/
+Disallow: /debian-cd/
+Disallow: /debian-non-US/

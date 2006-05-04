@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+# pkg.xml -- Status summary of this package in XML
+# 
+# Created: 2006-04-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+# options and usage
+usage() {
+    local cmd=`basename "$0"`
+    if [ -t 1 ]; then
+        cat <<EOF
+Usage:
+  $cmd -h  shows this usage
+  $cmd -f  shows full package information
+EOF
+        [ $# -le 0 ] || echo "$cmd: $@"
+    fi
+    exit 2
+}
+full=false
+while getopts "hf" o; do
+    case "$o" in
+        f) full=true ;;
+        h) usage ;;
+    esac
+done
+
+. /mirror/lib/pkg.sh
+
+## gather information
+# sync info
+lastupdated=
+started=
+sync_in_progress && started=`isodate -r lock`
+[ -f timestamp ] && lastupdated=`isodate -r timestamp`
+
+
+# status
+compute_times # defines: timepast interval failures penalty delay remaining
+if [ -n "$source" ]; then
+    if [ -n "$frequency" ]; then
+        if [ -f timestamp ]; then
+            status=good
+            #if [ $timepast -ge $interval ]; then
+            ratio=$(( $timepast / $validsecs ))
+            if   [ $ratio -ge 7 ]; then status=dead
+            elif [ $ratio -ge 3 ]; then status=bad
+            elif [ $ratio -ge 1 ]; then status=old
+            fi
+            #fi
+        else 
+            status=unknown
+        fi
+    else
+        status=down
+    fi
+else
+    status=original
+fi
+[ $failures -gt 0 ] && failed=$failures || failed=
+
+# urlpath
+urlpath=${datapath#$FTPRootPath}
+[ "$datapath" = "$urlpath" ] && urlpath=
+
+
+
+## show things in XML
+echo "<package id='$pkg'>"
+
+if $full; then
+    # name
+    echo "<name>${name:-$pkg}</name>"
+
+    # links
+    {
+        [ -f links ] && cat links
+        if [ -n "$urlpath" ]; then
+            cat <<EOF
+FTP	$FTPRootURL$urlpath
+HTTP	$HTTPRootURL$urlpath
+EOF
+        fi
+    } | sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:'
+
+    # any notes?
+    if [ -f note ]; then
+        echo "<note><![CDATA["
+        cat note
+        echo "]]></note>"
+    fi
+fi
+
+if [ -n "$source" ]; then
+    # synchronization
+    cat <<EOF
+<sync${started:+ started='$started'}${interval:+ frequency='$interval'${failed:+ failed='$failed'}}>$source</sync>
+EOF
+fi
+
+# status
+cat <<EOF
+<status${lastupdated:+ lastupdated='$lastupdated'}>$status</status>
+EOF
+
+echo "</package>"
+
+# vim:ft=sh

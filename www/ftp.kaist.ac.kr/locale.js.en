@@ -1,0 +1,45 @@
+function w(x) {
+         if (x == 'none'                ) return 'None'             ;
+    else if (x == 'name'                ) return 'Name'             ;
+    else if (x == 'url'                 ) return 'URL'              ;
+    else if (x == 'timeelapsed'         ) return 'Time Elapsed'     ;
+    else if (x == 'status'              ) return 'Status'           ;
+    else if (x == 'status_sync'         ) return 'Updating'         ;
+    else if (x == 'status_good'         ) return 'Good'             ;
+    else if (x == 'status_old'          ) return 'Old'              ;
+    else if (x == 'status_bad'          ) return 'Bad'              ;
+    else if (x == 'status_dead'         ) return 'Dead'             ;
+    else if (x == 'status_down'         ) return 'Inactive'         ;
+    else if (x == 'status_unknown'      ) return 'Unknown'          ;
+    else if (x == 'unknown'             ) return 'Unknown'          ;
+    else if (x == 'source'              ) return 'Source'           ;
+    else if (x == 'frequency'           ) return 'Frequency'        ;
+    else if (x == 'hours'               ) return 'Hours'            ;
+    else if (x == 'lastupdated'         ) return 'Last Updated'     ;
+    else if (x == 'statistics'          ) return 'Statistics'       ;
+    else if (x == 'sizechanges'         ) return 'Size Changes'     ;
+    else if (x == 'sizehistory'         ) return 'Size History'     ;
+    else if (x == 'currentsize'         ) return 'Current Size'     ;
+    else if (x == 'size'                ) return 'Size'             ;
+    else if (x == 'files'               ) return '#Files'           ;
+    else if (x == 'dirs'                ) return '#Directories'     ;
+    else if (x == 'sizecounted'         ) return 'Measured'         ;
+    else                                  return ''                 ;
+}
+
+function formatDate(dt, abbrv) {
+    function lead0(n) { return (n<10?'0':'')+n; }
+    var y = lead0(dt.getFullYear());
+    var m = lead0(dt.getMonth()+1);
+    var d = lead0(dt.getDate());
+    var day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dt.getDay()];
+    var H = lead0(dt.getHours());
+    var M = lead0(dt.getMinutes());
+    var S = lead0(dt.getSeconds());
+    var z = -dt.getTimezoneOffset();
+    z = ((z<0)?'-':'+')+lead0(parseInt(z/60))+lead0(z%60);
+    if (abbrv) return (day+' '+y+'-'+m+'-'+d+' '+H+':'+M+':'+S);
+    else return dt;
+}
+
+// vim:ft=javascript

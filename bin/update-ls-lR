@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# update-ls-lR -- /mirror/ftp/ls-lR* file generator
+# 
+# Refined: 2006-04-11
+# Created: 2003/07/27
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+cd $FTPRootPath
+
+LC_ALL=C
+LANG=$LC_ALL
+LANGUAGE=$LC_ALL
+export LC_ALL LANG LANGUAGE
+
+lslR=`mktemp .tmp/ls-lR.XXXXXX`
+trap "rm -f $lslR $lslR.gz" ERR HUP INT TERM
+
+ls -lR * >$lslR
+chmod a+r $lslR
+gzip <$lslR >$lslR.gz
+mv $lslR ls-lR
+mv $lslR.gz ls-lR.gz

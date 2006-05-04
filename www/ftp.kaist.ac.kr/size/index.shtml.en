@@ -1,0 +1,8 @@
+<!--#set var="id" value="du" -->
+<!--#set var="title" value="Size changes" -->
+<!--#include virtual="/include/head.shtml" -->
+
+<!--#include file="size.shtml" -->
+
+<!--#include virtual="/include/foot.shtml" -->
+

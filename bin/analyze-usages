@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+# analyze-usages -- Analyze service usages
+#  
+# Refined: 2006-01-22
+# Created: 2004-01-08
+# 
+# Written by Heon Jung <blmarket@sparcs.kaist.ac.kr>,
+#            Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+HOSTNAME=`hostname -f`
+
+## webalizer.conf for each service
+ftp_conf() {
+    cat <<-EOF
+	Incremental     yes
+	AllSites        yes
+	AllURLs         yes
+	AllUsers        yes
+	DumpHeader      yes
+	DumpSites       yes
+	DumpURLs        yes
+	DumpUsers       yes
+	EOF
+    grpurl() {
+        ( . /mirror/lib/pkg.sh
+        case "$datapath" in
+            $FTPRootPath*)
+            echo "GroupURL	/${datapath#$FTPRootPath}/*	$name"
+            echo "GroupURL	/pub/${datapath#$FTPRootPath}/*	$name"
+            ;;
+        esac
+        )
+    }
+    foreachpkg grpurl
+}
+
+http_conf() {
+    cat <<-EOF
+	Incremental	yes
+	PageType	htm*
+	PageType	cgi
+	PageType	shtm*
+	AllSites	yes
+	AllURLs	yes
+	AllReferrers	yes
+	AllAgents	yes
+	AllSearchStr	yes
+	HideURL	*.gif
+	HideURL	*.GIF
+	HideURL	*.jpg
+	HideURL	*.JPG
+	HideURL	*.png
+	HideURL	*.PNG
+	HideURL	*.css
+	HideURL	*.CSS
+	HideReferrer	http://ftp.kaist.ac.kr*
+	HideReferrer	http://ftp.kr.debian.org*
+	HideReferrer	http://kr.archive.ubuntu.com*
+	HideReferrer	http://ftp/*
+	GroupAgent	MSIE		Microsoft Internet Explorer
+	GroupAgent	Mozilla		Mozilla/Netscape
+	GroupAgent	Lynx*		Lynx
+	GroupAgent	Wget		Wget
+	GroupAgent	libwww-perl	libwww-perl
+	#GroupAgent	*APT-HTTP	APT-HTTP
+	#GroupAgent	*		others
+	SearchEngine	yahoo.com	p=
+	SearchEngine	altavista.com	q=
+	SearchEngine	google.com	q=
+	SearchEngine	eureka.com	q=
+	SearchEngine	lycos.com	query=
+	SearchEngine	hotbot.com	MT=
+	SearchEngine	msn.com	MT=
+	SearchEngine	infoseek.com	qt=
+	SearchEngine	webcrawler	searchText=
+	SearchEngine	excite	search=
+	SearchEngine	netscape.com	search=
+	SearchEngine	mamma.com	query=
+	SearchEngine	alltheweb.com	query=
+	SearchEngine	northernlight.com	qr=
+	DumpHeader	yes
+	DumpSites	yes
+	DumpURLs	yes
+	DumpReferrers	yes
+	DumpAgents	yes
+	DumpSearchStr	yes
+	EOF
+    grpurl() {
+        ( . /mirror/lib/pkg.sh
+        case "$datapath" in
+            $FTPRootPath*)
+            echo "GroupURL	/${datapath#$FTPRootPath}/*	$name"
+            echo "GroupURL	/pub/${datapath#$FTPRootPath}/*	$name"
+            ;;
+        esac
+        )
+    }
+    foreachpkg grpurl
+}
+
+rsync_conf() {
+    cat <<-EOF
+	Incremental     yes
+	AllSites        yes
+	AllURLs yes
+	AllUsers        yes
+	DumpHeader      yes
+	DumpSites       yes
+	DumpURLs        yes
+	DumpUsers       yes
+	EOF
+    grpurl() {
+        ( . /mirror/lib/pkg.sh
+        echo "GroupURL	$datapath/*	$name"
+        #echo "HideURL	$datapath/*"
+        )
+    }
+    foreachpkg grpurl
+}
+
+
+# run webalizer on given log for given service
+analyze() {
+    local svc=$1; shift
+    local usage=/mirror/www/ftp.kaist.ac.kr/usage
+    local conf=$usage/webalizer-$svc.conf
+    local outdir=$usage/$svc/
+    # if config is available,
+    if ${svc}_conf >$conf; then
+        mkdir -p $outdir &&
+        # then run webalizer
+        webalizer -Q -N 3 -D $usage/dnscache.db \
+                  -c $conf -o $outdir -n "$HOSTNAME ($svc)" \
+                  "$@"
+    fi
+}
+
+
+# choose what to do
+postfix=
+case "$1" in
+    rotated)
+    # use rotated log instead of the current one
+    postfix=".0"
+    ;;
+esac
+
+cd /mirror/log
+
+# http
+analyze http -F combined  httpd-access.log$postfix
+
+# ftp
+analyze ftp  -F ftp       ftpd-transfer.log$postfix
+
+# rsync needs log format conversion to common-log-format
+rsynclog2clf() {
+    grep '^.\{28\}send' | cut -b 34- | perl -e '
+    $tz = `date +%z`; chomp $tz;
+    @month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+    while (<STDIN>) {
+        s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6" 200 $7#; print;
+    }' 
+}
+rsynclog2clf <rsyncd.log$postfix >rsyncd-access.log &&
+analyze rsync -F clf      rsyncd-access.log
