@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+../debian/debian-ftpsync $source data
