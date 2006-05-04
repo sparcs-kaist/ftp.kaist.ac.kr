@@ -1,0 +1,9 @@
+# Supfile for OpenBSD CVSup mirror
+*default host=cvsup.jp.OpenBSD.org
+*default base=/mirror/cvsup
+*default delete use-rel-suffix umask=002
+
+OpenBSD-all      release=cvs  prefix=prefixes/OpenBSD.cvs
+
+# NOTE: -distrib collection is available from cvsup.jp.OpenBSD.org only
+OpenBSD-distrib  release=self prefix=prefixes/OpenBSD-distrib.self
