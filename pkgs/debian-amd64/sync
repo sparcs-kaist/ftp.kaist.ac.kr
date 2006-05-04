@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source --exclude=Archive-Update-in-Progress-ftp.kaist.ac.kr
+date -u >data/project/trace/ftp.kaist.ac.kr
