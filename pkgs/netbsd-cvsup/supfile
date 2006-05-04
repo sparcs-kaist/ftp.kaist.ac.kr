@@ -1,0 +1,7 @@
+# Supfile for NetBSD CVSup mirror
+*default host=cvsup.jp.NetBSD.org
+*default base=/mirror/cvsup
+*default delete use-rel-suffix umask=002
+
+netbsd            release=cvs  prefix=prefixes/NetBSD.cvs
+netbsd-distrib    release=self prefix=prefixes/NetBSD-distrib.self
