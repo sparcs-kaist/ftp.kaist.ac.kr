@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source --delete-excluded --exclude=nightly
