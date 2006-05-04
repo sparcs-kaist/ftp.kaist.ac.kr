@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source --exclude="#cvs.cvsup-*" --exclude=doc/www/{bin,cgi-src,htdocs/statistic/"**".core}
