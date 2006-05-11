@@ -11,10 +11,10 @@
 
 <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
 
-<xsl:variable name="packages-per-row" select="4"/>
+<xsl:variable name="packages-per-row" select="5"/>
 <xsl:variable name="_msgs">
 <labels lang="ko">
-    <label name="title">복사본 현황</label>
+    <label name="title">복사본 상태</label>
     <label name="name">이름</label>
     <label name="url">URL</label>
     <label name="timeelapsed">흐른 시간</label>

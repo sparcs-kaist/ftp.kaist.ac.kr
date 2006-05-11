@@ -1,0 +1,19 @@
+<div id="nav"
+    ><h2><a href="/">ftp.kaist.ac.kr</a></h2><ul
+        ><li><a href="/status">Status</a></li
+        ><li><a href="/usage">Usage</a></li
+        ><li><a href="/size">Size</a></li
+    ></ul
+    ><h2>User</h2
+    ><ul
+        ><li><a href="/trac/wiki/UserGuide">Guide</a></li
+        ><li><a href="/pub/">HTTP</a></li
+        ><li><a href="ftp://ftp.kaist.ac.kr/">FTP</a></li
+    ></ul
+    ><h2>Admin</h2
+    ><ul
+        ><li><a href="/trac/wiki/Introduction">Intro</a></li
+        ><li><a href="/trac/report/1">Activities</a></li
+        ><li><a href="/trac/newticket">Feedback</a></li
+    ></ul
+></div>

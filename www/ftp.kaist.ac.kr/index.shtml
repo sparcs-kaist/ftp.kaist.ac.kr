@@ -2,7 +2,14 @@
 <!--#set var="title" value="" -->
 <!--#include virtual="/include/head.shtml" -->
 
+<div style="margin-left:auto; margin-right:auto;">
 <pre><!--#include file="motd" --></pre>
+<div id="sponsors">
+    <a href="http://sparcs.kaist.ac.kr"><img alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
+    <a href="http://www.kaist.ac.kr"><img alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img alt="KT" src="/kt-logo.png" style="border:none;"/></a>
+</div>
+</div>
 
 <!--#set var="urlpath" value="/motd" -->
 <!--#include virtual="/include/foot.shtml" -->

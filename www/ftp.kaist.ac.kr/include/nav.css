@@ -1,0 +1,65 @@
+/*
+  navigation bar styles for ftp.kaist.ac.kr
+  Created: 2006-05-12
+
+  Written by Jaeho Shin <netj@sparcs.org>
+  (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+*/
+
+#nav {
+    position: fixed;
+    right: 0em;
+    top: 0em;
+    left: auto;
+    text-align: right;
+    cursor: default;
+    background-color: #fff;
+    font-size: 1em;
+}
+
+#nav * {
+    font-family: Trebuchet MS, Tahoma, Bitstream Vera Sans, 맑은 고딕, 돋움체, sans-serif !important;
+}
+
+#nav h2, #nav ul, #nav li, #nav a {
+    display: inline;
+    margin: 0em;
+    padding: 0em;
+}
+
+#nav h2 {
+    font-size: 1.1em;
+    padding: 3px;
+    padding-right: 0px;
+    border: 1px none #ccc;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    background-color: inherit;
+}
+
+#nav ul {
+    font-size: 1.1em;
+    padding: 3px;
+    border: 1px none #ccc;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    background-color: inherit;
+}
+#nav ul li {
+    font-size: 0.8em;
+    border-left: 1px dotted #ccc;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+#nav ul > li:first-child {
+    border-left: none;
+}
+
+#nav a {
+    color: #039;
+    border: none;
+}
+#nav a:hover {
+    text-decoration: none;
+    background-color: #def;
+}

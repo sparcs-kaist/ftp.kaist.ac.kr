@@ -1,42 +1,11 @@
 </div>
 
-<div id="nav">
-    <h2><a href="/">ftp.kaist.ac.kr</a></h2>
-    <ul>
-        <li><a href="/status">복사본 현황</a></li>
-        <li><a href="/pub/">HTTP 바로가기</a></li>
-        <li><a href="ftp://ftp.kaist.ac.kr/">FTP 바로가기</a></li>
-    </ul>
-    <h2>문서</h2>
-    <ul>
-        <li><a href="/guide">이용 안내</a></li>
-        <li>새 미러 요청</li>
-        <li><a href="/about">운영 안내</a></li>
-        <li><a href="/setup">미러링 방법</a></li>
-    </ul>
-    <h2>운영</h2>
-    <ul>
-        <li>시스템 상태</li>
-        <li><a href="/usage">서비스 사용량</a></li>
-        <li><a href="/size">크기 변화</a></li>
-        <li>동기화 비용</li>
-    </ul>
-    <ul id="sponsors">
-        <li><a href="http://sparcs.kaist.ac.kr"><img alt="SPARCS" src="/sparcs-logo.png"/></a></li>
-        <li><a href="http://www.kaist.ac.kr"><img alt="KAIST" src="/kaist-logo.png"/></a></li>
-        <li><a href="http://www.kt.co.kr"><img alt="KT" src="/kt-logo.png"/></a></li>
-    </ul>
-    <ul id="tools">
-        <li><a href="http://validator.w3.org/check/referer">XHTML</a></li>
-        <li><a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a></li>
-    </ul>
-</div>
-
+<!--#include file="nav.html.ko" -->
 
 <div id="foot">
     <!--#config timefmt="%Y년 %m월 %d일 %H시 %M분 %S초 %z" -->
     <div id="updateinfo">마지막 고침: <span id="lastupdated"><!--#flastmod virtual="$urlpath" --></span></div>
-    <address id="copyinfo">&copy; <a
+    <address id="copyinfo">&copy; 2006 <a
             href="http://ftp.kaist.ac.kr/geoul/">거울 프로젝트</a>. <a
             href="http://creativecommons.org/licenses/by/2.5/">저작권을 조금
             가집니다</a>.
