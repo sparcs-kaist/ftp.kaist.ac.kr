@@ -54,14 +54,15 @@ a:hover, a:active { text-decoration: underline; }
     color: #208;
     border-style: solid;
     border-width: 0px;
+    border-color: #ccc;
 }
 #head {
-    border-bottom-width: 2px;
+    border-bottom-width: 1px;
     padding-bottom: 0.1em;
     margin-bottom: 0.4em;
 }
 #foot {
-    border-top-width: 2px;
+    border-top-width: 1px;
     padding-top: 0.1em;
     margin-top: 0.4em;
 }
