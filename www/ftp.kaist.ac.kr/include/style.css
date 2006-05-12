@@ -19,7 +19,7 @@ body {
     padding-right: 0.5em;
 }
 #foot {
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 #head h1 {
     font-family: Verdana, Tahoma, HY견고딕, 은 돋움, 돋움, sans-serif;
@@ -65,6 +65,17 @@ a:hover, a:active { text-decoration: underline; }
     border-top-width: 1px;
     padding-top: 0.1em;
     margin-top: 0.4em;
+}
+
+/* foot */
+#foot * {
+    color: #999;
+}
+#copyinfo {
+    position: relative;
+    font-style: normal;
+    top: -1.3em;
+    text-align: right;
 }
 
 /* package index */

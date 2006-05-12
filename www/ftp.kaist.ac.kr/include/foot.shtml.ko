@@ -4,11 +4,12 @@
 
 <div id="foot">
     <!--#config timefmt="%Y년 %m월 %d일 %H시 %M분 %S초 %z" -->
-    <div id="updateinfo">마지막 고침: <span id="lastupdated"><!--#flastmod virtual="$urlpath" --></span></div>
+    <div id="updateinfo">새로고침: <span id="lastupdated"><!--#flastmod
+            virtual="$urlpath" --></span></div>
     <address id="copyinfo">&copy; 2006 <a
-            href="http://ftp.kaist.ac.kr/geoul/">거울 프로젝트</a>. <a
-            href="http://creativecommons.org/licenses/by/2.5/">저작권을 조금
-            가집니다</a>.
+            href="http://ftp.kaist.ac.kr/geoul/">거울 모임</a>. <a
+            href="http://creativecommons.org/licenses/by/2.5/">사용해도
+            좋습니다</a>.
     </address>
 </div>
 
