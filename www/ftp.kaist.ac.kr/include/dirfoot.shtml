@@ -1,0 +1,2 @@
+<!--#set var="urlpath" value="$SCRIPT_URL" -->
+<!--#include file="foot.shtml" -->
