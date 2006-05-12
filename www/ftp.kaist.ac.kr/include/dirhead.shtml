@@ -1,0 +1,2 @@
+<!--#set var="title" value="$SCRIPT_URL" -->
+<!--#include file="head.shtml" -->

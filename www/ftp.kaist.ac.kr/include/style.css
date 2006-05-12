@@ -34,6 +34,7 @@ a:link    { color: #33f; }
 a:visited { color: #039; }
 a:hover, a:active { text-decoration: underline; }
 a:hover, a:active { text-decoration: underline; }
+hr { border: 1px none #ccc; border-top-style: solid; }
 
 
 #sponsors {
@@ -71,11 +72,15 @@ a:hover, a:active { text-decoration: underline; }
 #foot * {
     color: #999;
 }
+#lastupdated {
+    line-height: 1em;
+}
 #copyinfo {
     position: relative;
     font-style: normal;
-    top: -1.3em;
+    top: -1.2em;
     text-align: right;
+    line-height: 1em;
 }
 
 /* package index */

@@ -14,6 +14,7 @@
     ><ul
         ><li><a href="/trac/wiki/Introduction">안내</a></li
         ><li><a href="/trac/report/1">활동</a></li
-        ><li><a href="/trac/newticket">건의/요청</a></li
+        ><li><a href="/trac/timeline">기록</a></li
+        ><li><a href="/trac/newticket">건의</a></li
     ></ul
 ></div>
