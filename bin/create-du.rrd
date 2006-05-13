@@ -9,6 +9,11 @@
 
 case "$1" in
     create)
+    # don't overwrite!
+    if [ -f du.rrd ]; then
+        echo du.rrd already exists >&2
+        exit 1
+    fi
     # Step is 6h,
     # DSs for disk usage (Kbytes), # directories, # files
     # RRAs holding 3m=~90d, 1y=~52w, 5y=~60m
