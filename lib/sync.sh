@@ -16,8 +16,9 @@ usage() {
         cat <<EOF
 Geoul synchronizer for $pkg
 Usage:
-  $cmd now        synchronizes immediately
-  $cmd regularly  checks timestamp and runs '$cmd now' if older than frequency
+  $cmd now        use this to begin sync immediately
+  $cmd pushed     use when upstream mirror is triggering push-mirroring
+  $cmd regularly  check timestamp and begin sync if older than frequency
 
 EOF
         [ $# -le 0 ] || echo "$cmd: $@"
@@ -41,7 +42,7 @@ cd "$(dirname "$0")"
 ## choose what to do
 triggered=$1
 case "$triggered" in
-    now) ;;
+    now|pushed) ;;
     regularly) [ -n "$frequency" ] || exit 6 ;;
     *) usage ;;
 esac
@@ -50,6 +51,8 @@ esac
 ## check environment
 running_as_mirror_admin "$@"
 
+shift
+export GETARGS="$@"
 
 ## check timestamp if regular sync
 if sync_in_progress; then

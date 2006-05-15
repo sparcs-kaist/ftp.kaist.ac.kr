@@ -8,8 +8,9 @@
 
 # simply run rsync
 # TODO: how about --delay-updates? --partial-dir?
-rsync -rtlHzv --stats --ignore-errors --delete-after \
-    --temp-dir=/mirror/ftp/.tmp "$@"
+rsync -rtlHzv --stats --temp-dir=/mirror/ftp/.tmp \
+    --delete-after --max-delete=10000 \
+    "$@"
 
 # and check its EXIT VALUES if somethings wrong
 code=$?
