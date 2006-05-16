@@ -25,7 +25,7 @@ foreachpkg() {
 
 # switch running user to mirror admin
 running_as_mirror_admin() {
-    [ `whoami` = $MirrorAdmin ] || exec sudo -u $MirrorAdmin "$0" "$@"
+    [ `whoami` = $MirrorAdmin ] || exec sudo -H -u $MirrorAdmin "$0" "$@"
 }
 
 # for readability

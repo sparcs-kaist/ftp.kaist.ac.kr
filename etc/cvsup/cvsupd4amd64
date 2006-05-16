@@ -29,7 +29,7 @@ start() {
     [ -f $LOG ] || touch $LOG
     chmod $MODE $LOG
     chown $USER:$GROUP $LOG
-    chroot $ROOT sudo -u $USER $DAEMON \
+    chroot $ROOT sudo -H -u $USER $DAEMON \
     -C 30 -l $LOG -b /mirror/cvsup \
     -s sup -c sup-freebsd:sup-netbsd:sup-openbsd
 }

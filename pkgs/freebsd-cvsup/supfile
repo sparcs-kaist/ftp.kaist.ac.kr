@@ -1,5 +1,5 @@
 # Supfile for FreeBSD CVSup mirror
-*default host=cvsup.kr.FreeBSD.org
+*default host=cvsup-master.FreeBSD.org
 *default base=/mirror/cvsup
 *default delete use-rel-suffix umask=002
 

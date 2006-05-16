@@ -16,5 +16,5 @@ if ! [ -e day ] || [ `cat day` != $day ]; then
     sflag=
 fi
 
-sudo chroot /cvsup sudo -u mirror \
+sudo chroot /cvsup sudo -H -u mirror \
 cvsup $sflag -g -L 2 -r 0 "$sup" && echo $day >day
