@@ -7,10 +7,12 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
 # simply run rsync
+(set -x
 # TODO: how about --delay-updates? --partial-dir?
-rsync -rtlHzv --stats --temp-dir=/mirror/ftp/.tmp \
+exec rsync -rtlHzv --stats --temp-dir=/mirror/ftp/.tmp \
     --delete-after --max-delete=10000 \
     "$@"
+)
 
 # and check its EXIT VALUES if somethings wrong
 code=$?

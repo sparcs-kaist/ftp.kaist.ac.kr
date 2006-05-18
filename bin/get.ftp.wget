@@ -18,5 +18,6 @@ dirdepth=`echo $dir | sed -e 's:/*$\|^/*::g' | tr / '\n' | wc -l`
 # run wget in $dest
 # XXX: wget can't delete files disappeared from source :(
 cd "$dest"
+set -x
 exec wget --mirror --no-verbose \
      --no-host-directories --cut-dirs=$dirdepth $url

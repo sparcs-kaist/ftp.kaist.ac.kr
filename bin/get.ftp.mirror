@@ -77,7 +77,9 @@ EOF
     done
 } >$f
 # let "mirror" handle the rest (apt-get install mirror)
-mirror "${opts[@]}" -p $pkg $f
+(set -x
+exec mirror "${opts[@]}" -p $pkg $f
+)
 # check error
 if grep 'Caught .* shutting down' log ||
    grep 'Cannot connect' log
