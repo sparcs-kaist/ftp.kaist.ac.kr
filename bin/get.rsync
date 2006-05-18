@@ -16,7 +16,7 @@ rsync -rtlHzv --stats --temp-dir=/mirror/ftp/.tmp \
 code=$?
 case $code in
     # treat some partial complete situations OK
-    24|25) true ;;
+    24) true ;;
     # see rsync(1) for more EXIT VALUES
     *) exit $code ;;
 esac
