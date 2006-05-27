@@ -34,17 +34,17 @@ a:link    { color: #33f; }
 a:visited { color: #039; }
 a:hover, a:active { text-decoration: underline; }
 a:hover, a:active { text-decoration: underline; }
-hr { border: 1px none #ccc; border-top-style: solid; }
+hr { border: 1px none #ccc; border-top-style: solid; clear: both; }
 
 
 #sponsors {
-    display: block;
-    text-align: center;
-    vertical-align: middle;
-    margin: 1em !important;
-    padding: 0em !important;
+    float: right;
+    position: relative;
+    top: -16em;
+    height: 0em;
 }
 #sponsors img {
+    display: block;
     vertical-align: middle;
     border-style: none;
     margin: 0.5em;
@@ -86,58 +86,68 @@ hr { border: 1px none #ccc; border-top-style: solid; }
 /* package index */
 #pkgs {
     font-size: 0.8em;
-    margin-left: auto;
-    margin-right: auto;
 }
 #pkgs.updating {
     background-color: #ff3 !important;
-/*    opacity: .5;*/
-}
-#pkgs thead {
-    text-align: center;
 }
 
+#pkgsidx a {
+    color: inherit;
+    text-decoration: none !important;
+}
+.pkglink {
+    border: 1px solid;
+    line-height: 2.4em;
+    display: inline !important;
+    white-space: nowrap;
+    margin: 0em;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    padding: 0.3em;
+}
+.pkglink.active, .pkglink:hover {
+    border-style: dotted !important;
+}
+
+#pkgstool, #pkgsinfo {
+    padding: 0.5em;
+}
+#pkgsinfo {
+    min-height: 20em;
+}
 .pkg {
-    border: 2px solid;
-    width: 11em;
-    margin: 0.3em;
-    padding: 0.2em;
+    display: none;
+    border: 1px solid;
+    padding: 0.5em;
 }
-.pkg:hover {
-    border-color: #f33 !important;
+.pkg.active {
+    display: block;
 }
-.sync    { border-style: dashed; }
-.good    { color: #000; background-color: #bfb; border-color: #000; }
-.old     { color: #efe; background-color: #363; border-color: #693; }
-.bad     { color: #fc9; background-color: #531; border-color: #842; }
-.dead    { color: #ece; background-color: #315; border-color: #999; }
-.down    { color: #999; background-color: #eee; border-color: #ccc; }
-.unknown { color: #fee; background-color: #f33; border-color: #000; }
+
+.pkg a {
+    color: inherit;
+    text-decoration: underline;
+}
+.pkg h3 {
+    margin: 0em;
+}
+.pkg ul {
+    margin: 0.5em;
+    padding-left: 1.5em;
+    line-height: 1.5em;
+}
+
+.sync    { border-color: #f33 !important; border-style: dashed !important; }
+.good    { color: #000 !important; background-color: #bfb; border-color: #000; }
+.old     { color: #efe !important; background-color: #363; border-color: #693; }
+.bad     { color: #fc9 !important; background-color: #531; border-color: #842; }
+.dead    { color: #ece !important; background-color: #315; border-color: #999; }
+.down    { color: #999 !important; background-color: #eee; border-color: #ccc; }
+.unknown { color: #fee !important; background-color: #f33; border-color: #000; }
 .pkgsync    { display: none;  }
 .pkgsync.up { display: inline !important; color: #fc3; font-weight: bold; }
 
-.pkglastupdated, .pkgage, .pkgsyncage, .pkgsyncfailures { font-size: 0.8em; }
+.pkgage, .pkgsyncage, .pkgsyncfailures { font-size: 0.8em; }
 .pkgsyncfailures {
     color: #888 !important;
-}
-.pkg a { color: inherit; }
-.pkg h3 {
-    font-size: 1.1em;
-    margin: 0em;
-}
-
-.pkg:hover .pkginfo {
-    display: block;
-}
-.pkginfo {
-    display: none;
-    font-size: 0.9em;
-    position: absolute;
-    background-color: #fff;
-    color: #004;
-    border: 3px double;
-    margin: 0em;
-    padding: 1em;
-    padding-left: 2em;
-    min-height: 4em;
 }

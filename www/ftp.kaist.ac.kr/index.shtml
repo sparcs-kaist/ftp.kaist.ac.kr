@@ -2,14 +2,67 @@
 <!--#set var="title" value="" -->
 <!--#include virtual="/include/head.shtml" -->
 
-<div style="margin-left:auto; margin-right:auto;">
-<pre><!--#include file="motd" --></pre>
+<h2>Welcome to KAIST File Archive!</h2>
+<ul>
+    <li>Located at <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>,
+    <a href="http://www.kaist.ac.kr/">KAIST</a>,
+    <a href="http://www.daejeon.go.kr/">Daejeon</a>,
+    <a href="http://www.korea.net/">Korea</a>, north-east Asia.
+    </li>
+    <li>Hardware and network connectivity supported by
+    <a href="http://ict.kaist.ac.kr/">KAIST ICT</a> and
+    <a href="http://www.kt.co.kr/">KT</a>.
+    </li>
+    <ul style="font-size:0.8em;">
+        <li>2x2-way 1.8GHz x64 processors</li>
+        <li>4GB main memory</li>
+        <li>2.6TB RAID</li>
+        <li>Gigabit ethernet</li>
+    </ul>
+    </li>
+    <li>Service operated by
+    <a href="http://ftp.kaist.ac.kr/geoul">Geoul Team</a> in
+    <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>.
+    </li>
+    <li>Also known as
+    <ul style="font-size:0.8em;">
+        <li><a href="http://ftp.kr.debian.org/">ftp.kr.debian.org</a></li>
+        <li><a href="http://kr.archive.ubuntu.com/">kr.archive.ubuntu.com</a></li>
+        <li>ftp2.kr.freebsd.org         </li>
+        <li>cvsup2.kr.freebsd.org       </li>
+    </ul>
+    <li>Accessible via
+    <a href="http://ftp.kaist.ac.kr/pub/">HTTP</a>,
+    <a href="ftp://ftp.kaist.ac.kr/">FTP</a>,
+    Rsync,
+    CVSup.
+    </li>
+    </li>
+</ul>
+
 <div id="sponsors">
-    <a href="http://sparcs.kaist.ac.kr"><img alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
-    <a href="http://www.kaist.ac.kr"><img alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
-    <a href="http://www.kt.co.kr"><img alt="KT" src="/kt-logo.png" style="border:none;"/></a>
-</div>
+    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
+    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
 </div>
 
-<!--#set var="urlpath" value="/motd" -->
+<div id="termsofuse">
+    <big>Use entirely at your own risk,
+        no warranty is expressed or implied.</big>
+    <ul style="font-size:0.7em;">
+        <li>None of the service providers in any way whatsoever can be
+        responsible for any problems that might be caused by this service.</li>
+        <li>Every access to this service is recorded and can be used and
+        published for the purpose of improving the quality of the service.</li>
+        <li>We may limit some accesses without forewarning that may prevent
+        operators from maintaining reasonable quality of the service.</li>
+    </ul>
+</div>
+
+<hr/>
+
+<h2 id="status">Mirror Status</h2>
+<!--#include file="status.html" -->
+
+<!--#set var="urlpath" value="/status.html" -->
 <!--#include virtual="/include/foot.shtml" -->

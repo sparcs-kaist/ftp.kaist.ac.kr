@@ -23,10 +23,10 @@ set +e
 for lang in ko en; do
     (
     set -e
-    tmp=`mktemp /tmp/status.shtml.XXXXXX`
+    tmp=`mktemp /tmp/status.html.XXXXXX`
     xsltproc --param lang "'$lang'" status2html.xsl pkgindex.xml >$tmp
     chmod a+r $tmp
-    mv -f $tmp status.shtml.$lang
+    mv -f $tmp status.html.$lang
     )
 done
 

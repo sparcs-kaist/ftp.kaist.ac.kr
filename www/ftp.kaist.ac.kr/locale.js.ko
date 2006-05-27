@@ -1,30 +1,18 @@
 function w(x) {
          if (x == 'none'                ) return '없음'             ;
-    else if (x == 'name'                ) return '이름'             ;
-    else if (x == 'url'                 ) return 'URL'              ;
-    else if (x == 'timeelapsed'         ) return '흐른 시간'        ;
     else if (x == 'status'              ) return '상태'             ;
-    else if (x == 'status_sync'         ) return '새로 받는 중'     ;
+    else if (x == 'status_sync'         ) return '받는 중'          ;
     else if (x == 'status_good'         ) return '좋음'             ;
-    else if (x == 'status_ok'           ) return '괜찮음'           ;
     else if (x == 'status_old'          ) return '오래됨'           ;
     else if (x == 'status_bad'          ) return '나쁨'             ;
     else if (x == 'status_dead'         ) return '죽었음'           ;
     else if (x == 'status_down'         ) return '멈춤'             ;
     else if (x == 'status_unknown'      ) return '알 수 없음'       ;
     else if (x == 'unknown'             ) return '알 수 없음'       ;
-    else if (x == 'source'              ) return '원본 위치'        ;
-    else if (x == 'frequency'           ) return '자동 갱신 주기'   ;
-    else if (x == 'hours'               ) return '시간'             ;
-    else if (x == 'lastupdated'         ) return '마지막 동기 시각' ;
-    else if (x == 'statistics'          ) return '통계 자료'        ;
-    else if (x == 'sizechanges'         ) return '크기 변화'        ;
-    else if (x == 'sizehistory'         ) return '모든 기록'        ;
-    else if (x == 'currentsize'         ) return '현재 크기'        ;
-    else if (x == 'size'                ) return '크기'             ;
-    else if (x == 'files'               ) return '파일 수'          ;
-    else if (x == 'dirs'                ) return '디렉토리 수'      ;
-    else if (x == 'sizecounted'         ) return '계산된 때'        ;
+    else if (x == 'timeelapsed'         ) return '흐른 시간'        ;
+    else if (x == 'lastupdated'         ) return '새로고침'         ;
+    else if (x == 'source'              ) return '원본'             ;
+    else if (x == 'frequency'           ) return '갱신 주기'        ;
     else                                  return ''                 ;
 }
 

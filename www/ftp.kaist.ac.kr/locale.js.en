@@ -1,8 +1,5 @@
 function w(x) {
          if (x == 'none'                ) return 'None'             ;
-    else if (x == 'name'                ) return 'Name'             ;
-    else if (x == 'url'                 ) return 'URL'              ;
-    else if (x == 'timeelapsed'         ) return 'Time Elapsed'     ;
     else if (x == 'status'              ) return 'Status'           ;
     else if (x == 'status_sync'         ) return 'Updating'         ;
     else if (x == 'status_good'         ) return 'Good'             ;
@@ -12,18 +9,10 @@ function w(x) {
     else if (x == 'status_down'         ) return 'Inactive'         ;
     else if (x == 'status_unknown'      ) return 'Unknown'          ;
     else if (x == 'unknown'             ) return 'Unknown'          ;
+    else if (x == 'timeelapsed'         ) return 'Time Elapsed'     ;
+    else if (x == 'lastupdated'         ) return 'Last Updated'     ;
     else if (x == 'source'              ) return 'Source'           ;
     else if (x == 'frequency'           ) return 'Frequency'        ;
-    else if (x == 'hours'               ) return 'Hours'            ;
-    else if (x == 'lastupdated'         ) return 'Last Updated'     ;
-    else if (x == 'statistics'          ) return 'Statistics'       ;
-    else if (x == 'sizechanges'         ) return 'Size Changes'     ;
-    else if (x == 'sizehistory'         ) return 'Size History'     ;
-    else if (x == 'currentsize'         ) return 'Current Size'     ;
-    else if (x == 'size'                ) return 'Size'             ;
-    else if (x == 'files'               ) return '#Files'           ;
-    else if (x == 'dirs'                ) return '#Directories'     ;
-    else if (x == 'sizecounted'         ) return 'Measured'         ;
     else                                  return ''                 ;
 }
 

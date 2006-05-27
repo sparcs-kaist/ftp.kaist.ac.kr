@@ -48,6 +48,54 @@ function setText(e,t) {
         e.replaceChild(document.createTextNode(t), e.firstChild);
 }
 
+var forms = [];
+function formfor(pkgid) {
+    for (var i=0; i<forms.length; i++) {
+        if (forms[i].id == pkgid)
+            return forms[i];
+    }
+    return null;
+}
+
+function init() {
+    var links = document.getElementById("pkgsidx").getElementsByTagName("a");
+    for (var i=0; i<links.length; i++) {
+        var link = links[i];
+        var pkgid = links[i].hash.replace(/^#/, '');
+        links[i].href = 'javascript:void("'+links[i].hash+'");';
+        var box = document.getElementById(pkgid);
+        if (! box)
+            continue;
+        function field(box, name, e) {
+            e = (e) ? e : box;
+            var cls = new RegExp('(^| )pkg'+name + '($| )');
+            var cs = e.childNodes;
+            for (var i=0; i<cs.length; i++)
+                if (cls.exec(cs[i].className))
+                    return cs[i];
+            for (var i=0; i<cs.length; i++) {
+                var f = field(box, name, cs[i]);
+                if (f) return f;
+            }
+            return null;
+        }
+        forms.push({
+            id              : pkgid,
+            link            : link,
+            frame            : box,
+            source          : field(box, 'source'),
+            frequency       : field(box, 'frequency'),
+            box             : field(box, 'box'),
+            sync            : field(box, 'sync'),
+            syncage         : field(box, 'syncage'),
+            syncfailed      : field(box, 'syncfailed'),
+            syncfailures    : field(box, 'syncfailures'),
+            status          : field(box, 'status'),
+            lastupdated     : field(box, 'lastupdated'),
+            age             : field(box, 'age')
+        });
+    }
+}
 
 
 var refreshTimer;
@@ -95,78 +143,67 @@ function update(http_request) {
             var now = new Date();
             for (var i=0; i<pkgs.length; i++) {
                 var pkg = pkgs[i];
-                pkgid = pkg.getAttribute('id');
-                var box = document.getElementById('pkg-' + pkgid);
-                if (! box)
+                id = pkg.getAttribute('id');
+                var form = formfor('pkg-'+id);
+                if (! form)
                     continue;
-                function field(box, name, e) {
-                    e = (e) ? e : box;
-                    var cls = new RegExp('(^| )pkg'+name + '($| )');
-                    var cs = e.childNodes;
-                    for (var i=0; i<cs.length; i++)
-                        if (cls.exec(cs[i].className))
-                            return cs[i];
-                    for (var i=0; i<cs.length; i++) {
-                        var f = field(box, name, cs[i]);
-                        if (f) return f;
-                    }
-                    return null;
-                }
-                box.className = 'pkg';
+                var statusClassName =
+                    (active == form) ? ' active' : '';
                 var sync = pkg.selectSingleNode('sync');
                 var frequency;
                 // updating status
                 if (sync) {
-                    setText(field(box,'source'), getText(sync));
+                    setText(form.source, getText(sync));
                     if (frequency = sync.getAttribute('frequency')) {
                         frequency = formatSeconds(frequency);
-                        setText(field(box,'frequency'), frequency);
+                        setText(form.frequency, frequency);
                     } else
-                        setText(field(box,'frequency'), w('none'));
-                    var syncinfo = field(box,'sync');
+                        setText(form.frequency, w('none'));
+                    var syncinfo = form.sync;
                     syncinfo.className = 'pkgsync';
                     var started;
                     if (started = sync.getAttribute('started')) {
-                        box.className += ' sync';
-                        setText(field(box,'syncage'),
+                        statusClassName += ' sync';
+                        setText(form.syncage,
                                 formatSeconds((now-isoDate(started))/1000));
                         syncinfo.className += ' up';
                     }
                     var failed;
                     if (failed = sync.getAttribute('failed')) {
-                        setText(field(box,'syncfailed'), failed);
-                        field(box,'syncfailures').style.display = 'inline';
+                        setText(form.syncfailed, failed);
+                        form.syncfailures.style.display = 'inline';
                     } else {
-                        field(box,'syncfailures').style.display = 'none';
+                        form.syncfailures.style.display = 'none';
                     }
                 }
                 // status
                 var status = pkg.selectSingleNode('status');
                 if (status) {
                     var statustxt = getText(status);
-                    setText(field(box,'status').getElementsByTagName('a')[0],
-                        w('status_' + statustxt));
-                    box.className += ' ' + statustxt;
+                    setText(form.status, w('status_' + statustxt));
+                    statusClassName += ' ' + statustxt;
                     var lastupdated;
                     if (lastupdated = status.getAttribute('lastupdated')) {
                         lastupdated = isoDate(lastupdated);
-                        setText(field(box,'lastupdated'), formatDate(lastupdated, true));
+                        setText(form.lastupdated, formatDate(lastupdated, true));
                         if (frequency)
-                            setText(field(box,'age'),
+                            setText(form.age,
                                 formatSeconds((now-lastupdated)/1000)
                                 + ' / ' + frequency);
                         else
-                            setText(field(box,'age'), w(''));
+                            setText(form.age, w(''));
                     } else {
                         // no timestamp
-                        setText(field(box,'lastupdated'), w(''));
-                        setText(field(box,'age'), w(''));
+                        setText(form.lastupdated, w(''));
+                        setText(form.age, w(''));
                     }
                 } else {
-                    setText(field(box,'status'), w('unknown'));
-                    setText(field(box,'lastupdated'), w(''));
-                    setText(field(box,'age'), w(''));
+                    setText(form.status, w('unknown'));
+                    setText(form.lastupdated, w(''));
+                    setText(form.age, w(''));
                 }
+                form.frame.className = 'pkg'     + statusClassName;
+                form.link.className  = 'pkglink' + statusClassName;
             }
             setText(document.getElementById("lastupdated"),
                     formatDate(now));
@@ -176,4 +213,28 @@ function update(http_request) {
 
 }
 
-window.onload = refresh;
+var active;
+function toggle(pkgid) {
+    var form = formfor(pkgid);
+    if (! form)
+        return;
+    if (active) { // hide
+        active.frame.className = active.frame.className.replace(/ active/, '');
+        active.link.className  = active.link.className.replace(/ active/, '');
+    }
+    // toggle
+    active = (active == form) ? null : form;
+    if (active) { // show
+        active.frame.className += ' active';
+        active.link.className  += ' active';
+    }
+}
+
+function load() {
+    init();
+    if (location.hash.match(/^#pkg-/))
+        toggle(location.hash.replace(/^#/, ''));
+    refresh();
+}
+
+window.onload = load;
