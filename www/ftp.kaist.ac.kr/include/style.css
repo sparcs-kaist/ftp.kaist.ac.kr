@@ -36,14 +36,9 @@ a:hover, a:active { text-decoration: underline; }
 a:hover, a:active { text-decoration: underline; }
 hr { border: 1px none #ccc; border-top-style: solid; clear: both; }
 
-
-#sponsors {
-    float: right;
-    position: relative;
-    top: -16em;
-    height: 0em;
-}
 #sponsors img {
+    float: right;
+    clear: right;
     display: block;
     vertical-align: middle;
     border-style: none;
@@ -100,25 +95,26 @@ hr { border: 1px none #ccc; border-top-style: solid; clear: both; }
     line-height: 2.4em;
     display: inline !important;
     white-space: nowrap;
-    margin: 0em;
-    margin-left: 0.3em;
-    margin-right: 0.3em;
-    padding: 0.3em;
+    margin: 0.3em;
+    padding: 3px;
 }
 .pkglink.active, .pkglink:hover {
-    border-style: dotted !important;
+    border-width: 2px;
+    padding: 2px;
 }
 
 #pkgstool, #pkgsinfo {
     padding: 0.5em;
 }
-#pkgsinfo {
-    min-height: 20em;
+#pkgsinfo.active {
+    min-height: 17em;
 }
 .pkg {
-    display: none;
     border: 1px solid;
     padding: 0.5em;
+}
+.pkg.inactive {
+    display: none;
 }
 .pkg.active {
     display: block;

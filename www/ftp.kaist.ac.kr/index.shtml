@@ -3,6 +3,14 @@
 <!--#include virtual="/include/head.shtml" -->
 
 <h2>Welcome to KAIST File Archive!</h2>
+
+<div id="sponsors">
+    <span style="display:none;">Brought to you by: </span>
+    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
+    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
+</div>
+
 <ul>
     <li>Located at <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>,
     <a href="http://www.kaist.ac.kr/">KAIST</a>,
@@ -39,12 +47,6 @@
     </li>
     </li>
 </ul>
-
-<div id="sponsors">
-    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
-    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
-    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
-</div>
 
 <div id="termsofuse">
     <big>Use entirely at your own risk,

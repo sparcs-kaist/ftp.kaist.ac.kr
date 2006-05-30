@@ -58,6 +58,7 @@ function formfor(pkgid) {
 }
 
 function init() {
+    document.getElementById("pkgsinfo").className += ' active';
     var links = document.getElementById("pkgsidx").getElementsByTagName("a");
     for (var i=0; i<links.length; i++) {
         var link = links[i];
@@ -79,10 +80,11 @@ function init() {
             }
             return null;
         }
+        box.className += ' inactive';
         forms.push({
             id              : pkgid,
             link            : link,
-            frame            : box,
+            frame           : box,
             source          : field(box, 'source'),
             frequency       : field(box, 'frequency'),
             box             : field(box, 'box'),
@@ -148,7 +150,7 @@ function update(http_request) {
                 if (! form)
                     continue;
                 var statusClassName =
-                    (active == form) ? ' active' : '';
+                    (active == form) ? ' active' : ' inactive';
                 var sync = pkg.selectSingleNode('sync');
                 var frequency;
                 // updating status
@@ -218,15 +220,20 @@ function toggle(pkgid) {
     var form = formfor(pkgid);
     if (! form)
         return;
+    function chClassName(e,from,to) {
+        e.className = e.className.replace(from, to);
+    }
+    function activate(e)   { chClassName(e, ' inactive', ' active'); }
+    function inactivate(e) { chClassName(e, ' active', ' inactive'); }
     if (active) { // hide
-        active.frame.className = active.frame.className.replace(/ active/, '');
-        active.link.className  = active.link.className.replace(/ active/, '');
+        inactivate(active.frame);
+        inactivate(active.link);
     }
     // toggle
     active = (active == form) ? null : form;
     if (active) { // show
-        active.frame.className += ' active';
-        active.link.className  += ' active';
+        activate(active.frame);
+        activate(active.link);
     }
 }
 
