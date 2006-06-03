@@ -63,7 +63,6 @@ function init() {
     for (var i=0; i<links.length; i++) {
         var link = links[i];
         var pkgid = links[i].hash.replace(/^#/, '');
-        links[i].href = 'javascript:void("'+links[i].hash+'");';
         var box = document.getElementById(pkgid);
         if (! box)
             continue;
