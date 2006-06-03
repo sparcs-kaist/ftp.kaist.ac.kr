@@ -12,9 +12,9 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # update data to show
 * *	* * *	mirror	exec publish-pkgstat.xml
-0 *	* * *	mirror	exec publish-pkgindex
-51 *	* * *	mirror	exec analyze-usages
-47 */3	* * *	mirror	exec update-ls-lR
+0 *	* * *	mirror	exec nice publish-pkgindex
+51 *	* * *	mirror	exec nice analyze-usages
+47 */3	* * *	mirror	exec nice update-ls-lR
 0 0	* * *	root	exec update-rsyncd.conf
-11 */6  * * *	mirror	exec measure-sizes
-17 */6  * * *	mirror	exec update-size.graphs
+11 */6  * * *	mirror	exec nice measure-sizes
+17 */6  * * *	mirror	exec nice update-size.graphs
