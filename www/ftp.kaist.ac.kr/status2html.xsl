@@ -86,12 +86,12 @@
         </div>
         <div id="pkgsidx">
             <xsl:apply-templates select="package" mode="index">
-                <xsl:sort select="name"/>
+                <xsl:sort select="translate(name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:apply-templates>
         </div>
         <div id="pkgsinfo">
             <xsl:apply-templates select="package">
-                <xsl:sort select="name"/>
+                <xsl:sort select="translate(name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:apply-templates>
         </div>
     </div>

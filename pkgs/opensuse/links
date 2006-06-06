@@ -1,1 +1,2 @@
-list	http://en.opensuse.org/Mirrors_Development_Build
+list	http://opensuse.org/Mirrors_Released_Version
+list2	http://opensuse.org/Mirrors_Development_Build
