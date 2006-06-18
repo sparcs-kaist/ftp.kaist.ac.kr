@@ -3,8 +3,6 @@
 <!--#include virtual="/include/head.shtml" -->
 
 <h2>Welcome to KAIST File Archive!</h2>
-<h3 style="color:red">Our server will be temporary unavailable due to electric power interruption<br/>
-1:30pm KST ~ 3:30pm KST</h3>
 
 <div id="sponsors">
     <span style="display:none;">Brought to you by: </span>
