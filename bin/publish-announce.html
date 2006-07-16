@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# publish-announce.html -- Publish announce.rss in HTML
+# 
+# Created: 2006-07-16
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+cd /mirror/www/ftp.kaist.ac.kr
+tmp=`mktemp /tmp/announce.html.XXXXXX`
+trap "rm $tmp" EXIT ERR HUP INT TERM
+chmod a+r $tmp
+
+set +e
+for rss in announce.rss*; do
+    html=.announce.html${rss#announce.rss}
+    [ $rss -nt $html ] || continue
+    (
+    set -e
+    allim $rss html-list >$tmp
+    cp -f $tmp $html
+    )
+done
+
+# vim:ft=sh

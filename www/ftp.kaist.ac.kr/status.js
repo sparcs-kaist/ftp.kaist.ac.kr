@@ -7,7 +7,7 @@
  * (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
  */
 
-var pkgindexurl = '/pkgstat.xml';
+var pkgstaturl = '/pkgstat.xml';
 
 var monthnames = "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec".split(',');
 function isoDate(isoStr) {
@@ -127,7 +127,7 @@ function refresh() {
     }
     if (http_request) {
         http_request.onreadystatechange = function() { update(http_request); };
-        http_request.open('GET', pkgindexurl, true);
+        http_request.open('GET', pkgstaturl, true);
         http_request.send(null);
     } else {
         // AJAX unavailable, just reload

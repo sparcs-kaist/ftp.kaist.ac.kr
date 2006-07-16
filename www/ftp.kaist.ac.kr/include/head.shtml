@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/include/style.css"/>
     <link rel="shortcut icon" type="image/x-icon" href="/geoul-icon.ico"/>
     <link rel="icon" type="image/png" href="/geoul-icon.png"/>
+    <link rel="alternate" type="application/rss+xml" href="/announce.rss"/>
 </head>
 
 <body id="<!--#echo var="id" -->">

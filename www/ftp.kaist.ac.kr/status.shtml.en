@@ -1,0 +1,8 @@
+<!--#set var="id" value="status" -->
+<!--#set var="title" value="Mirror Status" -->
+<!--#include virtual="/include/head.shtml" -->
+
+<!--#include file=".status.html" -->
+
+<!--#set var="urlpath" value="/.status.html" -->
+<!--#include virtual="/include/foot.shtml" -->

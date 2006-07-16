@@ -1,0 +1,77 @@
+/*
+  mirror status page styles for ftp.kaist.ac.kr
+  Created: 2006-07-16
+
+  Written by Jaeho Shin <netj@sparcs.org>
+  (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+*/
+
+/* package index */
+#pkgs {
+    font-size: 0.8em;
+}
+#pkgs.updating {
+    background-color: #ff3 !important;
+}
+
+#pkgsidx a {
+    color: inherit;
+    text-decoration: none !important;
+}
+.pkglink {
+    border: 1px solid;
+    line-height: 2.4em;
+    display: inline !important;
+    white-space: nowrap;
+    margin: 0.3em;
+    padding: 3px;
+}
+.pkglink.active, .pkglink:hover {
+    border-width: 2px;
+    padding: 2px;
+}
+
+#pkgstool, #pkgsinfo {
+    padding: 0.5em;
+}
+#pkgsinfo.active {
+    min-height: 17em;
+}
+.pkg {
+    border: 1px solid;
+    padding: 0.5em;
+}
+.pkg.inactive {
+    display: none;
+}
+.pkg.active {
+    display: block;
+}
+
+.pkg a {
+    color: inherit !important;
+    text-decoration: underline !important;
+}
+.pkg h3 {
+    margin: 0em;
+}
+.pkg ul {
+    margin: 0.5em;
+    padding-left: 1.5em;
+    line-height: 1.5em;
+}
+
+.sync    { border-color: #f33 !important; border-style: dashed !important; }
+.good    { color: #000 !important; background-color: #bfb; border-color: #000; }
+.old     { color: #efe !important; background-color: #363; border-color: #693; }
+.bad     { color: #fc9 !important; background-color: #531; border-color: #842; }
+.dead    { color: #ece !important; background-color: #315; border-color: #999; }
+.down    { color: #999 !important; background-color: #eee; border-color: #ccc; }
+.unknown { color: #fee !important; background-color: #f33; border-color: #000; }
+.pkgsync    { display: none;  }
+.pkgsync.up { display: inline !important; color: #fc3; font-weight: bold; }
+
+.pkgage, .pkgsyncage, .pkgsyncfailures { font-size: 0.8em; }
+.pkgsyncfailures {
+    color: #888 !important;
+}

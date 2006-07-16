@@ -1,8 +1,13 @@
-<!--#set var="id" value="motd" -->
+<!--#set var="id" value="announce" -->
 <!--#set var="title" value="" -->
 <!--#include virtual="/include/head.shtml" -->
 
-<h2>Welcome to KAIST File Archive!</h2>
+<h2 style="vertical-align:top;">Announcements <a href="announce.rss"><img
+        src="feed-icon-24x24.png" alt="(RSS)" style="border:none;
+        width:24px; height:24px; vertical-align:top;"/></a></h2>
+<!--#include file=".announce.html" -->
+
+<h2>KAIST File Archive</h2>
 
 <div id="sponsors">
     <span style="display:none;">Brought to you by: </span>
@@ -17,10 +22,10 @@
     <a href="http://www.daejeon.go.kr/">Daejeon</a>,
     <a href="http://www.korea.net/">Korea</a>, north-east Asia.
     </li>
+
     <li>Hardware and network connectivity supported by
     <a href="http://ict.kaist.ac.kr/">KAIST ICT</a> and
     <a href="http://www.kt.co.kr/">KT</a>.
-    </li>
     <ul style="font-size:0.8em;">
         <li>2x2-way 1.8GHz x64 processors</li>
         <li>4GB main memory</li>
@@ -28,23 +33,26 @@
         <li>Gigabit ethernet</li>
     </ul>
     </li>
+
     <li>Service operated by
     <a href="http://ftp.kaist.ac.kr/geoul">Geoul Team</a> in
     <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>.
     </li>
+
     <li>Also known as
     <ul style="font-size:0.8em;">
         <li><a href="http://ftp.kr.debian.org/">ftp.kr.debian.org</a></li>
         <li><a href="http://kr.archive.ubuntu.com/">kr.archive.ubuntu.com</a></li>
-        <li>ftp2.kr.freebsd.org         </li>
-        <li>cvsup2.kr.freebsd.org       </li>
+        <li>ftp2.kr.freebsd.org</li>
+        <li>cvsup2.kr.freebsd.org</li>
     </ul>
+    </li>
+
     <li>Accessible via
     <a href="http://ftp.kaist.ac.kr/pub/">HTTP</a>,
     <a href="ftp://ftp.kaist.ac.kr/">FTP</a>,
     Rsync,
     CVSup.
-    </li>
     </li>
 </ul>
 
@@ -61,10 +69,5 @@
     </ul>
 </div>
 
-<hr/>
-
-<h2 id="status">Mirror Status</h2>
-<!--#include file="status.html" -->
-
-<!--#set var="urlpath" value="/status.html" -->
+<!--#set var="urlpath" value="/.announce.html" -->
 <!--#include virtual="/include/foot.shtml" -->

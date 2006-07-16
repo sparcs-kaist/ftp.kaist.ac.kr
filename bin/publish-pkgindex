@@ -9,24 +9,28 @@ set -e
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
-trap 'rm -f $tmp' ERR HUP INT TERM
-cd /mirror/www/ftp.kaist.ac.kr
+# update pkgidx.xml
+cd /tmp
+tmp=`mktemp .geoul.index.xml.XXXXXX`
+trap "rm -f $tmp" ERR HUP INT TERM
 
-# update pkgindex.xml
-tmp=`mktemp /tmp/pkgindex.xml.XXXXXX`
 pkgs.xml -f >$tmp
 chmod a+r $tmp
-mv -f $tmp pkgindex.xml
+
+mv -f $tmp geoul.index.xml
+ln -sf /tmp/geoul.index.xml /mirror/www/ftp.kaist.ac.kr/pkgidx.xml
+
 
 # publish HTMLs
+cd /mirror/www/ftp.kaist.ac.kr
 set +e
 for lang in ko en; do
     (
     set -e
     tmp=`mktemp /tmp/status.html.XXXXXX`
-    xsltproc --param lang "'$lang'" status2html.xsl pkgindex.xml >$tmp
+    xsltproc --param lang "'$lang'" status2html.xsl pkgidx.xml >$tmp
     chmod a+r $tmp
-    mv -f $tmp status.html.$lang
+    mv -f $tmp .status.html.$lang
     )
 done
 

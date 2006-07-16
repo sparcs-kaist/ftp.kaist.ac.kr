@@ -10,13 +10,13 @@ set -e
 running_as_mirror_admin "$@"
 
 cd /tmp
-tmp=`mktemp .geoul.index.xml.XXXXXX`
-trap "rm -f $tmp" EXIT ERR HUP INT TERM
+tmp=`mktemp .geoul.status.xml.XXXXXX`
+trap "rm -f $tmp" ERR HUP INT TERM
 
 pkgs.xml >$tmp
 chmod a+r $tmp
 
-mv -f $tmp geoul.index.xml
-ln -sf /tmp/geoul.index.xml /mirror/www/ftp.kaist.ac.kr/pkgstat.xml
+mv -f $tmp geoul.status.xml
+ln -sf /tmp/geoul.status.xml /mirror/www/ftp.kaist.ac.kr/pkgstat.xml
 
 # vim:ft=sh
