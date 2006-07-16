@@ -25,8 +25,6 @@ function formatDate(dt, abbrv) {
     var H = lead0(dt.getHours());
     var M = lead0(dt.getMinutes());
     var S = lead0(dt.getSeconds());
-    var z = -dt.getTimezoneOffset();
-    z = ((z<0)?'-':'+')+lead0(parseInt(z/60))+lead0(z%60);
     if (abbrv) return (day+' '+y+'-'+m+'-'+d+' '+H+':'+M+':'+S);
     else return dt;
 }
