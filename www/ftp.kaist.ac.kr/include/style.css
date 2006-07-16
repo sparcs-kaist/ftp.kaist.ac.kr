@@ -37,16 +37,6 @@ a:hover, a:active { text-decoration: underline; }
 a:hover, a:active { text-decoration: underline; }
 hr { border: 1px none #ccc; border-top-style: solid; clear: both; }
 
-#sponsors img {
-    float: right;
-    clear: right;
-    display: block;
-    vertical-align: middle;
-    border-style: none;
-    margin: 0.5em;
-    margin-right: 2em;
-}
-
 /* borders */
 #head, #foot {
     color: #208;
@@ -78,5 +68,30 @@ hr { border: 1px none #ccc; border-top-style: solid; clear: both; }
     top: -1.2em;
     text-align: right;
     line-height: 1em;
+}
+
+/* rss items */
+.rss-item br {
+    display: none;
+}
+.rss-item-date:before {
+    content: ' ';
+}
+.rss-item-date {
+    margin-left: 0.5em;
+    font-size: 0.8em;
+}
+.rss-item-description {
+    font-size: 0.8em;
+    margin: 0.3em;
+}
+
+
+/* front page */
+#announce #sponsors-pane img {
+    vertical-align: middle;
+    border-style: none;
+    margin: 0.5em;
+    margin-right: 2em;
 }
 

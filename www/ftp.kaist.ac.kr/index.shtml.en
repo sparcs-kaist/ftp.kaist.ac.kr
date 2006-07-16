@@ -2,25 +2,25 @@
 <!--#set var="title" value="" -->
 <!--#include virtual="/include/head.shtml" -->
 
-<h2 style="vertical-align:top;">Announcements <a href="announce.rss"><img
-        src="feed-icon-24x24.png" alt="(RSS)" style="border:none;
-        width:24px; height:24px; vertical-align:top;"/></a></h2>
+<div id="announce-pane" style="position: absolute;
+    left: 23em; width: auto; height: 22em; overflow: auto;
+    padding-right: 1em;">
+<h2 style="margin-top: 0.3em; margin-bottom: 0.3em;">Announcements <a
+        href="announce.rss"><img src="feed-icon-24x24.png" alt="(RSS)"
+        style="border:none; width:24px; height:24px;
+        vertical-align:top;"/></a></h2>
 <!--#include file=".announce.html" -->
-
-<h2>KAIST File Archive</h2>
-
-<div id="sponsors">
-    <span style="display:none;">Brought to you by: </span>
-    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
-    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
-    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
 </div>
 
-<ul>
+<div id="intro-pane" style="position: absolute;
+    width: 21em; height: 22em; overflow: auto;
+    padding-right: 1em;">
+<h2 style="margin-top: 0.3em; margin-bottom: 0.3em;">KAIST File Archive</h2>
+<ul style="margin: 0em; padding: 0em; padding-left: 2em;">
     <li>Located at <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>,
     <a href="http://www.kaist.ac.kr/">KAIST</a>,
     <a href="http://www.daejeon.go.kr/">Daejeon</a>,
-    <a href="http://www.korea.net/">Korea</a>, north-east Asia.
+    <a href="http://www.korea.net/">Korea</a>, northeast Asia.
     </li>
 
     <li>Hardware and network connectivity supported by
@@ -34,7 +34,7 @@
     </ul>
     </li>
 
-    <li>Service operated by
+    <li>Operated by
     <a href="http://ftp.kaist.ac.kr/geoul">Geoul Team</a> in
     <a href="http://sparcs.kaist.ac.kr/">SPARCS</a>.
     </li>
@@ -55,8 +55,17 @@
     CVSup.
     </li>
 </ul>
+</div>
 
-<div id="termsofuse">
+<div id="sponsors-pane" style="padding-top: 21em;
+    text-align: center; vertical-align: middle;">
+    <span style="display:none;">Brought to you by: </span>
+    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
+    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
+</div>
+
+<div id="termsofuse" style="margin-top: 1em;">
     <big>Use entirely at your own risk,
         no warranty is expressed or implied.</big>
     <ul style="font-size:0.7em;">
