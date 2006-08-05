@@ -8,7 +8,7 @@
 . /mirror/lib/geoul.sh
 
 trysync() {
-    [ -x sync ] && exec $PWD/sync regularly &
+    [ -x sync ] && setsid $PWD/sync regularly &
 }
 foreachpkg trysync
 

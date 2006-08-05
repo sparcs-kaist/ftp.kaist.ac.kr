@@ -19,6 +19,7 @@ Usage:
   $cmd now        use this to begin sync immediately
   $cmd pushed     use when upstream mirror is triggering push-mirroring
   $cmd regularly  check timestamp and begin sync if older than frequency
+  $cmd stop       stop the synchronizing process
 
 EOF
         [ $# -le 0 ] || echo "$cmd: $@"
@@ -44,6 +45,7 @@ triggered=$1
 case "$triggered" in
     now|pushed) ;;
     regularly) [ -n "$frequency" ] || exit 6 ;;
+    stop) ;;
     *) usage ;;
 esac
 
@@ -54,12 +56,27 @@ running_as_mirror_admin "$@"
 shift
 export GETARGS="$@"
 
-## check timestamp if regular sync
+## stop
+if [ "$triggered" = stop ]; then
+    if sync_in_progress; then
+        pgrp=`cat lock.owner 2>/dev/null`
+        msg "terminating PGID $pgrp"
+        [ -n "$pgrp" ] && childs=`ps --no-heading -o pid -$pgrp` &&
+        [ -n "$childs" ] && kill $childs &>/dev/null &&
+        msg "terminated PID" $childs && exit 0
+        exit 2
+    else
+        err 4 "no sync in progress"
+    fi
+fi
+
+## check no other sync is running
 if sync_in_progress; then
     msg "another sync in progress"
     exit 4
 fi
 
+## check timestamp if regular sync
 compute_times # defines: timepast interval failures penalty delay remaining
 if [ "$triggered" = regularly ]; then
     desc=
@@ -112,7 +129,7 @@ finish() {
     # stop monitoring log
     if [ -n "$tailpid" ]; then
         sleep 1
-        kill $tailpid
+        kill $tailpid 2>/dev/null
         wait $tailpid
     fi
     # save log
