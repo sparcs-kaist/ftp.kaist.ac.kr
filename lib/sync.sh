@@ -62,7 +62,7 @@ if [ "$triggered" = stop ]; then
         pgrp=`cat lock.owner 2>/dev/null`
         msg "terminating PGID $pgrp"
         [ -n "$pgrp" ] && childs=`ps --no-heading -o pid -$pgrp` &&
-        [ -n "$childs" ] && kill $childs &>/dev/null &&
+        [ -n "$childs" ] && kill "$@" $childs &>/dev/null &&
         msg "terminated PID" $childs && exit 0
         exit 2
     else
@@ -148,7 +148,7 @@ finish() {
     exit $exitcode
 }
 trap 'exitcode=$?; set +x; finish' EXIT ERR
-trap '' INT HUP TERM
+trap 'exit 2' INT HUP TERM
 
 ## now, the real synchronization begins
 msg "sync begins at `humandate`"
