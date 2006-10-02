@@ -105,7 +105,7 @@ my @FS = qw(/mirror);
 my $blocks = 0;
 my $used = 0;
 my $available = 0;
-foreach (split "\n", `df -k @FS | tail +2`) {
+foreach (split "\n", `df -k @FS | tail -n +2`) {
     my ($dev, $b, $u, $a) = split /\s+/;
     $blocks += $b;
     $used += $u;

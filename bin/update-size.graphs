@@ -51,6 +51,6 @@ cd /mirror/www/ftp.kaist.ac.kr/size
 graph total.png --width 600 --height 400 \
     --title "Total disk usage of $HOSTNAME" \
     --end now --start end-3m --base 1024 \
-    --upper-limit `df -k /mirror | tail +2 | awk '{print $2*1024}'` --rigid
+    --upper-limit `df -k /mirror | tail -n +2 | awk '{print $2*1024}'` --rigid
 
 # TODO: more graphs for each package
