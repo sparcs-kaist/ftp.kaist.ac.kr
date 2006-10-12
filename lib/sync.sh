@@ -97,8 +97,10 @@ acquire_lock || exit 4
 
 
 ## prepare logging and unlocking
+# clean up last failure log
+rm -f fail.log
 # create a new log
-log=.`date -u +%FT%TZ.%N`.log
+log=/mirror/log/sync/`date -u +%FT%TZ.%N`.log
 : >$log
 ln -sf $log log
 if [ -t 1 ]; then
@@ -129,17 +131,20 @@ finish() {
         wait $tailpid
     fi
     # save log
-    gzip -f $log
-    rm -f log
-    #  remove previous unreported failure log
-    rm -f .failure.log.gz
-    #  mark success/failure
-    ln -sf $log.gz .$result.log.gz
-    # TODO: add to RSS
+    #  handle failure log for reporting
+    rm -f fail.log
     case "$result" in
-        failure) # TODO: record failure
+        failure) ln -f $log fail.log ;;
+    esac
+    #  compress log
+    gzip -f $log
+    ln -sf $log.gz .$result.log.gz
+    rm -f log
+    #  mark success/failure
+    case "$result" in
+        failure) # TODO: record failure to RSS
         ;;
-        success) # TODO: record success
+        success) # TODO: record success to RSS
         ;;
     esac
     release_lock

@@ -39,7 +39,7 @@ sync_in_progress && started=`isodate -r lock`
 # references
 ref_of() {
     local log=`readlink $1`
-    log=${log%.gz}
+    log=${log#/mirror/log/sync/}
     echo "$log"
 }
 currentref=`ref_of log`
@@ -106,8 +106,12 @@ if [ -n "$source" ]; then
     # synchronization
     cat <<EOF
 <sync${currentref:+ ref='$currentref'}${started:+ started='$started'}${interval:+ frequency='$interval'}>$source</sync>
+EOF
+    if [ "${failed:-0}" -gt 0 ]; then
+        cat <<EOF
 <fail${failureref:+ ref='$failureref'}>${failed:-0}</fail>
 EOF
+    fi
 fi
 
 # status
