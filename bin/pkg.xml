@@ -39,6 +39,7 @@ sync_in_progress && started=`isodate -r lock`
 # references
 ref_of() {
     local log=`readlink $1`
+    log=${log%.gz}
     log=${log#/mirror/log/sync/}
     echo "$log"
 }
