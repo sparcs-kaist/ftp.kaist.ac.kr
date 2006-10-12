@@ -107,8 +107,8 @@ lock_expired() { needs_lock
     [ -z "`find "$lock" -mtime -$LockValidDays 2>/dev/null`" ]
 }
 sync_in_progress() { needs_lock
-    # lock, log exists
-    [ -e "$lock" -a -e log ]
+    # lock exists
+    [ -e "$lock" ]
     # the owner process is still alive
     ps -p "`cat lock.owner 2>/dev/null`" &>/dev/null
 }

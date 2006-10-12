@@ -97,32 +97,28 @@ acquire_lock || exit 4
 
 
 ## prepare logging and unlocking
-# take care of old logs
-if [ -f log ]; then
-    ln -f log fail.log
-    savelog -q fail.log
-    mv -f log fail.log
-fi
-# and create a new one
-: >log
+# create a new log
+log=.`date -u +%FT%TZ.%N`.log
+: >$log
+ln -sf $log log
 if [ -t 1 ]; then
     # monitor log if connected to a terminal
-    tail -f log &
+    tail -f $log &
     tailpid=$!
 fi
-exec >>log 2>&1
+exec >>$log 2>&1
 
 finish() {
     trap '' EXIT ERR INT HUP TERM
     local result=
     if [ $exitcode -eq 0 ]; then
         # record success
-        result=done
+        result=success
         touch timestamp
         clear_failures
     else
         # record failure
-        result=failed
+        result=failure
         increase_failures
     fi
     msg "sync $result at `humandate`"
@@ -133,17 +129,19 @@ finish() {
         wait $tailpid
     fi
     # save log
+    gzip -f $log
+    rm -f log
     #  remove previous unreported failure log
-    rm -f fail.log
-    #  distinguish success/failure logs
-    if [ "$result" = failed ]; then
-        #  rotate and place fail.log so it gets reported
-        ln -f log fail.log
-        savelog -q fail.log
-        mv -f log fail.log
-    else
-        savelog -q log
-    fi
+    rm -f .failure.log.gz
+    #  mark success/failure
+    ln -sf $log.gz .$result.log.gz
+    # TODO: add to RSS
+    case "$result" in
+        failure) # TODO: record failure
+        ;;
+        success) # TODO: record success
+        ;;
+    esac
     release_lock
     exit $exitcode
 }

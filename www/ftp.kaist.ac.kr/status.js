@@ -88,6 +88,7 @@ function init() {
             frequency       : field(box, 'frequency'),
             box             : field(box, 'box'),
             sync            : field(box, 'sync'),
+            syncref         : field(box, 'syncref'),
             syncage         : field(box, 'syncage'),
             syncfailed      : field(box, 'syncfailed'),
             syncfailures    : field(box, 'syncfailures'),
@@ -145,6 +146,7 @@ function update(http_request) {
             for (var i=0; i<pkgs.length; i++) {
                 var pkg = pkgs[i];
                 id = pkg.getAttribute('id');
+                var refprefix = '/pkgs/' + id + '/';
                 var form = formfor('pkg-'+id);
                 if (! form)
                     continue;
@@ -169,9 +171,19 @@ function update(http_request) {
                                 formatSeconds((now-isoDate(started))/1000));
                         syncinfo.className += ' up';
                     }
-                    var failed;
-                    if (failed = sync.getAttribute('failed')) {
-                        setText(form.syncfailed, failed);
+                    var syncref;
+                    if (syncref = sync.getAttribute('ref'))
+                        form.syncref.href = refprefix + syncref;
+                    else
+                        form.syncref.href = null;
+                }
+                // failures
+                var fail = pkg.selectSingleNode('fail');
+                if (fail) {
+                    var failref;
+                    if (failref = fail.getAttribute('ref')) {
+                        setText(form.syncfailed, getText(fail));
+                        form.syncfailures.href = refprefix + failref;
                         form.syncfailures.style.display = 'inline';
                     } else {
                         form.syncfailures.style.display = 'none';
@@ -183,6 +195,11 @@ function update(http_request) {
                     var statustxt = getText(status);
                     setText(form.status, w('status_' + statustxt));
                     statusClassName += ' ' + statustxt;
+                    var statusref;
+                    if (statusref = status.getAttribute('ref'))
+                        form.status.href = refprefix + statusref;
+                    else
+                        form.status.href = null;
                     var lastupdated;
                     if (lastupdated = status.getAttribute('lastupdated')) {
                         lastupdated = isoDate(lastupdated);

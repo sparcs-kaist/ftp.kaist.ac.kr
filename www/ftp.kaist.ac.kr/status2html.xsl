@@ -109,7 +109,7 @@
             <xsl:if test="status != 'original'">
                 <li><xsl:value-of select="$labs[@name='status']"/>:
                     <!-- show update status -->
-                    <a class="pkgstatus" href="/pkgs/{@id}/log.0">
+                    <a class="pkgstatus" href="/pkgs/{@id}/{status/@ref}">
                         <xsl:call-template name="fallback-to-unknown">
                             <xsl:with-param name="v"
                                 select="$labs[@name=concat('status_',
@@ -119,20 +119,17 @@
                     <xsl:text> </xsl:text>
                     <!-- show synchronizing status -->
                     <span class="pkgsync">
-                        <a href="/pkgs/{@id}/log"><xsl:value-of
+                        <a href="/pkgs/{@id}/{sync/@ref}" class="pkgsyncref"><xsl:value-of
                                 select="$labs[@name='status_sync']"/></a>
                         <xsl:text> </xsl:text>
                         <span class="pkgsyncage"
                             title="{$labs[@name='timeelapsed']}">&#160;</span>
                     </span>
                     <xsl:text> </xsl:text>
-                    <a href="/pkgs/{@id}/fail.log.0" class="pkgsyncfailures"
+                    <a href="/pkgs/{@id}/{fail/@ref}" class="pkgsyncfailures"
                         style="display:none;">(<span
-                            class="pkgsyncfailed"><xsl:choose> <xsl:when
-                                    test="sync/@failed"><xsl:value-of
-                                        select="sync/@failed"/></xsl:when>
-                                <xsl:otherwise>0</xsl:otherwise>
-                            </xsl:choose></span><xsl:value-of
+                            class="pkgsyncfailed"><xsl:value-of
+                                select="fail"/></span><xsl:value-of
                             select="$labs[@name='failures']"/>)</a>
                     <xsl:text> </xsl:text>
                     <!-- show elapsed time in such state -->

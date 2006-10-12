@@ -24,14 +24,14 @@ check() {
     local timepast interval failures penalty delay
     compute_times # defines: timepast interval failures penalty delay remaining
     # failed syncs
-    if [ -f fail.log -a $timepast -ge $ReportFailedSyncsAfter ]; then
+    if [ -f .failure.log.gz -a $timepast -ge $ReportFailedSyncsAfter ]; then
         local when="soon"
         [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
         item "$pkg: sync failed $failures times; will retry $when"
         echo "== $pkg failed =="
         echo "-->8--"
-        cat fail.log
-        rm -f fail.log  # remove it not to report twice
+        zcat .failure.log.gz
+        rm -f .failure.log.gz  # remove it not to report twice
         echo "--8<--"
         echo
     # too long syncs
@@ -58,6 +58,7 @@ check() {
             echo $reports >lock.reported
         fi
     fi
+    # TODO: simply too old packages
     # TODO: more anomalies?
 }
 
