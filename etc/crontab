@@ -7,6 +7,7 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # keep in sync
 */3 *	* * *	mirror	exec nice -n  5 maintain-sync >/dev/null
+0 6	* * *	mirror	exec nice -n 10 expire-sync-logs
 0 16	* * *	mirror	exec check-anomalies
 
 # update data to show

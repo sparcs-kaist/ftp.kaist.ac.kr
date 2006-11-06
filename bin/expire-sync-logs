@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# expire-sync-logs -- Sync log cleaning script
+# 
+# Created: 2006-10-30
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+days=60
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+cd /mirror/log/sync
+
+# remove old logs
+find . -mtime +$days -type f -exec rm -f {} \;
+
+# remove empty dirs
+find . -mtime +$days -type d -exec rmdir -f {} \;
