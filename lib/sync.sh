@@ -100,7 +100,8 @@ acquire_lock || exit 4
 # clean up last failure log
 rm -f fail.log
 # create a new log
-log=/mirror/log/sync/`date -u +%FT%TZ.%N`.log
+log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.log
+mkdir -p `dirname $log`
 : >$log
 ln -sf $log log
 if [ -t 1 ]; then
