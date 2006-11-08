@@ -1,3 +1,33 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-./debian-ftpsync $source data debian-ftpsync.conf
+
+set -e
+
+HOSTNAME=`hostname -f`
+#HOSTNAME=ftp.kr.debian.org
+umask 002
+
+# load private info
+set +x
+. debian-ftpsync.conf
+export RSYNC_PASSWORD
+set -x
+
+source=${source/:\/\//:\/\/$RSYNC_USER@}
+
+rsync --recursive --times --links --hard-links \
+      --exclude "Packages*" --exclude "Sources*" \
+      --exclude "Release*" --exclude "ls-lR*" \
+      --verbose --stats \
+      $source data/
+
+rsync --recursive --times --links --hard-links --max-delete=40000 \
+      --delete --delete-after \
+      --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
+      --exclude "project/trace/${HOSTNAME}" \
+      --verbose --stats \
+      $source data/
+
+date -u >data/project/trace/${HOSTNAME}
+
+#./push

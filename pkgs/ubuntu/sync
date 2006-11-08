@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
 
+set -e
+
 #HOSTNAME=`hostname -f`
 HOSTNAME=kr.archive.ubuntu.com
 

@@ -113,6 +113,7 @@ exec >>$log 2>&1
 
 finish() {
     trap '' EXIT ERR INT HUP TERM
+    set +e
     local result=
     if [ $exitcode -eq 0 ]; then
         # record success
