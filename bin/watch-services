@@ -21,9 +21,9 @@ check() {
 cd /mirror/etc
 
 #check proftpd   "proftpd: (accepting connections)"
-check inetd     "/usr/sbin/inetd"
-check ssh       "/usr/sbin/sshd"
-check vsftpd    "/usr/sbin/vsftpd"
-check apache2   "/usr/sbin/apache2"
-check rsync     "rsync .*--daemon" 
-check cvsupd    "/usr/sbin/cvsupd"
+check openbsd-inetd     "/usr/sbin/inetd"
+check ssh               "/usr/sbin/sshd"
+check vsftpd            "/usr/sbin/vsftpd"
+check apache2           "/usr/sbin/apache2"
+check rsync             "rsync .*--daemon" 
+check cvsupd            "/usr/sbin/cvsupd"
