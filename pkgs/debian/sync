@@ -15,6 +15,8 @@ set -x
 
 source=${source/:\/\//:\/\/$RSYNC_USER@}
 
+#why these two rsync steps are required? i don't know why - blmarket
+
 rsync --recursive --times --links --hard-links \
       --exclude "Packages*" --exclude "Sources*" \
       --exclude "Release*" --exclude "ls-lR*" \
@@ -22,7 +24,7 @@ rsync --recursive --times --links --hard-links \
       $source data/
 
 rsync --recursive --times --links --hard-links --max-delete=40000 \
-      --delete --delete-after \
+      --delete --delete-after --delay-updates\
       --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
       --exclude "project/trace/${HOSTNAME}" \
       --verbose --stats \
