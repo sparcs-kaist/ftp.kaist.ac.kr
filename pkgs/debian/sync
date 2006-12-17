@@ -3,8 +3,8 @@
 
 set -e
 
-HOSTNAME=`hostname -f`
-#HOSTNAME=ftp.kr.debian.org
+#HOSTNAME=`hostname -f`
+HOSTNAME=ftp.kr.debian.org
 umask 002
 
 # load private info
@@ -15,14 +15,14 @@ set -x
 
 source=${source/:\/\//:\/\/$RSYNC_USER@}
 
-#why these two rsync steps are required? i don't know why - blmarket
-
+# first, get new debs (not touching removed ones or indices)
 rsync --recursive --times --links --hard-links \
       --exclude "Packages*" --exclude "Sources*" \
       --exclude "Release*" --exclude "ls-lR*" \
       --verbose --stats \
       $source data/
 
+# then, synchronize indices and everything else
 rsync --recursive --times --links --hard-links --max-delete=40000 \
       --delete --delete-after --delay-updates\
       --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
@@ -30,6 +30,7 @@ rsync --recursive --times --links --hard-links --max-delete=40000 \
       --verbose --stats \
       $source data/
 
+# now, place a timestamp
 date -u >data/project/trace/${HOSTNAME}
 
 #./push

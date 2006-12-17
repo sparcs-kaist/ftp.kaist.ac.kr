@@ -13,7 +13,8 @@ if [ -n "$RSYNC_USER" ]; then
 fi
 export RSYNC_PASSWORD
 
-HOST=`hostname -f`
+#HOST=`hostname -f`
+HOST=ftp.kr.debian.org
 #LOCK="${TO}/Archive-Update-in-Progress-${HOST}"
 
 #LOGFILE=$LOGDIR/debian-cd-mirror.log

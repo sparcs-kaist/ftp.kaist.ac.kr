@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
+
 set -e
-get $source --exclude=Archive-Update-in-Progress-ftp.kaist.ac.kr
-date -u >data/project/trace/ftp.kaist.ac.kr
+#HOSTNAME=`hostname -f`
+HOSTNAME=ftp.kr.debian.org
+
+get $source --exclude=Archive-Update-in-Progress-$HOSTNAME
+date -u >data/project/trace/$HOSTNAME
