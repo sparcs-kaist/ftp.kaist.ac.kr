@@ -172,18 +172,15 @@ libjcode-pm-perl				install
 libjpeg62					install
 libklibc					install
 libkrb53					install
-libldap-2.3-0					install
 libldap2					install
 liblocale-gettext-perl				install
 liblockfile1					install
 liblwres9					install
 liblzo1						install
-liblzo2-2					install
 libmagic1					install
 libmailtools-perl				install
 libncurses5					install
 libncursesw5					install
-libneon25					install
 libneon26					install
 libnet-ldap-perl				install
 libnet-ssleay-perl				install
@@ -213,7 +210,6 @@ libsasl2-modules				install
 libselinux1					install
 libsensors3					install
 libsepol1					install
-libsigc++-1.2-5c2				install
 libsigc++-2.0-0c2a				install
 libslang2					install
 libsnmp-base					install
@@ -232,7 +228,6 @@ libtasn1-3					install
 libtext-charwidth-perl				install
 libtext-iconv-perl				install
 libtext-wrapi18n-perl				install
-libtextwrap1					install
 libtimedate-perl				install
 libttf2						install
 libunicode-map-perl				install
