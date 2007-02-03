@@ -17,4 +17,4 @@ cd /mirror/log/sync
 find . -mtime +$days -type f -exec rm -f {} \;
 
 # remove empty dirs
-find . -mtime +$days -type d -exec rmdir -f {} \;
+find . -mtime +$days -type d -exec rmdir {} \;
