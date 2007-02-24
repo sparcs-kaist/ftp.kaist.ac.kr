@@ -9,7 +9,7 @@
 # simply run rsync
 (set -x
 # TODO: how about --delay-updates? --partial-dir?
-exec rsync -rtlHzv --stats --temp-dir=/mirror/ftp/.tmp \
+exec rsync -rtlHv --stats --temp-dir=/mirror/ftp/.tmp \
     --delete-after \
     "$@"
 )
