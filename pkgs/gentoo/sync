@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
+
+# load private info
+set +x
+. gentoo-rsync.conf
+export RSYNC_PASSWORD
+set -x
+
 get $source --exclude /releases/lost+found
