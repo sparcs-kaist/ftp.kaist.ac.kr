@@ -5,7 +5,7 @@
 <div id="foot">
     <!--#config timefmt="%c %z" -->
     <div id="updateinfo">Last updated: <span id="lastupdated"><!--#flastmod virtual="$urlpath" --></span></div>
-    <address id="copyinfo">&copy; 2006 <a
+    <address id="copyinfo">&copy; 2006-2007 <a
             href="http://ftp.kaist.ac.kr/geoul/">Geoul Project</a>. <a
             href="http://creativecommons.org/licenses/by/2.5/">Some rights
             reserved</a>.
