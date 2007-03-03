@@ -11,9 +11,8 @@ umask 002
 set +x
 . debian-ftpsync.conf
 export RSYNC_PASSWORD
-set -x
-
 source=${source/:\/\//:\/\/$RSYNC_USER@}
+set -x
 
 # first, get new debs (not touching removed ones or indices)
 rsync --recursive --times --links --hard-links \
