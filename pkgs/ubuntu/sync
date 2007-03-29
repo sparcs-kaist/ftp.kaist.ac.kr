@@ -8,14 +8,14 @@ HOSTNAME=kr.archive.ubuntu.com
 
 # first, download actual packages
 rsync --recursive --times --links --hard-links \
-    --stats \
+    --verbose --stats \
     --exclude "Packages*" --exclude "Sources*" \
     --exclude "Release*" \
     $source data/
 
 # then, download the indexes
 rsync --recursive --times --links --hard-links \
-    --stats --delete --delete-after \
+    --verbose --stats --delete --delete-after \
     --exclude "project/trace/$HOSTNAME" \
     $source data/
 
