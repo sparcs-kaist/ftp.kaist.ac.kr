@@ -10,7 +10,10 @@
 MirrorAdmin=mirror
 FTPRootPath=/mirror/ftp/
 FTPRootURL=ftp://ftp.kaist.ac.kr/
-HTTPRootURL=http://ftp.kaist.ac.kr/pub/
+BaseURL=http://ftp.kaist.ac.kr
+StatusURL=$BaseURL/status
+SyncLogRootURL=$BaseURL/sync
+HTTPRootURL=$BaseURL/pub/
 
 # environment
 LC_ALL=C
@@ -94,4 +97,13 @@ humaninterval() {
         [ $S = 0 ] || printf '%d'\" $S
         echo
     fi
+}
+
+
+log_uri() {
+    local log=$1
+    ! [ -L "$log" ] || log=`readlink "$log"`
+    log=${log%.gz}
+    log=${log#/mirror/log/sync/}
+    echo "$log"
 }

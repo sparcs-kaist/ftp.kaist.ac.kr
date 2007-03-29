@@ -37,15 +37,9 @@ sync_in_progress && started=`isodate -r lock`
 [ -f timestamp ] && lastupdated=`isodate -r timestamp`
 
 # references
-ref_of() {
-    local log=`readlink $1`
-    log=${log%.gz}
-    log=${log#/mirror/log/sync/}
-    echo "$log"
-}
-currentref=`ref_of log`
-successref=`ref_of .success.log.gz`
-failureref=`ref_of .failure.log.gz`
+currentref=`log_uri log`
+successref=`log_uri .success.log.gz`
+failureref=`log_uri .failure.log.gz`
 
 # status
 compute_times # defines: timepast interval failures penalty delay remaining

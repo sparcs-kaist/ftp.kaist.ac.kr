@@ -97,8 +97,8 @@ acquire_lock || exit 4
 
 
 ## prepare logging and unlocking
-# clean up last failure log
-rm -f fail.log
+# clean up last failure report flag
+rm -f failed.needsreport
 # create a new log
 log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.log
 mkdir -p `dirname $log`
@@ -133,18 +133,16 @@ finish() {
         wait $tailpid
     fi
     # save log
-    #  handle failure log for reporting
-    rm -f fail.log
-    case "$result" in
-        failure) ln -f $log fail.log ;;
-    esac
     #  compress log
     gzip -f $log
     ln -sf $log.gz .$result.log.gz
     rm -f log
     #  mark success/failure
     case "$result" in
-        failure) # TODO: record failure to RSS
+        failure)
+        # raise need-to-report flag
+        touch failed.needsreport
+        # TODO: record failure to RSS
         ;;
         success) # TODO: record success to RSS
         ;;
