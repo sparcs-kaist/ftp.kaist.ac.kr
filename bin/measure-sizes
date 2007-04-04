@@ -101,11 +101,12 @@ for my $pkg (keys %InLSLR) {
 }
 
 # record df
-my @FS = qw(/mirror);
+our @FS = qw(/mnt /mnt/ftp2);
 my $blocks = 0;
 my $used = 0;
 my $available = 0;
-foreach (split "\n", `df -k @FS | tail -n +2`) {
+my $fsargs = join " ", map {quotemeta} @FS;
+foreach (split "\n", `df -P -k $fsargs | tail -n +2`) {
     my ($dev, $b, $u, $a) = split /\s+/;
     $blocks += $b;
     $used += $u;
