@@ -105,5 +105,21 @@ log_uri() {
     ! [ -L "$log" ] || log=`readlink "$log"`
     log=${log%.gz}
     log=${log#/mirror/log/sync/}
-    echo "$log"
+    echo "$SyncLogRootURL/$log"
+}
+
+pkg_uri() {
+    local pkg=$1
+    echo "$BaseURL/pkgs/$pkg"
+}
+
+excerpt() {
+    local f=$1 l=${2:-10}
+    if [ `zless "$f" 2>/dev/null | wc -l || echo 0` -gt $(($l * 2)) ]; then
+        zless "$f" | head -$l
+        echo "..."
+        zless "$f" | tail -$l
+    else
+        zless "$f"
+    fi
 }

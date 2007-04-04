@@ -81,15 +81,9 @@ check() {
 
 quotelog() {
     local log=$1
-    echo "Excerpt of [$SyncLogRootURL/`log_uri "$log"`]:"
+    echo "Excerpt of [`log_uri "$log"`]:"
     echo "-->8--"
-    if [ `zless "$log" 2>/dev/null | wc -l || echo 0` -gt 20 ]; then
-        zless "$log" | head
-        echo "..."
-        zless "$log" | tail
-    else
-        zless "$log"
-    fi
+    excerpt "$log"
     echo "--8<--"
 }
 

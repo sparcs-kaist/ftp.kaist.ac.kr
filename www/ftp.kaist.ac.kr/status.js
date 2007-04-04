@@ -146,7 +146,6 @@ function update(http_request) {
             for (var i=0; i<pkgs.length; i++) {
                 var pkg = pkgs[i];
                 id = pkg.getAttribute('id');
-                var refprefix = '/sync/';
                 var form = formfor('pkg-'+id);
                 if (! form)
                     continue;
@@ -173,7 +172,7 @@ function update(http_request) {
                     }
                     var syncref;
                     if (syncref = sync.getAttribute('ref'))
-                        form.syncref.href = refprefix + syncref;
+                        form.syncref.href = syncref;
                     else
                         form.syncref.href = null;
                     // failures
@@ -183,7 +182,7 @@ function update(http_request) {
                         form.syncfailures.style.display = 'inline';
                         var failref;
                         if (failref = fail.getAttribute('ref'))
-                            form.syncfailures.href = refprefix + failref;
+                            form.syncfailures.href = failref;
                     } else {
                         form.syncfailures.style.display = 'none';
                     }
@@ -197,7 +196,7 @@ function update(http_request) {
                     if (form.status) {
                         var statusref;
                         if (statusref = status.getAttribute('ref'))
-                            form.status.href = refprefix + statusref;
+                            form.status.href = statusref;
                         else
                             form.status.href = null;
                     }

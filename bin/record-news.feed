@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# record-news.feed -- Record events to news.feed
+# 
+# Created: 2007-04-04
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+HOSTNAME=`hostname -f`
+feed=news.feed
+keep=P1D
+
+. /mirror/lib/pkg.sh
+running_as_mirror_admin "$@"
+
+home=`pkg_uri $pkg`
+
+# create feed if not exists
+[ -f "$feed" ] ||
+    allim "$feed" new "$home/$feed" "$name mirror on $HOSTNAME" "$home" <<<""
+
+event=$1
+case "$event" in
+    sync-*) shift # synchronization
+    log=$1
+    case "${event#sync-}" in
+        success) title="$name updated" ;;
+        failure) title="$name update failed" ;;
+        *)       title="$name ${event#sync-}" ;;
+    esac
+    { echo "<pre>"; excerpt "$log" 20; echo "</pre>"; } |
+        allim "$feed" add "$title" "`log_uri "$log"`"
+    # TODO propagate to central news.feed
+    ;;
+    "") # usage
+    usage "
+Usage:
+  `basename "$0"` <event> [<argument> ...]
+Events:
+  sync <log>
+"
+    ;;
+    # TODO: more events?
+    *)
+    usage "$event: Unknown type of event"
+    ;;
+esac

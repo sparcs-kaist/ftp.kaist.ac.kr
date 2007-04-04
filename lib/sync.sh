@@ -142,11 +142,12 @@ finish() {
         failure)
         # raise need-to-report flag
         touch failed.needsreport
-        # TODO: record failure to RSS
         ;;
-        success) # TODO: record success to RSS
+        success)
         ;;
     esac
+    #  record to RSS
+    record-news.feed sync-$result $log.gz
     release_lock
     exit $exitcode
 }
