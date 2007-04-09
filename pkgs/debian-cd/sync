@@ -24,10 +24,13 @@ rsync -avH --delete --delete-after --timeout 7200 \
 # image generation
 currentVersion=`readlink data/current`
 versionDir=data/$currentVersion
-tmpDirBase=/mirror/ftp/.tmp
+tmpDirBase=/mirror/ftp/.tmp/debian-cd
 jigdoConf=$tmpDirBase/jigdo-mirror.conf
+rm -rf $tmpDirBase
+mkdir -p $tmpDirBase
 for arch in $versionDir/*/; do
     a=`basename $arch`
+    [ -f data/project/build/$currentVersion/$a ] || continue
     sets=`cat data/project/build/$currentVersion/$a`
     for s in $sets; do
         jigdoDir=$PWD/data/$currentVersion/$a/jigdo-$s
