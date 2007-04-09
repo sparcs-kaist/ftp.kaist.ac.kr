@@ -8,8 +8,10 @@
 set -e
 
 HOSTNAME=`hostname -f`
+pkgsfeed=../news.feed
+pkgskeep=P3D
 feed=news.feed
-keep=P1D
+keep=P7D
 
 . /mirror/lib/pkg.sh
 running_as_mirror_admin "$@"
@@ -17,8 +19,14 @@ running_as_mirror_admin "$@"
 home=`pkg_uri $pkg`
 
 # create feed if not exists
+[ -f "$pkgsfeed" ] ||
+    allim "$pkgsfeed" new "$PkgsRootURL" \
+        "News for mirrors on $HOSTNAME" "$StatusURL" duration=$pkgskeep <<<""
+
+# create feed if not exists
 [ -f "$feed" ] ||
-    allim "$feed" new "$home/$feed" "$name mirror on $HOSTNAME" "$home" <<<""
+    allim "$feed" new "$home/$feed" \
+        "$name mirror on $HOSTNAME" "$home" duration=$keep <<<""
 
 event=$1
 case "$event" in
@@ -29,10 +37,16 @@ case "$event" in
         failure) title="$name update failed" ;;
         *)       title="$name ${event#sync-}" ;;
     esac
-    { echo "<pre>"; excerpt "$log" 20; echo "</pre>"; } |
-        allim "$feed" add "$title" "`log_uri "$log"`"
-    # TODO propagate to central news.feed
+    uri=`log_uri "$log"`
+    desc=`mktemp /tmp/record-news.feed.XXXXXX`
+    trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
+    { echo "<pre>"; excerpt "$log" 20; echo "</pre>"; } >$desc
+    # record feed items
+    for f in "$feed" "$pkgsfeed"; do
+        allim "$f" add "$title" "$uri" <$desc
+    done
     ;;
+
     "") # usage
     usage "
 Usage:

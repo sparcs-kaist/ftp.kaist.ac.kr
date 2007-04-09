@@ -12,6 +12,7 @@ FTPRootPath=/mirror/ftp/
 FTPRootURL=ftp://ftp.kaist.ac.kr/
 BaseURL=http://ftp.kaist.ac.kr
 StatusURL=$BaseURL/status
+PkgsRootURL=$BaseURL/pkgs
 SyncLogRootURL=$BaseURL/sync
 HTTPRootURL=$BaseURL/pub/
 
