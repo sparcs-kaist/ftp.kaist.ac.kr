@@ -2,13 +2,13 @@
   Welcome to KAIST File Archive, ftp.kaist.ac.kr!
    (AKA ftp.kr.debian.org, kr.archive.ubuntu.com, ftp2.kr.freebsd.org)
   We provide mirrors of open source softwares, e.g. Debian, *BSDs,
-  Mozilla, Apache, etc. and publically available files and softwares.
+  Mozilla, Apache, etc. and publically available files and software.
   Various access methods are available: FTP, HTTP, Rsync or CVSup.
 
   This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-  A dual Dual Core Opteron 265(1.8GHz) box with 4GBs of main memory
-  and 2.6TB of RAID storage is used.  Hardware and network connectivity
-  are supported by KAIST and KT.  Service is operated by SPARCS.
+  Two machines with total 6-core x64 CPUs and 12GB of main memory are
+  used to keep our 6.5TB RAID storage online.  KAIST and KT sponsored
+  hardware and network connectivity.  SPARCS operates the whole service.
 
   Use entirely at your own risk -- no warranty is expressed or implied.
   * None of the service providers in any way whatsoever can be
@@ -20,8 +20,4 @@
 
   For more information about our archive,
   please visit: http://ftp.kaist.ac.kr/
-
-
-  NOTE: No IPv6 connection will be available for a while
-        due to some policy change of our network provider. (2006-01-17)
 

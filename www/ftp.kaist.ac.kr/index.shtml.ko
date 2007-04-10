@@ -28,9 +28,9 @@
     <li> <a href="http://ict.kaist.ac.kr/">한국과학기술원 정보통신팀</a>과
     <a href="http://www.kt.co.kr/">KT</a>가 하드웨어 및 전산망을 지원합니다.
     <ul style="font-size:0.8em;">
-        <li>2x2-way 1.8GHz x64 프로세서</li>
-        <li>4GB 메모리</li>
-        <li>2.6TB RAID</li>
+        <li>총 6개 코어 x64 프로세서</li>
+        <li>총 12GB 메모리</li>
+        <li>총 6.5TB RAID 스토리지</li>
         <li>Gigabit 이더넷</li>
     </ul>
     </li>
