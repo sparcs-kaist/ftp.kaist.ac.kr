@@ -28,11 +28,12 @@ EOF
 }
 trap usage ERR
 msg() { echo "$pkg: $@"; }
-err() {
+die() {
     local c=$1; shift
-    echo "$pkg: $@" >&2
+    echo "$pkg: $@"
     exit $c
 }
+err() { die "$@" >&2; }
 
 
 ## read package information
@@ -74,7 +75,7 @@ if sync_in_progress; then
         exec tail -f log
         ;;
 
-        *) err 4 "another sync in progress" ;;
+        *) die 4 "another sync in progress" ;;
     esac
 else
     case "$triggered" in
@@ -93,7 +94,7 @@ if [ "$triggered" = regularly ]; then
         desc="=`humaninterval $interval`+`humaninterval $penalty`(${failures} failures)"
     fi
     if [ $timepast -lt $delay ]; then
-        err 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
+        die 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
     else
         msg "old enough (age = `humaninterval $timepast` >= `humaninterval $delay`$desc)"
     fi
