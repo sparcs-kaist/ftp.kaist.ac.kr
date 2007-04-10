@@ -46,6 +46,7 @@ case "$triggered" in
     now|pushed) ;;
     regularly) [ -n "$frequency" ] || exit 6 ;;
     stop) ;;
+    watch) ;;
     *) usage ;;
 esac
 
@@ -56,25 +57,33 @@ running_as_mirror_admin "$@"
 shift
 export GETARGS="$@"
 
-## stop
-if [ "$triggered" = stop ]; then
-    if sync_in_progress; then
+
+## jobs to be/not to be done while sync_in_progress
+if sync_in_progress; then
+    case "$triggered" in
+        stop)
         pgrp=`cat lock.owner 2>/dev/null`
         msg "terminating PGID $pgrp"
         [ -n "$pgrp" ] && childs=`ps --no-heading -o pid -$pgrp` &&
         [ -n "$childs" ] && kill "$@" $childs &>/dev/null &&
         msg "terminated PID" $childs && exit 0
         exit 2
-    else
-        err 4 "no sync in progress"
-    fi
+        ;;
+
+        watch)
+        exec tail -f log
+        ;;
+
+        *) err 4 "another sync in progress" ;;
+    esac
+else
+    case "$triggered" in
+        now|pushed|regularly) ;;
+
+        *) err 4 "no sync in progress" ;;
+    esac
 fi
 
-## check no other sync is running
-if sync_in_progress; then
-    msg "another sync in progress"
-    exit 4
-fi
 
 ## check timestamp if regular sync
 compute_times # defines: timepast interval failures penalty delay remaining
@@ -84,8 +93,7 @@ if [ "$triggered" = regularly ]; then
         desc="=`humaninterval $interval`+`humaninterval $penalty`(${failures} failures)"
     fi
     if [ $timepast -lt $delay ]; then
-        msg "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
-        exit 8
+        err 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
     else
         msg "old enough (age = `humaninterval $timepast` >= `humaninterval $delay`$desc)"
     fi
