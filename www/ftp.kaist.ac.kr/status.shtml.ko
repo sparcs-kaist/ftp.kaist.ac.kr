@@ -1,4 +1,5 @@
 <!--#set var="id" value="status" -->
+<!--#set var="feedurl" value="http://ftp.kaist.ac.kr/pkgs/news.feed" -->
 <!--#set var="title" value="복사본 상태" -->
 <!--#include virtual="/include/head.shtml" -->
 

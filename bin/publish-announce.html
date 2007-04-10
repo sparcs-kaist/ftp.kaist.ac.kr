@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# publish-announce.html -- Publish announce.rss in HTML
+# publish-announce.html -- Publish announce.feed in HTML
 # 
 # Created: 2006-07-16
 # 
@@ -15,12 +15,12 @@ trap "rm $tmp" EXIT ERR HUP INT TERM
 chmod a+r $tmp
 
 set +e
-for rss in announce.rss*; do
-    html=.announce.html${rss#announce.rss}
-    [ $rss -nt $html ] || continue
+for feed in announce.feed*; do
+    html=.announce.html${feed#announce.feed}
+    [ $feed -nt $html ] || continue
     (
     set -e
-    allim $rss html-list >$tmp
+    allim $feed html-list >$tmp
     cp -f $tmp $html
     )
 done

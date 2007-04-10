@@ -6,10 +6,10 @@
     left: 23em; width: auto; height: 22em; overflow: auto;
     padding-right: 1em;">
 <h2 style="margin-top: 0.3em; margin-bottom: 0.3em;">공지사항 <a
-        href="announce.rss"><img src="feed-icon-24x24.png" alt="(RSS)"
+        href="announce.feed"><img src="feed-icon-24x24.png" alt="(RSS)"
         style="border:none; width:24px; height:24px;
         vertical-align:top;"/></a></h2>
-<!--#include file=".announce.html" -->
+<!--#include file=".announce.html.ko" -->
 </div>
 
 <div id="intro-pane" style="position: absolute;

@@ -73,6 +73,9 @@
     <script type="text/javascript" src="/status.js">;</script>
     <div id="pkgs">
         <div id="pkgstool">
+            <a href="/pkgs/news.feed"><img alt="[feed]"
+                    src="feed-icon-24x24.png"
+                    style="border:none; vertical-align:middle;"/></a>
             <select onchange="refreshRegularly(this.value);">
                 <option     value=""><xsl:value-of select="$labs[@name='refreshnow']"/></option>
                 <option   value="60"><xsl:value-of select="$labs[@name='refresh1min']"/></option>
@@ -104,7 +107,11 @@
 
 <xsl:template match="package">
     <div id="pkg-{@id}" class="pkg {status}">
-        <h3 class="pkgname"><xsl:value-of select="name"/></h3>
+        <h3 class="pkgname"><xsl:value-of select="name"/>
+            <xsl:text> </xsl:text>
+            <a href="/pkgs/{@id}/news.feed"><img alt="[feed]"
+                    src="feed-icon-12x12.png"
+                    style="border:none; vertical-align:top;"/></a></h3>
         <ul>
             <xsl:if test="status != 'original'">
                 <li><xsl:value-of select="$labs[@name='status']"/>:

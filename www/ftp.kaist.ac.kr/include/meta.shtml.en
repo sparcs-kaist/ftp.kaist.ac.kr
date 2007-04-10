@@ -8,3 +8,6 @@
 <!--#if expr="$expires" -->
 <meta http-equiv="Expires" content="<!--#echo var="expires" -->"/>
 <!--#endif -->
+<!--#if expr="! $feedurl" -->
+<!--#set var="feedurl" value="http://ftp.kaist.ac.kr/announce.feed" -->
+<!--#endif -->
