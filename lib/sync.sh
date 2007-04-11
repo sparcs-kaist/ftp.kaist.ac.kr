@@ -109,7 +109,7 @@ acquire_lock || exit 4
 # clean up last failure report flag
 rm -f failed.needsreport
 # create a new log
-log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.log
+log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.$pkg.log
 mkdir -p `dirname $log`
 : >$log
 ln -sf $log log
