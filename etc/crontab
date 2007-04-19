@@ -21,7 +21,7 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # clean up
 0 5	* * *	mirror	exec nice -n 10 expire-sync-logs
-0 4	* * *	root	exec nice -n 10 expire-tmp
+0 4	* * *	mirror	exec nice -n 10 expire-tmp
 
 # reboot
 @reboot 	mirror	publish-pkgstat.xml; publish-pkgindex
