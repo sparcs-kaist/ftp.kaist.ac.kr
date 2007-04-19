@@ -86,7 +86,7 @@ function init() {
             frame           : box,
             source          : field(box, 'source'),
             frequency       : field(box, 'frequency'),
-            box             : field(box, 'box'),
+            //box             : field(box, 'box'),
             sync            : field(box, 'sync'),
             syncref         : field(box, 'syncref'),
             syncage         : field(box, 'syncage'),
