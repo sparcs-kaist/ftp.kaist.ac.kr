@@ -6,22 +6,22 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */2 *	* * *	root	exec watch-services
 
 # keep in sync
-*/3 *	* * *	mirror	exec nice -n  5 maintain-sync >/dev/null
+*/3 *	* * *	mirror	exec nice -n  2 maintain-sync >/dev/null
 0 16	* * *	mirror	exec check-anomalies
 
 # update data to show
-* *	* * *	mirror	exec nice -n  2 publish-pkgstat.xml
+* *	* * *	mirror	exec nice -n  3 publish-pkgstat.xml
 0 *	* * *	mirror	exec nice -n 10 publish-pkgindex
-31 *	* * *	mirror	exec nice -n 10 publish-announce.html
-51 *	* * *	mirror	exec nice -n 15 analyze-usages
-47 */3	* * *	mirror	exec nice -n  7 update-ls-lR
-0 0	* * *	root	exec nice -n 10 update-rsyncd.conf
-11 */6  * * *	mirror	exec nice -n 15 measure-sizes
-17 */6  * * *	mirror	exec nice -n 10 update-size.graphs
+5 *	* * *	mirror	exec nice -n 10 publish-announce.html
+51 9	* * *	mirror	exec nice -n 15 analyze-usages
+17 */5	* * *	mirror	exec nice -n  1 update-ls-lR
+0 0     * * *	root	exec nice -n 10 update-rsyncd.conf
+31 */5 * * *	mirror	exec nice -n 15 measure-sizes >/dev/null
+41 */5 * * *	mirror	exec nice -n 10 update-size.graphs
 
 # clean up
-0 5	* * *	mirror	exec nice -n 10 expire-sync-logs
-0 4	* * *	mirror	exec nice -n 10 expire-tmp
+13 7	* * *	mirror	exec nice -n  1 expire-sync-logs
+23 8	* * *	mirror	exec nice -n  1 expire-tmp
 
 # reboot
 @reboot 	mirror	publish-pkgstat.xml; publish-pkgindex

@@ -25,7 +25,7 @@ sub collect {
                 # determine which package
                 my $path = "$Root$1";
                 $path =~ s#/\.$##;
-                if (not defined $pfx or $path !~ m#^$pfx(/|$)#) { # at another package
+                if (not defined $pkg or $path !~ m#^$pfx(/|$)#) { # at another package
                     my $found = 0;
                     foreach (keys %Prefixes) {
                         $pkg = $_;
@@ -62,6 +62,10 @@ sub collect {
     }
 }
 
+sub run {
+    print @_, "\n";
+    system @_;
+}
 ###############################################################################
 
 $ENV{LC_ALL} = "C";
@@ -97,7 +101,7 @@ for my $pkg (keys %Prefixes) {
 for my $pkg (keys %InLSLR) {
     my $rrd = "$pkg/du.rrd";
     next unless -f $rrd;
-    system "rrdupdate $rrd -t du:dirs:files N:$DU->{$pkg}:$DIRS->{$pkg}:$FILES->{$pkg}";
+    run("rrdupdate $rrd -t du:dirs:files N:$DU->{$pkg}:$DIRS->{$pkg}:$FILES->{$pkg}");
 }
 
 # record df
@@ -113,4 +117,4 @@ foreach (split "\n", `df -P -k $fsargs | tail -n +2`) {
     $available += $a;
 }
 my $rrd = "/mirror/www/ftp.kaist.ac.kr/size/df.rrd";
-system "rrdupdate $rrd -t blocks:used:available N:$blocks:$used:$available";
+run("rrdupdate $rrd -t blocks:used:available N:$blocks:$used:$available");
