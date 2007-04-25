@@ -1,1 +1,2 @@
 list	http://fedora.redhat.com/Download/mirrors.html
+new list	https://hosted.fedoraproject.org/projects/mirrormanager/browser/client/report_mirror
