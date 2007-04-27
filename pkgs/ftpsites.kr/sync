@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+(
+cd data
+wget $source \
+    --no-verbose --timestamping --continue --random-wait \
+    --page-requisites --convert-links \
+    --recursive --relative --no-parent --no-directories \
+    
+)
