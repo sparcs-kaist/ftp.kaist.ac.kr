@@ -25,16 +25,20 @@ graph() {
 
 defs() {
     ( . /mirror/lib/pkg.sh
-    echo "DEF:du_$pkg=/mirror/pkgs/$pkg/du.rrd:du:AVERAGE:$@"
-    echo "DEF:dirs_$pkg=/mirror/pkgs/$pkg/du.rrd:dirs:AVERAGE:$@"
-    echo "DEF:files_$pkg=/mirror/pkgs/$pkg/du.rrd:files:AVERAGE:$@"
+    if [ -r du.rrd ]; then
+        echo "DEF:du_$pkg=/mirror/pkgs/$pkg/du.rrd:du:AVERAGE:$@"
+        echo "DEF:dirs_$pkg=/mirror/pkgs/$pkg/du.rrd:dirs:AVERAGE:$@"
+        echo "DEF:files_$pkg=/mirror/pkgs/$pkg/du.rrd:files:AVERAGE:$@"
+    fi
     )
 }
 
 graphdu() {
     ( . /mirror/lib/pkg.sh
-    echo "CDEF:du_bytes_$pkg=du_$pkg,1024,*"
-    echo "AREA:du_bytes_$pkg#$color:$name:STACK"
+    if [ -r du.rrd ]; then
+        echo "CDEF:du_bytes_$pkg=du_$pkg,1024,*"
+        echo "AREA:du_bytes_$pkg#$color:$name:STACK"
+    fi
     )
 }
 
