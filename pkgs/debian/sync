@@ -12,22 +12,21 @@ set +x
 . debian-ftpsync.conf
 export RSYNC_PASSWORD
 source=${source/:\/\//:\/\/$RSYNC_USER@}
+source=${source%/}
 set -x
 
 # first, get new debs (not touching removed ones or indices)
 rsync --recursive --times --links --hard-links \
-      --exclude "Packages*" --exclude "Sources*" \
-      --exclude "Release*" --exclude "ls-lR*" \
       --verbose --stats \
-      $source data/
+      $source/pool/ data/pool/
 
 # then, synchronize indices and everything else
-rsync --recursive --times --links --hard-links --max-delete=40000 \
-      --delete --delete-after --delay-updates\
+rsync --recursive --times --links --hard-links \
+      --delete --delete-after --delay-updates \
       --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
       --exclude "project/trace/${HOSTNAME}" \
       --verbose --stats \
-      $source data/
+      $source/ data/
 
 # now, place a timestamp
 date -u >data/project/trace/${HOSTNAME}
