@@ -16,33 +16,33 @@ running_as_mirror_admin "$@"
 ReportFailedSyncsAfter=`secondsof $ReportFailedSyncsAfter`
 ReportLongSyncsEvery=`secondsof $ReportLongSyncsEvery`
 HOSTNAME=`hostname -f`
-items=()
-item() { items=("${items[@]}" "$@"); }
+
+tmp=`mktemp -d /tmp/check-anomalies.XXXXXX`
+report=$tmp/report
+items=$tmp/items
+item() { echo "$@" >>$items; }
 
 send_report() {
     local exitcode=$?
     trap "exit $exitcode" EXIT ERR HUP INT TERM
     # report anything exists
-    if [ -s $report -o ${#items[@]} -gt 0 ]; then
+    if [ -s $report -o -s $items ]; then
         {
             echo "= Summary ="
-            local i
-            for i in "${items[@]}"; do
-                echo "* $i"
-            done
+            cat $items 2>/dev/null | xargs printf "* %s\n"
             echo "Check the [$StatusURL status page] for current data"
             echo
             echo "= Log ="
             cat $report
         } | mail -s "$HOSTNAME STATUS ALERT" "$MAILTO"
     fi
-    rm -f $report
+    rm -rf $tmp
     exit $exitcode
 }
-report=`mktemp /tmp/check-anomalies.XXXXXX`
 trap send_report EXIT ERR HUP INT TERM
 
 check() {
+    (
     . /mirror/lib/pkg.sh
     local timepast interval failures penalty delay
     compute_times # defines: timepast interval failures penalty delay remaining
@@ -77,6 +77,7 @@ check() {
     fi
     # TODO: simply too old packages
     # TODO: more anomalies?
+    )
 }
 
 quotelog() {

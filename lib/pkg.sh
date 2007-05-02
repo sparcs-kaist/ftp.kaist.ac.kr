@@ -14,7 +14,6 @@ LockValidDays=10 #days
 if ! type usage >/dev/null 2>&1; then
     usage() {
         ! [ -t 1 ] || echo "`basename "$0"`: $@"
-        exit 2
     }
 fi
 
