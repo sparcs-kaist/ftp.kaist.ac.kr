@@ -28,12 +28,17 @@ send_report() {
     # report anything exists
     if [ -s $report -o -s $items ]; then
         {
-            echo "= Summary ="
-            cat $items 2>/dev/null | xargs printf "* %s\n"
-            echo "Check the [$StatusURL status page] for current data"
-            echo
-            echo "= Log ="
-            cat $report
+            if [ -s $items ]; then
+                echo "= Summary ="
+                cat $items 2>/dev/null |
+                while read; do printf "* %s\n" "$REPLY"; done
+                echo "Check the [$StatusURL status page] for current data"
+                echo
+            fi
+            if [ -s $report ]; then
+                echo "= Log ="
+                cat $report
+            fi
         } | mail -s "$HOSTNAME STATUS ALERT" "$MAILTO"
     fi
     rm -rf $tmp
