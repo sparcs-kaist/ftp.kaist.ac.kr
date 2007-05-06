@@ -10,7 +10,7 @@
 (set -x
 # TODO: how about --delay-updates? --partial-dir?
 exec rsync -rtlHv --stats --temp-dir=/mirror/ftp/.tmp \
-    --delete-after \
+    --delete-after --exclude='.*.??????' \
     "$@"
 )
 
