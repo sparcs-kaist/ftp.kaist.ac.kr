@@ -105,7 +105,7 @@ for my $pkg (keys %InLSLR) {
 }
 
 # record df
-our @FS = qw(/mnt /mnt/ftp2);
+our @FS = qw(/net/ftp/srv /net/ftp2/srv);
 my $blocks = 0;
 my $used = 0;
 my $available = 0;

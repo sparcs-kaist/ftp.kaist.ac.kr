@@ -8,7 +8,7 @@
 
 HOSTNAME=`hostname -f`
 
-filesystems=(/mnt /mnt/ftp2)
+filesystems=(/net/ftp/srv /net/ftp2/srv)
 
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
