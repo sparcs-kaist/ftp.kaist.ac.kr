@@ -17,7 +17,7 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 17 */5	* * *	mirror	exec nice -n  1 update-ls-lR
 0 0     * * *	root	exec nice -n 10 update-rsyncd.conf
 31 */5 * * *	mirror	exec nice -n 15 measure-sizes >/dev/null
-41 */5 * * *	mirror	exec nice -n 10 update-size.graphs
+41 */5 * * *	mirror	exec nice -n 10 update-size.graphs --lazy
 
 # clean up
 13 7	* * *	mirror	exec nice -n  1 expire-sync-logs

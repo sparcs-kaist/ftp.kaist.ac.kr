@@ -114,6 +114,13 @@ cat <<EOF
 <status${successref:+ ref='$successref'}${lastupdated:+ lastupdated='$lastupdated'}>$status</status>
 EOF
 
+if [ -f du.rrd ]; then
+    # TODO: actual size info using rrdtool fetch
+    cat <<EOF
+<size/>
+EOF
+fi
+
 echo "</package>"
 
 # vim:ft=sh

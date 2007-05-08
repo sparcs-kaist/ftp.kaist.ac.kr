@@ -19,7 +19,7 @@ graph() {
     while read; do
         defs=("${defs[@]}" "$REPLY")
     done
-    rrdtool graph --slope-mode --imgformat PNG --interlaced --lazy \
+    rrdtool graph --slope-mode --imgformat PNG --interlaced \
         --lower-limit 0 "$@" "${defs[@]}" >/dev/null
 }
 
@@ -43,6 +43,7 @@ graphdu() {
 }
 
 
+timestamp=`date +"%F %T %z"`
 cd /mirror/www/ftp.kaist.ac.kr/size
 {
     foreachpkg defs
@@ -53,10 +54,12 @@ cd /mirror/www/ftp.kaist.ac.kr/size
     echo "LINE2:df_bytes#ff0000"
     echo "CDEF:used_bytes=used,1024,*"
     echo "LINE:used_bytes#000000"
+    echo "COMMENT:\\\\n"
+    echo "COMMENT:${timestamp//:/\\\\:}\\\\r"
 } | \
 graph total.png --width 600 --height 400 \
     --title "Total disk usage of $HOSTNAME" \
-    --end now --start end-3m --base 1024 \
+    --end now --start end-1y --base 1024 \
     --upper-limit `{
             echo -n '('
             df -P -k "${filesystems[@]}" |
@@ -64,4 +67,24 @@ graph total.png --width 600 --height 400 \
             echo '0)*1024'
         } | bc` --rigid "$@"
 
-# TODO: more graphs for each package
+
+# individual graph for each package
+graphdu1() {
+    ( . /mirror/lib/pkg.sh
+    [ -r du.rrd ] || return
+    {
+        echo "DEF:du_$pkg=/mirror/pkgs/$pkg/du.rrd:du:AVERAGE"
+        echo "DEF:dirs_$pkg=/mirror/pkgs/$pkg/du.rrd:dirs:AVERAGE"
+        echo "DEF:files_$pkg=/mirror/pkgs/$pkg/du.rrd:files:AVERAGE"
+        echo "CDEF:du_bytes_$pkg=du_$pkg,1024,*"
+        echo "AREA:du_bytes_$pkg#$color::STACK"
+        echo "LINE:0#000000::STACK"
+        echo "COMMENT:${timestamp//:/\\\\:}\\\\r"
+    } |
+    graph du.png --width 400 --height 100 \
+        --title "Disk usage of $name" \
+        --end now --start end-1y --base 1024 \
+        --rigid "$@"
+    )
+}
+foreachpkg graphdu1 "$@"
