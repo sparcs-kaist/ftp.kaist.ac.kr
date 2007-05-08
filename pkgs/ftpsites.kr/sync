@@ -3,7 +3,7 @@
 (
 cd data
 wget $source \
-    --no-verbose --timestamping --continue --random-wait \
+    --no-verbose --timestamping --random-wait \
     --page-requisites --convert-links \
     --recursive --relative --no-parent --no-directories \
     
