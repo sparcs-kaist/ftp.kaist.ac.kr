@@ -99,7 +99,7 @@ for my $pkg (keys %Prefixes) {
     next if exists $InLSLR{$pkg};
     warn "$pkg ($Prefixes{$pkg}) not in ls-lR"
         if $Prefixes{$pkg} =~ m#^/mirror/ftp/#;
-    collect("", "ls -alR $Prefixes{$pkg} |");
+    collect("", "ls -AlR $Prefixes{$pkg} |");
 }
 
 # record data using rrdupdate
