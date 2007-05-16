@@ -8,7 +8,7 @@
 
 # named constants
 MirrorAdmin=mirror
-FTPRootPath=/mirror/ftp/
+FTPRootPath=/mirror/ftp/pub/
 FTPRootURL=ftp://ftp.kaist.ac.kr/
 BaseURL=http://ftp.kaist.ac.kr
 StatusURL=$BaseURL/status

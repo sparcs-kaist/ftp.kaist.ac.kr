@@ -24,7 +24,8 @@ sub collect {
             if ($line =~ /^(.*):$/) { # a new directory
                 # determine which package
                 my $path = "$Root$1";
-                $path =~ s#/\.$##;
+                $path =~ s#/\./#/#g;
+                $path =~ s#^\./|/\.$##;
                 if (not defined $pkg or $path !~ m#^$pfx(/|$)#) { # at another package
                     my $found = 0;
                     foreach (keys %Prefixes) {
@@ -33,11 +34,13 @@ sub collect {
                         if ($path =~ m#^$pfx(/|$)#) {
                             $found = 1;
                             $InLSLR{$pkg} = 1;
+#warn "$pkg\t$path";
                             last;
                         }
                     }
                     if (not $found) {
                         # listing belongs to some unknown package
+#warn "???\t$path";
                         $pkg = undef;
                     }
                 }
@@ -94,7 +97,9 @@ collect("/mirror/ftp/", "< /mirror/ftp/ls-lR");
 # collect ones not found from it
 for my $pkg (keys %Prefixes) {
     next if exists $InLSLR{$pkg};
-    collect("", "ls -lR $Prefixes{$pkg} |");
+    warn "$pkg ($Prefixes{$pkg}) not in ls-lR"
+        if $Prefixes{$pkg} =~ m#^/mirror/ftp/#;
+    collect("", "ls -alR $Prefixes{$pkg} |");
 }
 
 # record data using rrdupdate

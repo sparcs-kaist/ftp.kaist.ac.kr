@@ -21,7 +21,7 @@ export LC_ALL LANG LANGUAGE
 lslR=`mktemp .tmp/ls-lR.XXXXXX`
 trap "rm -f $lslR $lslR.gz" ERR HUP INT TERM
 
-ls -lR * >$lslR
+ls -alR >$lslR
 chmod a+r $lslR
 gzip <$lslR >$lslR.gz
 mv $lslR ls-lR
