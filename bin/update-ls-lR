@@ -11,7 +11,7 @@ set -e
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
-cd $FTPRootPath
+cd /mirror/ftp
 
 LC_ALL=C
 LANG=$LC_ALL
