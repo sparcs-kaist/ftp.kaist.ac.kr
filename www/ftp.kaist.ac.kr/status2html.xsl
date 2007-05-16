@@ -90,12 +90,12 @@
                     style="text-decoration:underline;">r</sub></button>
         </div>
         <div id="pkgsidx">
-            <xsl:apply-templates select="package" mode="index">
+            <xsl:apply-templates select="package[not(hidden)]" mode="index">
                 <xsl:sort select="translate(name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:apply-templates>
         </div>
         <div id="pkgsinfo">
-            <xsl:apply-templates select="package">
+            <xsl:apply-templates select="package[not(hidden)]">
                 <xsl:sort select="translate(name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:apply-templates>
         </div>

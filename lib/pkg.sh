@@ -43,6 +43,11 @@ in_a_package() {
         usage "$pkg: no source defined and not original"
         false
     fi
+    # check visibility
+    visible=true
+    if [ -e HIDDEN ]; then
+        visible=false
+    fi
     # color (for graphs)
     if [ -f color ]; then
         color=`cat color`

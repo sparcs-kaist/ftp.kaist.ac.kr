@@ -75,6 +75,9 @@ urlpath=${datapath#$FTPRootPath}
 echo "<package id='$pkg'>"
 
 if $full; then
+    # visibility
+    $visible || echo "<hidden/>"
+
     # name
     echo "<name>${name:-$pkg}</name>"
 
