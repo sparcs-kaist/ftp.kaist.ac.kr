@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# update-ftproot -- /mirror/ftp/ symlink manager
+# 
+# Created: 2007-06-18
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+cd /mirror/ftp
+
+# remove stale links
+for l in *; do
+    [ -L "$l" ] || continue
+    p=`readlink "$l"`
+    case "$p" in
+        pub/*)
+        [ -e "$p" ] || rm -vf "$l"
+        ;;
+    esac
+done
+
+# create new links
+for d in pub/*; do
+    [ -d "$d" ] || continue
+    n=`basename "$d"`
+    ! [ -L "$n" ] || [ "$d" != "`readlink "$n"`" ] || continue
+    ln -vsfn "$d" "$n"
+done
