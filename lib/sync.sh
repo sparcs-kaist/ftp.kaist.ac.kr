@@ -118,7 +118,8 @@ if [ -t 1 ]; then
     tail -f $log &
     tailpid=$!
 fi
-exec >>$log 2>&1
+# backup stdout/err fd's and redirect everything to log
+exec 3>&1- 4>&2-  >>$log 2>&1
 
 finish() {
     trap '' EXIT ERR INT HUP TERM
@@ -141,6 +142,8 @@ finish() {
         kill $tailpid 2>/dev/null
         wait $tailpid
     fi
+    # restore stdout/err
+    exec >&3- 2>&4-
     # save log
     #  compress log
     gzip -f $log
