@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
 get $source
+./report_mirror -c report_mirror.conf
