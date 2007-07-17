@@ -6,10 +6,32 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 . /mirror/lib/geoul.sh
-running_as_mirror_admin
+running_as_mirror_admin "$@"
+
+# parse arguments
+force=false
+while getopts "f" o; do
+    case $o in
+        f) force=true ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+# first, check load average (5 minute)
+if ! $force; then
+    nomorethan=2 # tasks per cpu
+    loadavg=$(set -- `cat /proc/loadavg`; echo $2)
+    nrcpus=`grep -c '^processor[ 	]*:' /proc/cpuinfo`
+    if [ `bc <<<"${loadavg:-0} / ${nrcpus:-1}"` -ge $nomorethan ]; then
+        ! [ -t 1 ] ||
+        echo "load average too high: $loadavg / $nrcpus >= $nomorethan"
+        exit 8
+    fi
+fi
+
+# try sync for each package
 trysync() {
     [ -x sync ] && setsid $PWD/sync regularly &
 }
 foreachpkg trysync
-
 wait
