@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# get.cvsup -- CVSup driver
+# 
+# Created: 2007-07-17
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# parse arguments
+url=$1; shift
+data=$1; shift
+host=${url#cvsup://}
+host=${host%%/*}
+
+# making sure that cvsup runs without -s flag once a day
+sflag=-s
+day=`date +%d`
+if ! [ -e day ] || [ `cat day` != $day ]; then
+    sflag=
+fi
+
+# generate supfile with arguments over stdin
+supfile=$PWD/supfile
+{
+    echo "*default delete use-rel-suffix umask=002"
+    cat
+} >$supfile
+
+# run cvsup
+if cvsup $sflag -g -L 2 -r 0 -h "$host" -b "$data" -c scan "$supfile" "$@"; then
+    echo $day >day
+fi

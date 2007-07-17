@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# update symlinks under prefixes/ and scan/
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2007-07-17
+cd "`dirname "$0"`"
+mkdir -p prefixes scan
+for d in {FreeBSD,NetBSD,OpenBSD}/{prefixes,scan}; do
+    [ -d $d ] || continue
+    for j in $d/*; do
+        ln -vsfn ../$j ${j#*/}
+    done
+done

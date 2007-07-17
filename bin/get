@@ -12,7 +12,7 @@ proto=${url%%://*}
 driver=/mirror/bin/get."$proto"
 
 if [ -x "$driver" ]; then
-    exec "$driver" "$url" data/ "$@" $GETARGS
+    exec "$driver" "$url" "$PWD/data/" "$@" $GETARGS
 else
     echo "get: no driver available for $url" >&2
     exit 64

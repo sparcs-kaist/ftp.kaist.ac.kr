@@ -31,7 +31,7 @@ start() {
     chown $USER:$GROUP $LOG
     chroot $ROOT sudo -H -u $USER $DAEMON \
     -C 30 -l $LOG -b /mirror/cvsup \
-    -s sup -c sup-freebsd:sup-netbsd:sup-openbsd
+    -s scan -c sup-freebsd:sup-netbsd:sup-openbsd
 }
 
 fullstop() {

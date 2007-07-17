@@ -1,20 +1,10 @@
 #!/usr/bin/env bash
-# run-cvsup -- run CVSup with given supfile
+# run-cvsup -- CVSup wrapper for amd64
 # 
 # Created: 2006-01-26
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
-set -e
 
-sup=$PWD/$1
-
-# making sure that cvsup runs without -s flag once a day
-sflag=-s
-day=`date +%d`
-if ! [ -e day ] || [ `cat day` != $day ]; then
-    sflag=
-fi
-
-sudo chroot /cvsup sudo -H -u mirror \
-cvsup $sflag -g -L 2 -r 0 "$sup" && echo $day >day
+exec sudo chroot /cvsup sudo -H -u $USER \
+cvsup "$@"
