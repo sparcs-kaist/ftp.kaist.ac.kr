@@ -159,6 +159,12 @@
                 </li>
             </xsl:if>
 
+            <xsl:if test="note">
+                <li>
+                    <pre class="pkgnote"><xsl:value-of select="note"/></pre>
+                </li>
+            </xsl:if>
+
             <xsl:if test="link">
                 <li><xsl:value-of select="$labs[@name='links']"/>:
                     <ul class="pkglinks">
