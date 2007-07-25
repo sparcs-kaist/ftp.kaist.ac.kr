@@ -57,12 +57,6 @@ in_a_package() {
     fi
 }
 
-mtime() {
-    local f=$1
-    # XXX: works on GNU only :-|
-    local t=`date -r "$f" +%s 2>/dev/null || echo 0`
-    echo ${t:-0}
-}
 compute_times() {
     lasttime=`mtime timestamp`
     timepast=$((`now` - $lasttime))

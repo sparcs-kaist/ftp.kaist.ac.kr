@@ -148,7 +148,7 @@ finish() {
     #  compress log
     gzip -f $log
     ln -sf $log.gz .$result.log.gz
-    rm -f log
+    rm -f log log.*
     #  mark success/failure
     case "$result" in
         failure)

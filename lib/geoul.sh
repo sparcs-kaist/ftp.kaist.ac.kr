@@ -36,6 +36,12 @@ running_as_mirror_admin() {
 now() {
     date "$@" +%s
 }
+mtime() {
+    local f=$1
+    # XXX: works on GNU only :-|
+    local t=`date -r "$f" +%s 2>/dev/null || echo 0`
+    echo ${t:-0}
+}
 
 # ISO8601:2000 date format
 isodate() {

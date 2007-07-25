@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# watch-syncs -- Watch running syncs and stop overly inactive ones
+# 
+# Created: 2007-07-19
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. /mirror/lib/geoul.sh
+
+StopSyncsInactiveFor=${SyncStopInactiveFor:-43200}
+
+sync_inactive_for() {
+    local activity=`head -1 log; stat -L -c "%Y %s" log`
+    if [ -f log.monitor ] && [ "`cat log.monitor`" = "$activity" ]; then
+        echo $((`now` - `mtime log.monitor`))
+    else
+        echo "$activity" >log.monitor
+        echo 0
+    fi
+}
+
+watch() {
+    (
+    . /mirror/lib/pkg.sh
+    if sync_in_progress; then
+        [ `sync_inactive_for` -lt $StopSyncsInactiveFor ] ||
+        ./sync stop "due to no activity"
+    fi
+    )
+}
+
+foreachpkg watch
