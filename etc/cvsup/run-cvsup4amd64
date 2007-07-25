@@ -6,5 +6,5 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-exec sudo chroot /cvsup sudo -H -u $USER -- \
+exec sudo chroot /cvsup sudo -u ${USER:-`whoami`} -H -- \
 cvsup "$@"
