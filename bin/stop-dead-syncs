@@ -7,7 +7,7 @@
 # (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 . /mirror/lib/geoul.sh
 
-StopSyncsInactiveFor=${SyncStopInactiveFor:-43200}
+StopSyncsInactiveFor=${SyncStopInactiveFor:-$((3600*48))}
 
 sync_inactive_for() {
     local activity=`head -1 log; stat -L -c "%Y %s" log`

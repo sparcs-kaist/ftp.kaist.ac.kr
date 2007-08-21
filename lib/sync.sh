@@ -45,7 +45,10 @@ cd "$(dirname "$0")"
 triggered=$1
 case "$triggered" in
     now|pushed) ;;
-    regularly) [ -n "$frequency" ] || exit 6 ;;
+    regularly)
+    [ -n "$frequency" ] || exit 6
+    system_not_degraded
+    ;;
     stop) ;;
     watch) ;;
     *) usage ;;
@@ -154,12 +157,14 @@ finish() {
         failure)
         # raise need-to-report flag
         touch failed.needsreport
+        # TODO: check sources, switch sources
         ;;
         success)
         ;;
     esac
     #  record to RSS
     record-news.feed sync-$result $log.gz
+    #  TODO record-sync-cost using `collect-sync-cost $log.gz`
     release_lock
     exit $exitcode
 }

@@ -32,6 +32,16 @@ running_as_mirror_admin() {
     [ `whoami` = $MirrorAdmin ] || exec sudo -H -u $MirrorAdmin "$0" "$@"
 }
 
+# check nosync
+system_not_degraded() {
+    if [ -e /mirror/etc/noupdate ]; then
+        echo "/mirror/etc/noupdate: system in degraded mode" >&2
+        exit 36
+    else
+        true
+    fi
+}
+
 # for readability
 now() {
     date "$@" +%s

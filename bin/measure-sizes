@@ -73,6 +73,12 @@ sub run {
 
 $ENV{LC_ALL} = "C";
 
+# check nosync
+if (-e "/mirror/etc/noupdate") {
+    print STDERR "/mirror/etc/noupdate: system in degraded mode";
+    exit 36
+}
+
 our $PWD = "/mirror/pkgs";
 chdir $PWD;
 

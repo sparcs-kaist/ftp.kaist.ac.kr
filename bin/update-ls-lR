@@ -9,8 +9,8 @@
 set -e
 
 . /mirror/lib/geoul.sh
+system_not_degraded
 running_as_mirror_admin "$@"
-
 cd /mirror/ftp
 
 LC_ALL=C

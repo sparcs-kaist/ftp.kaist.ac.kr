@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# control-regular-tasks -- Stop or resume regular tasks
+#  
+# Created: 2007-08-22
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+Cmd=$1; shift
+
+case "$Cmd" in
+    suspend)
+    sudo touch /mirror/etc/noupdate
+    ;;
+
+    stop)
+    $0 suspend
+    # XXX: duplicate from restart-services
+    # stop active syncs
+    for l in /mirror/pkgs/*/lock; do
+        [ -e $l ] || continue
+        # TODO: only stop regularly invoked syncs
+        ${l%lock}sync stop
+    done
+    ;;
+
+    resume)
+    noupdate=/mirror/etc/noupdate
+    while [ -L "$noupdate" ]; do
+        noupdate=`readlink "$noupdate"`
+    done
+    sudo rm -f "$noupdate"
+    ;;
+
+    *)
+    cat <<USAGE
+Usage:
+  $0 suspend
+    creates /mirror/etc/noupdate to prevent from starting regular syncs
+
+  $0 stop
+    stops currently running regular syncs and suspends all future ones
+
+  $0 resume
+    resumes regular syncs
+USAGE
+    ;;
+esac
