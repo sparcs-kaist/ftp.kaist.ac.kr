@@ -9,6 +9,7 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
 . /mirror/lib/geoul.sh
+system_not_degraded
 running_as_mirror_admin "$@"
 
 HOSTNAME=`hostname -f`
