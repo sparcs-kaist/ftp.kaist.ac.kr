@@ -35,7 +35,9 @@ running_as_mirror_admin() {
 # check nosync
 system_not_degraded() {
     if [ -e /mirror/etc/noupdate ]; then
-        echo "/mirror/etc/noupdate: system in degraded mode" >&2
+        if [ -t 1 ]; then
+            echo "/mirror/etc/noupdate: system in degraded mode"
+        fi
         exit 36
     else
         true
