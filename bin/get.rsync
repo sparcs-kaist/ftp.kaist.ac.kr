@@ -9,9 +9,9 @@
 # simply run rsync
 (set -x
 # TODO: how about --delay-updates? --partial-dir?
-exec rsync -rtlH --no-perms --chmod=a+rX \
+exec rsync -rtlH --no-perms --chmod=a+rX,ug+w \
     --delete-after --delay-updates \
-    --temp-dir=/mirror/ftp/.tmp --exclude='.*.??????' \
+    --temp-dir=/mirror/ftp/pub/.tmp --exclude='.*.??????' \
     --verbose --stats \
     "$@"
 )
