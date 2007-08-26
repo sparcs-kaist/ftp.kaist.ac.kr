@@ -108,7 +108,8 @@ sync_in_progress() { needs_lock
     # lock exists
     [ -e "$lock" ]
     # the owner process is still alive
-    ps -p "`cat lock.owner 2>/dev/null`" &>/dev/null
+    # FIXME: this works only on a single host configuration :(
+    # FIXME: ps -p "`cat lock.owner 2>/dev/null`" &>/dev/null
 }
 
 acquire_lock() { needs_lock
