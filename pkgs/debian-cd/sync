@@ -24,7 +24,7 @@ rsync -rtlHv --stats --delete --delete-after --timeout 7200 \
 # image generation
 currentVersion=`readlink data/current`
 versionDir=data/$currentVersion
-tmpDirBase=/mirror/ftp/.tmp/debian-cd
+tmpDirBase=/mirror/ftp/pub/.tmp/debian-cd
 jigdoConf=$tmpDirBase/jigdo-mirror.conf
 rm -rf $tmpDirBase
 mkdir -p $tmpDirBase

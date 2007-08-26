@@ -11,7 +11,7 @@ days=15
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
-cd /mirror/ftp/.tmp
+cd /mirror/ftp/pub/.tmp
 
 # remove old temporary files
 find . -mtime +$days -exec rm -rf {} \;
