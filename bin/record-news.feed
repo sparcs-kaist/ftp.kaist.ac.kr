@@ -9,6 +9,7 @@ set -e
 
 HOSTNAME=`hostname -f`
 pkgsfeed=../news.feed
+problemsfeed=../problems.feed
 pkgskeep=P3D
 feed=news.feed
 keep=P7D
@@ -32,10 +33,11 @@ event=$1
 case "$event" in
     sync-*) shift # synchronization
     log=$1
-    case "${event#sync-}" in
+    eventtype=${event#sync-}
+    case "$eventtype" in
         success) title="$name updated" ;;
-        failure) title="$name update failed" ;;
-        *)       title="$name ${event#sync-}" ;;
+        failure) title="$name failed" ;;
+        *)       title="$name $eventtype" ;;
     esac
     uri=`log_uri "$log"`
     desc=`mktemp /tmp/record-news.feed.XXXXXX`
@@ -45,6 +47,10 @@ case "$event" in
     for f in "$feed" "$pkgsfeed"; do
         allim "$f" add "$title" "$uri" <$desc
     done
+    # record failure to problems
+    if [ "$eventtype" = failure ]; then
+        allim "$problemsfeed" add "$title" "$uri" <$desc
+    fi
     ;;
 
     "") # usage
