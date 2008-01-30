@@ -62,18 +62,28 @@ shift
 export GETARGS="$@"
 
 
+## stop
+if [ "$triggered" = stop ]; then
+    if sync_in_progress; then
+        kill_lock_owner
+        die 0 "stopped running sync"
+    else
+        ruins=`find lock lock.* log log.* 2>/dev/null || true`
+        if [ -n "$ruins" ]; then
+            # TODO: clean up (as in finish)
+            rm -f log log.*
+            release_lock
+            die 0 "cleaned up dead sync"
+        else
+            die 4 "no sync in progress"
+        fi
+    fi
+fi
+
+
 ## jobs to be/not to be done while sync_in_progress
 if sync_in_progress; then
     case "$triggered" in
-        stop)
-        pgrp=`cat lock.owner 2>/dev/null`
-        msg "terminating PGID $pgrp"
-        [ -n "$pgrp" ] && childs=`ps --no-heading -o pid -$pgrp` &&
-        [ -n "$childs" ] && kill "$@" $childs &>/dev/null &&
-        msg "terminated PID" $childs && exit 0
-        exit 2
-        ;;
-
         watch)
         exec tail -f log
         ;;

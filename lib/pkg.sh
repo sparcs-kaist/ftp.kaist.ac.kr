@@ -100,6 +100,14 @@ needs_lock() { [ -z "$lock" ] || return 0
     fi
 }
 
+lock_owner() {
+    local owner=`cat lock.owner 2>/dev/null`
+    if [ -n "$owner" ]; then
+        echo owner=$owner
+        echo host=${owner%:*}
+        echo pgrp=${owner#*:}
+    fi
+}
 lock_expired() { needs_lock
     # detect stale (too old) lock files
     [ -z "`find "$lock" -mtime -$LockValidDays 2>/dev/null`" ]
@@ -108,24 +116,35 @@ sync_in_progress() { needs_lock
     # lock exists
     [ -e "$lock" ]
     # the owner process is still alive
-    # FIXME: this works only on a single host configuration :(
-    # FIXME: ps -p "`cat lock.owner 2>/dev/null`" &>/dev/null
+    local owner host pgrp
+    eval `lock_owner`
+    ssh $host ps -p $pgrp &>/dev/null
 }
 
 acquire_lock() { needs_lock
-    if sync_in_progress && lock_expired; then kill_lock; fi
+    if sync_in_progress && lock_expired; then kill_lock_owner; fi
     # using lockfile(1) included in procmail(1)
     lockfile -r3 "$lock"
     # record owner info
-    echo $$ >lock.owner
+    echo $HOSTNAME:$$ >lock.owner
 }
 release_lock() { needs_lock
     rm -f lock.owner lock.reported "$lock"
 }
-kill_lock() {
+kill_lock_owner() {
     # kill the lock owner and release it
-    local owner=`cat lock.owner 2>/dev/null`
-    [ -z "$owner" ] || kill -KILL $owner
+    local owner host pgrp
+    eval `lock_owner`
+    if [ -n "$owner" ]; then
+        # send TERM
+        ssh $host kill -TERM -$pgrp
+        sleep 2
+        # send KILL if still alive
+        while sync_in_progress; do
+            ssh $host kill -KILL -$pgrp
+            sleep 2
+        done
+    fi
     release_lock
 }
 
