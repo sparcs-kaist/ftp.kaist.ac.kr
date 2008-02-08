@@ -124,7 +124,7 @@ sync_in_progress() { needs_lock
 acquire_lock() { needs_lock
     if sync_in_progress && lock_expired; then kill_lock_owner; fi
     # using lockfile(1) included in procmail(1)
-    lockfile -r3 "$lock"
+    lockfile -r3 "$lock" 2>/dev/null
     # record owner info
     echo $HOSTNAME:$$ >lock.owner
 }
