@@ -115,7 +115,7 @@ fi
 
 
 ## lock this package
-acquire_lock || exit 4
+acquire_lock || die 4 "locked or another sync in progress"
 
 
 ## prepare logging and unlocking
