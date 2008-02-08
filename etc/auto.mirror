@@ -1,0 +1,39 @@
+# automounter map for ftp;  See autofs(5)
+# vim:ts=32
+
+.tmp		localhost:/srv/&
+
+debian		ftp:/srv/&
+ubuntu		ftp:/srv/&
+fedora		ftp:/srv/&
+mozilla		ftp:/srv/&
+MPlayer		ftp:/srv/&
+Apache		ftp:/srv/&
+CPAN		ftp:/srv/&
+gentoo		ftp:/srv/&
+cygwin		ftp:/srv/&
+hangul		ftp:/srv/&
+
+debian-amd64		ftp2:/srv/&
+debian-archive		ftp2:/srv/&
+debian-cd		ftp2:/srv/&
+ubuntu-cd		ftp2:/srv/&
+opensuse		ftp2:/srv/&
+gnu		ftp2:/srv/&
+gnu-alpha		ftp2:/srv/&
+FreeBSD		ftp2:/srv/&
+FreeBSD-kr		ftp2:/srv/&
+NetBSD		ftp2:/srv/&
+OpenBSD		ftp2:/srv/&
+sunfreeware		ftp2:/srv/&
+
+openoffice		ftp2:/srv/&
+eclipse		ftp2:/srv/&
+putty		ftp2:/srv/&
+vim		ftp2:/srv/&
+isc		ftp2:/srv/&
+tex-archive		ftp2:/srv/&
+
+rfc		ftp2:/srv/&
+internet-drafts		ftp2:/srv/&
+pdb		ftp2:/srv/&
