@@ -1,2 +1,1 @@
-#!/bin/sh
-exec /mirror/etc/allim/allim "$@"
+../contrib/allim/allim
