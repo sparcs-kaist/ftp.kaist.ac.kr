@@ -22,9 +22,8 @@ for l in /mirror/pkgs/*/lock; do
     [ -e $l ] || continue
     ${l%lock}sync stop
 done
-# stop autofs
-umount -l /mirror/ftp/pub{,/*}
-invoke-rc.d autofs stop
+# stop semiautofs
+invoke-rc.d semiautofs stop
 
 
 echo "Exit with code 0 when everything's ready go back"
@@ -32,8 +31,8 @@ bash
 
 
 echo starting...
-# start autofs
-invoke-rc.d autofs start
+# start semiautofs
+invoke-rc.d semiautofs start
 # start services
 for s in "${services[@]}"; do
     invoke-rc.d "$s" start
