@@ -12,8 +12,6 @@
 system_not_degraded
 running_as_mirror_admin "$@"
 
-HOSTNAME=`hostname -f`
-
 ## webalizer.conf for each service
 ftp_conf() {
     cat <<-EOF
@@ -135,7 +133,7 @@ analyze() {
         mkdir -p $outdir &&
         # then run webalizer
         webalizer -Q -N 3 -D $usage/dnscache.db \
-                  -c $conf -o $outdir -n "$HOSTNAME ($svc)" \
+                  -c $conf -o $outdir -n "$SITENAME ($svc)" \
                   "$@"
     fi
 }

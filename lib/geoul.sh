@@ -7,10 +7,11 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
 # named constants
+export SITENAME=ftp.kaist.ac.kr
 MirrorAdmin=mirror
-FTPRootPath=/mirror/ftp/pub/
-FTPRootURL=ftp://ftp.kaist.ac.kr/
-BaseURL=http://ftp.kaist.ac.kr
+FTPRootPath=/mirror/ftp/
+FTPRootURL=ftp://$SITENAME/
+BaseURL=http://$SITENAME
 StatusURL=$BaseURL/status
 PkgsRootURL=$BaseURL/pkgs
 SyncLogRootURL=$BaseURL/sync
@@ -29,7 +30,8 @@ foreachpkg() {
 
 # switch running user to mirror admin
 running_as_mirror_admin() {
-    [ `whoami` = $MirrorAdmin ] || exec sudo -H -u $MirrorAdmin "$0" "$@"
+    local self=`readlink -f "$0" || { cd "$OLDPWD" && readlink -f "$0"; }`
+    [ `whoami` = $MirrorAdmin ] || exec sudo -H -u $MirrorAdmin "$self" "$@"
 }
 
 # check nosync

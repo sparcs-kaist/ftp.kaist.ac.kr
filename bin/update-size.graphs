@@ -6,8 +6,6 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-HOSTNAME=`hostname -f`
-
 filesystems=(/net/ftp/srv /net/ftp2/srv)
 
 . /mirror/lib/geoul.sh
@@ -58,7 +56,7 @@ cd /mirror/www/ftp.kaist.ac.kr/size
     echo "COMMENT:${timestamp//:/\\\\:}\\\\r"
 } | \
 graph total.png --width 600 --height 400 \
-    --title "Total disk usage of $HOSTNAME" \
+    --title "Total disk usage of $SITENAME" \
     --end now --start end-1y --base 1024 \
     --upper-limit `{
             echo -n '('

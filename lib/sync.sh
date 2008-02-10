@@ -184,8 +184,10 @@ trap 'exit 2' INT HUP TERM
 ## now, the real synchronization begins
 msg "sync begins at `humandate`"
 cat <<EOF
-+ triggered=$triggered
 + source=$source
++ site=$SITENAME
++ node=$HOSTNAME
++ triggered=$triggered
 + frequency=$frequency
 + timepast=`humaninterval $timepast`
 + failures=$failures

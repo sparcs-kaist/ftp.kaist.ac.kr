@@ -7,7 +7,6 @@
 # (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-HOSTNAME=`hostname -f`
 pkgsfeed=../news.feed
 problemsfeed=../problems.feed
 pkgskeep=P3D
@@ -22,12 +21,12 @@ home=`pkg_uri $pkg`
 # create feed if not exists
 [ -f "$pkgsfeed" ] ||
     allim "$pkgsfeed" new "$PkgsRootURL" \
-        "News for mirrors on $HOSTNAME" "$StatusURL" duration=$pkgskeep <<<""
+        "News for mirrors on $SITENAME" "$StatusURL" duration=$pkgskeep <<<""
 
 # create feed if not exists
 [ -f "$feed" ] ||
     allim "$feed" new "$home/$feed" \
-        "$name mirror on $HOSTNAME" "$home" duration=$keep <<<""
+        "$name mirror on $SITENAME" "$home" duration=$keep <<<""
 
 event=$1
 case "$event" in

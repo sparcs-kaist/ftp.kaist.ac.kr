@@ -6,14 +6,13 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
-HOSTNAME=`hostname -f`
 
 notrailingslash() { echo "$1" | sed -e 's:/*$::'; }
 url=`notrailingslash "$1"` dest=`notrailingslash "$2"`; shift 2
 
 set -x
 exec lftp -c "
-set ftp:anon-pass mirror@$HOSTNAME;
+set ftp:anon-pass mirror@${SITENAME:-$HOSTNAME};
 set cmd:verbose yes;
 set list-options -a;
 mirror --continue --delete --no-perms --verbose=3 \

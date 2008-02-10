@@ -15,7 +15,6 @@ running_as_mirror_admin "$@"
 
 ReportFailedSyncsAfter=`secondsof $ReportFailedSyncsAfter`
 ReportLongSyncsEvery=`secondsof $ReportLongSyncsEvery`
-HOSTNAME=`hostname -f`
 
 tmp=`mktemp -d /tmp/check-anomalies.XXXXXX`
 report=$tmp/report
@@ -39,7 +38,7 @@ send_report() {
                 echo "= Log ="
                 cat $report
             fi
-        } | mail -s "$HOSTNAME STATUS ALERT" "$MAILTO"
+        } | mail -s "$SITENAME STATUS ALERT" "$MAILTO"
     fi
     rm -rf $tmp
     exit $exitcode
