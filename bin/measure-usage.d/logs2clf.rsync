@@ -1,0 +1,16 @@
+#!/bin/sh
+# logs2clf.rsync -- Convert rsync log into CLF
+#  
+# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+grep '^.\{28\}send' | cut -b 34- | perl -e '
+$tz = `date +%z`; chomp $tz;
+@month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+while (<STDIN>) {
+    s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6 rsync" 200 $7#; print;
+}' 

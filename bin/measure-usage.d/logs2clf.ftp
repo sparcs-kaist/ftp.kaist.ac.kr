@@ -1,0 +1,11 @@
+#!/bin/sh
+# logs2clf.ftp -- Convert ftpd's xfer log to CLF
+#  
+# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+# TODO

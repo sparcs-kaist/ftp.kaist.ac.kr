@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# clf2tsv -- Extract raw usage data from CLF
+# 
+# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+
+datapath-s() {
+    (
+    . /mirror/lib/pkg.sh
+    echo "s#$datapath/\S*#$pkg#;"
+    )
+}
+path2pkg() {
+    sed -e "`foreachpkg datapath-s`"
+}
+protocol2svc() {
+    sed -e "s%HTTP/.*%http%"
+}
+
+extract-fields() {
+    sed -e 's%.* "GET \([^"]*\)\( \([^ ]\+\)\)\?" [^ ]\+ \([0-9]\+\)%\1	\3	\4%;'
+}
+
+extract-fields | path2pkg

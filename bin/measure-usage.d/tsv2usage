@@ -1,0 +1,31 @@
+#!/usr/bin/perl -w
+# tsv2usage -- Summarize raw usage data
+#  
+# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+my $summary = {};
+
+# read and accumulate
+while (<>) {
+    my ($pkg, $svc, $size) = split /\t/;
+    $summary->{$pkg} = {
+        $svc => { size => 0, count => 0 }
+    } unless exists $summary->{$pkg};
+    my $r = $summary->{$pkg}->{$svc};
+    $r->{size} += $size;
+    $r->{count}++;
+}
+
+# print
+for my $pkg (keys %$summary) {
+    my $pkgsummary = $summary->{$pkg};
+    for my $svc (keys %$pkgsummary) {
+        my $r = $pkgsummary->{$svc};
+        print join("\t", $pkg, $svc, @$r{qw(size count)}), "\n";
+    }
+}

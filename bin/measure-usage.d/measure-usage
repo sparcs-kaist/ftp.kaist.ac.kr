@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# measure-usage -- measure usages from service logs and keep them in RRDs
+# 
+# See http://oss.oetiker.ch/rrdtool/ for RRDtool
+# and http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# some configuration knobs
+LogConfig=${LogConfig:-/mirror/etc/measure-usage.conf}
+ProcessUnder=${ProcessUnder:-/mirror/log/measure-usage}
+RRDRoot=${RRDRoot:-/mirror/pkgs}
+RRDStep=${RRDStep:-3600}
+
+# add vocabulary directory to PATH
+Cmd=`readlink -f "$0"`
+Here=`dirname "$Cmd"`
+PATH="$Here:$PATH"
+
+# yes, we are one of the Geoul tool chain
+. /mirror/lib/geoul.sh
+system_not_degraded
+#running_as_mirror_admin "$@"
+
+
+# convert logs & collect to clf
+wd=`mktemp -d $ProcessUnder/XXXXXX`
+logs2clf "$LogConfig" >$wd/clf
+
+process() {
+    local wd=$1; shift
+
+    # TODO generate webalizer report from clf
+    #webalize-clf    $wd/clf &
+
+    # process clf
+    clf2tsv   <$wd/clf >$wd/tsv
+    tsv2usage <$wd/tsv >$wd/usage
+    # now we have RRD update parameters for each pkg in $wd/usage
+
+    # update rrd
+    while read pkg svc params; do
+        rrd=$RRDRoot/$pkg/usage.$svc.rrd
+        [ -e $rrd ] || create-rrd $rrd $RRDStep
+        update-rrd $rrd $params
+    done <$wd/usage
+
+    # clean up
+    rm -rf $wd
+}
+
+# check unfinished previous processing dirs
+for wd in $ProcessUnder/*
+do process $wd
+done

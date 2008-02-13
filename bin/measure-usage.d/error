@@ -1,0 +1,10 @@
+#!/bin/sh
+# error -- Show error messages
+#  
+# Created: 2008-02-14
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+echo "measure-usage: $@" >&2
+false

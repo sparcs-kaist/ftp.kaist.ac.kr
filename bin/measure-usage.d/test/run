@@ -1,0 +1,16 @@
+#!/bin/sh
+# run test cases
+
+cd `dirname "$0"`
+
+for tc in *.tc; do
+    (
+    cd $tc
+    export LogConfig=measure-usage.conf
+    export ProcessUnder=tmp
+    export RRDRoot=$PWD/rrds
+    rm -rf $RRDRoot $ProcessUnder *.offset
+    mkdir -p $ProcessUnder
+    ../../measure-usage
+    )
+done

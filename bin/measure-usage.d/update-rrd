@@ -1,0 +1,15 @@
+#!/bin/sh
+# update-rrd -- Update the Round Robin Database with measured usage
+# 
+# See http://oss.oetiker.ch/rrdtool/ for RRDtool.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+rrd=$1; shift
+size=$1; shift
+count=$1; shift
+
+rrdupdate $rrd -t size:count N:${size:-U}:${count:-U}
