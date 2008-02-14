@@ -1,0 +1,33 @@
+#!/usr/bin/perl -w
+# logs2clf.ftp -- Convert ftpd's xferlog to CLF
+#  
+# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF
+# and http://docs.sun.com/app/docs/doc/819-2251/xferlog-4 for xferlog.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+use POSIX qw(strftime);
+my $tz = strftime '%z', localtime;
+
+# read
+while (<>) {
+    if (/^\w{3} (\w{3}) ([ 0-9]{2}) ([:0-9]{8}) (\d+) (\d+) (\S+) (\d+) (\S+) \S+ \S+ \S+ \S+ (\S+) \S+ \d+ \S+ \S+/) {
+        # date-time
+        my $month = $1;
+        my $day = $2;
+        my $time = $3;
+        my $year = $4;
+        # request
+        my $transfertime = $5;
+        my $client = $6;
+        my $size = $7;
+        my $path = $8;
+        my $authuser = $9;
+        # print
+        printf '%s - %s [%2d/%s/%d:%s %s] "GET %s ftp" 200 %d'."\n",
+        $client, $authuser, $day, $month, $year, $time, $tz, $path, $size;
+    }
+}
