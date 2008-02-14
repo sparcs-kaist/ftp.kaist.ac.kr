@@ -9,8 +9,10 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
+our $FTPRootPath = $ENV{FTPRootPath} || "/mirror/ftp";
+
 use POSIX qw(strftime);
-my $tz = strftime '%z', localtime;
+our $tz = strftime '%z', localtime;
 
 # read
 while (<>) {
@@ -24,7 +26,7 @@ while (<>) {
         my $transfertime = $5;
         my $client = $6;
         my $size = $7;
-        my $path = $8;
+        my $path = $FTPRootPath.$8;
         my $authuser = $9;
         # print
         printf '%s - %s [%2d/%s/%d:%s %s] "GET %s ftp" 200 %d'."\n",
