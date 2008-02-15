@@ -1,9 +1,12 @@
 #!/bin/sh
 # run test cases
 
-cd `dirname "$0"`
+cd "`dirname "$0"`"
 
-for tc in *.tc; do
+[ $# -gt 0 ] || exec ./"`basename "$0"`" *.tc
+
+for tc in "$@"; do
+    echo running $tc...
     (
     cd $tc
     export LogConfig=measure-usage.conf

@@ -14,9 +14,10 @@
 svc=$1
 
 grep '^.\{28\}send' | cut -b 34- | perl -e '
-$tz = `date +%z`; chomp $tz;
-@month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
-while (<STDIN>) {
-    s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6 '$svc'" 200 $7#;
+use strict;
+our @month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+my $tz = `date +%z`; chomp $tz;
+while (<>) {
+    s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6 '$svc'" 200 $7 "-" "-"#;
     print;
 }' 

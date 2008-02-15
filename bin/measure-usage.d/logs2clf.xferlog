@@ -12,11 +12,11 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+use strict;
 
 our $svc = shift @ARGV;
 
-use POSIX qw(strftime);
-our $tz = strftime '%z', localtime;
+our $tz = `date +%z`; chomp $tz;
 
 # read
 while (<>) {
