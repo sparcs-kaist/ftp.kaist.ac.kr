@@ -1,11 +1,17 @@
 #!/bin/sh
 # logs2clf.combined -- Convert Apache's combined log to CLF
 #  
-# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
 # 
 # Created: 2008-02-13
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-# TODO
+svc=$1
+
+# need to amend the protocol part of the request
+sed -e 's%\("GET [^" ]*\) [^"]*"%\1 '$svc'"%'

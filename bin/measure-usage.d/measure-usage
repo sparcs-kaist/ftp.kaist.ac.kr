@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # measure-usage -- measure usages from service logs and keep them in RRDs
 # 
-# See http://oss.oetiker.ch/rrdtool/ for RRDtool
-# and http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# See http://oss.oetiker.ch/rrdtool/ for RRDtool.
+# CLF here, stands for Combined Log Format rather than Common Log Format.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
 #  
 # Created: 2008-02-13
 # 
@@ -38,8 +40,9 @@ process() {
     #webalize-clf    $wd/clf &
 
     # process clf
-    clf2tsv   <$wd/clf >$wd/tsv
-    tsv2usage <$wd/tsv >$wd/usage
+    clf2tsv   <$wd/clf      >$wd/tsv.all
+    clean-tsv <$wd/tsv.all  >$wd/tsv
+    tsv2usage <$wd/tsv      >$wd/usage
     # now we have RRD update parameters for each pkg in $wd/usage
 
     # update rrd
@@ -51,6 +54,19 @@ process() {
 
     # clean up
     rm -rf $wd
+}
+clean-tsv() {
+    # filter lines beginning with ?
+    touch $wd/tsv.err
+    sed -ne '
+    /^\?/{
+        s/^?//
+        w '$wd/tsv.err'
+        d
+    }
+    p
+    '
+    cat $wd/tsv.err >&2
 }
 
 # check unfinished previous processing dirs

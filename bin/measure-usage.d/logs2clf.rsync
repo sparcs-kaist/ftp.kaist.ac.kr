@@ -1,16 +1,22 @@
 #!/bin/sh
 # logs2clf.rsync -- Convert rsync log into CLF
 #  
-# See http://en.wikipedia.org/wiki/Common_Log_Format for CLF.
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
 # 
 # Created: 2008-02-13
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
+svc=$1
+
 grep '^.\{28\}send' | cut -b 34- | perl -e '
 $tz = `date +%z`; chomp $tz;
 @month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
 while (<STDIN>) {
-    s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6 rsync" 200 $7#; print;
+    s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6 '$svc'" 200 $7#;
+    print;
 }' 
