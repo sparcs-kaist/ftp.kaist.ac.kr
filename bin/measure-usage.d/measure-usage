@@ -36,13 +36,17 @@ logs2clf "$LogConfig" >$wd/clf
 process() {
     local wd=$1; shift
 
-    # TODO generate webalizer report from clf
-    #webalize-clf    $wd/clf &
+    # generate webalizer report from clf
+    webalize-clf $wd/clf &
 
     # process clf
-    clf2tsv   <$wd/clf      >$wd/tsv.all
-    clean-tsv <$wd/tsv.all  >$wd/tsv
-    tsv2usage <$wd/tsv      >$wd/usage
+    if ! [ -e $wd/usage ]; then
+        if ! [ -e $wd/tsv ]; then
+            clf2tsv <$wd/clf >$wd/tsv.all
+        fi
+        clean-tsv <$wd/tsv.all >$wd/tsv
+    fi
+    tsv2usage <$wd/tsv >$wd/usage
     # now we have RRD update parameters for each pkg in $wd/usage
 
     # update rrd
