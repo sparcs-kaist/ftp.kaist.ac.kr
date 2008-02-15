@@ -26,7 +26,7 @@ PATH="$Here:$PATH"
 # yes, we are one of the Geoul tool chain
 . /mirror/lib/geoul.sh
 system_not_degraded
-#running_as_mirror_admin "$@"
+running_as_mirror_admin "$@"
 
 
 # convert logs & collect to clf
