@@ -34,7 +34,6 @@ if [ -r "$config" ]; then
         local type=$1; shift
         converter=logs2clf.$type
         if type $converter &>/dev/null; then
-            # TODO consider rotated situation
             PATH=$PATH:/usr/sbin
             logtail $path | $converter $service | fixpaths "$@" >&3
         else
