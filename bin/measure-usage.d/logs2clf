@@ -34,8 +34,15 @@ if [ -r "$config" ]; then
         local type=$1; shift
         converter=logs2clf.$type
         if type $converter &>/dev/null; then
-            PATH=$PATH:/usr/sbin
-            logtail $path | $converter $service | fixpaths "$@" >&3
+            if lockfile -r3 $path.lock 2>/dev/null; then
+                PATH=$PATH:/usr/sbin
+                set +e
+                logtail $path | $converter $service | fixpaths "$@" >&3
+                rm -f $path.lock
+                set -e
+            else
+                error "$path: another measurement in progress"
+            fi
         else
             error "logs2clf: analyze: $type: unsupported log type"
         fi

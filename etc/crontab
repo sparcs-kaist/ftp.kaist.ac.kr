@@ -27,3 +27,4 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # reboot
 @reboot 	mirror	publish-pkgstat.xml; publish-pkgindex
+@reboot 	mirror	rm -f /mirror/log/*.lock
