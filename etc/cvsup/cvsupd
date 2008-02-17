@@ -19,7 +19,7 @@ ROOT=/cvsup
 USER=cvsupd
 GROUP=mirror
 MODE=a=r,ug+w
-LOG=/mirror/log/cvsupd.log
+LOG=/mirror/log/cvsupd/all.log
 
 test -f $ROOT/$DAEMON || exit 0
 

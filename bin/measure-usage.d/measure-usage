@@ -14,7 +14,7 @@ set -e
 
 # some configuration knobs
 LogConfig=${LogConfig:-/mirror/etc/measure-usage.conf}
-ProcessUnder=${ProcessUnder:-/mirror/log/measure-usage}
+ProcessUnder=${ProcessUnder:-/mirror/log/usage/measurement}
 RRDRoot=${RRDRoot:-/mirror/pkgs}
 RRDStep=${RRDStep:-3600}
 
@@ -57,7 +57,10 @@ process() {
     done <$wd/usage
 
     # clean up
-    rm -rf $wd
+#XXX debugging for the moment
+#rm -rf $wd
+    chmod +rX $wd
+    mv -f $wd `dirname $wd`/.`basename $wd`
 }
 clean-tsv() {
     # filter lines beginning with ?

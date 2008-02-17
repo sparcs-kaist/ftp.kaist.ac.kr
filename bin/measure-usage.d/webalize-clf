@@ -9,13 +9,13 @@
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-log=/mirror/log/usage
+log=/mirror/log/usage/clf
 
 new=$1; shift
 
 # XXX just keeping for the moment
 ln -f $new $log.$$
-savelog -qnjd -r `basename $log`.d $log
+savelog -qnjd $log
 mv $log.$$ $log
 
 # TODO
