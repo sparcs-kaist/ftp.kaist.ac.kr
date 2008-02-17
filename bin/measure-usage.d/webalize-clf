@@ -14,9 +14,9 @@ log=/mirror/log/usage/clf
 new=$1; shift
 
 # XXX just keeping for the moment
-ln -f $new $log.$$
+ln -f $new $log-$$
 savelog -qnjd $log
-mv $log.$$ $log
+mv $log-$$ $log
 
 # TODO
 #webalizer -Q -N 3 -D $usage/dnscache.db \
