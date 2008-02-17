@@ -151,10 +151,10 @@ esac
 cd /mirror/log
 
 # http
-analyze http -F combined  httpd-access.log$postfix
+analyze http -F combined  httpd/ftp.kaist.ac.kr.log$postfix
 
 # ftp
-analyze ftp  -F ftp       ftpd-transfer.log$postfix
+analyze ftp  -F ftp       ftpd/xfer.log$postfix
 
 # rsync needs log format conversion to common-log-format
 rsynclog2clf() {
@@ -165,5 +165,5 @@ rsynclog2clf() {
         s#^(\S+) - \S* \[(\d+)/(\d{2})/(\d{2}) (\S+)\] "([^"]*)" \S+ (\S+)#$1 - - [$4/$month[$3]/$2:$5 $tz] "GET $6" 200 $7#; print;
     }' 
 }
-rsynclog2clf <rsyncd.log$postfix >rsyncd-access.log &&
-analyze rsync -F clf      rsyncd-access.log
+rsynclog2clf <rsyncd/all.log$postfix >rsyncd/clf.log &&
+analyze rsync -F clf      rsyncd/clf.log
