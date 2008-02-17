@@ -14,4 +14,4 @@
 svc=$1
 
 # need to amend the protocol part of the request and append referer, user-agent
-sed -e 's%\("GET [^" ]*\) [^"]*"%\1 '$svc'"%' -e 's/$/ "-" "-"/'
+sed -e 's%\(\] "[^ ]\+ [^" ]*\)[^"]*"%\1 '$svc'"%' -e 's/$/ "-" "-"/'

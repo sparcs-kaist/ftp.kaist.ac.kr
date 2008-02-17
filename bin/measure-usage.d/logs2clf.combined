@@ -14,4 +14,4 @@
 svc=$1
 
 # need to amend the protocol part of the request
-sed -e 's%\("GET [^" ]*\) [^"]*"%\1 '$svc'"%'
+sed -e 's%\(\] "[^ ]\+ [^" ]*\)[^"]*"%\1 '$svc'"%'

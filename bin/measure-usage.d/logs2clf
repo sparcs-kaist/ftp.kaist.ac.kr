@@ -21,7 +21,7 @@ if [ -r "$config" ]; then
             args=()
             for rule in "$@"; do
                 local from=${rule%%=*} to=${rule#*=}
-                args=("${args[@]}" -e "s=\(.*\"GET \)$from=\\1${to//&/$from}=")
+                args=("${args[@]}" -e "s=\(.*\] \"[^ ]\+ \)$from=\\1${to//&/$from}=")
             done
             sed "${args[@]}"
         else
