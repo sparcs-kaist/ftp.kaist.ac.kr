@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# rewrite-paths -- Rewrite paths in CLF
+# 
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+#  
+# Created: 2008-02-18
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# prepare rewriting sed expression
+e=
+# 1. discard url scheme+host part first,
+# 2. apply user given rules,
+# 3. strip file://
+for rule in "[A-Za-z0-9_-]\+://[^/]*=" "$@" "file://="; do
+    from=${rule%%=*} to=${rule#*=}
+    e="$e s=\(\] \"[^ ]\+ \)$from=\\1${to//&/$from}=;"
+done
+
+normalize-path() {
+    perl -ne '
+    if (my ($pre, $url, $post) = $_ =~ /^(.*?\] "[^ ]+ )([^" ]+?)([ "].*)$/) {
+        $url =~ s:/(/|\./)+:/:g;
+        print "$pre$url$post\n";
+    }'
+}
+
+# normalize path and rewrite them
+normalize-path | sed -e "$e"

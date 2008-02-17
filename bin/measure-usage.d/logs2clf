@@ -15,19 +15,6 @@ set -e
 config=$1; shift || error "logs2clf: no config supplied"
 
 if [ -r "$config" ]; then
-    fixpaths() {
-        if [ $# -gt 0 ]; then
-            local rule= args=
-            args=()
-            for rule in "$@"; do
-                local from=${rule%%=*} to=${rule#*=}
-                args=("${args[@]}" -e "s=\(.*\] \"[^ ]\+ \)$from=\\1${to//&/$from}=")
-            done
-            sed "${args[@]}"
-        else
-            cat
-        fi
-    }
     analyze() {
         local service=$1; shift
         local path=$1; shift
@@ -37,7 +24,7 @@ if [ -r "$config" ]; then
             if lockfile -r3 $path.lock 2>/dev/null; then
                 PATH=$PATH:/usr/sbin
                 set +e
-                logtail $path | $converter $service | fixpaths "$@" >&3
+                logtail $path | $converter $service | rewrite-paths "$@" >&3
                 rm -f $path.lock
                 set -e
             else
