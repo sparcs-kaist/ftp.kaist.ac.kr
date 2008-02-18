@@ -27,6 +27,7 @@ for my $rule (@ARGV) {
 
 # rewrite them
 while (defined (my $line = <STDIN>)) {
+    chomp $line;
     if (my ($pre, $p, $post) = $line =~ /^(.*?\] "[^ ]+ )([^" ]+?)([ "].*)$/) {
         # discard url scheme+host part first,
         $p =~ s#^\w+://[^/]*##;
@@ -41,4 +42,5 @@ while (defined (my $line = <STDIN>)) {
     } else {
         print $line;
     }
+    print "\n";
 }

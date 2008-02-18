@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# logs2clf.ftp -- Convert ftpd's xferlog to CLF
+# logs2clf.xferlog -- Convert ftpd's xferlog to CLF
 # 
 # See http://docs.sun.com/app/docs/doc/819-2251/xferlog-4 for xferlog.
 #  
@@ -32,8 +32,12 @@ while (<>) {
         my $size = $7;
         my $path = $8;
         my $authuser = $9;
+        # determine response code
+        my $response = "200";
+        $response = "404" if ($transfertime == 1 and $size == 0);
         # print
-        printf '%s - %s [%2d/%s/%d:%s %s] "GET %s %s" 200 %d'."\n",
-        $client, $authuser, $day, $month, $year, $time, $tz, $path, $svc, $size;
+        printf '%s - %s [%2d/%s/%d:%s %s] "GET %s %s" %s %d "-" "-"'."\n",
+        $client, $authuser, $day, $month, $year, $time, $tz,
+        $path, $svc, $response, $size;
     }
 }
