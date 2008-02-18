@@ -9,13 +9,13 @@
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-log=/mirror/log/usage/clf
+log=/mirror/log/unified/clf
 
 new=$1; shift
 
 # XXX just keeping for the moment
 ln -f $new $log
-savelog -qnjd $log
+savelog -qd $log
 
 # TODO
 #webalizer -Q -N 3 -D $usage/dnscache.db \

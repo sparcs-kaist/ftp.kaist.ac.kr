@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/perl -w
 # rewrite-paths -- Rewrite paths in CLF
 # 
 # CLF here, stands for Combined Log Format which is a slight extension to the
@@ -10,25 +10,35 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
-set -e
 
-# prepare rewriting sed expression
-e=
-# 1. discard url scheme+host part first,
-# 2. apply user given rules,
-# 3. strip file://
-for rule in "[A-Za-z0-9_-]\+://[^/]*=" "$@" "file://="; do
-    from=${rule%%=*} to=${rule#*=}
-    e="$e s=\(\] \"[^ ]\+ \)$from=\\1${to//&/$from}=;"
-done
+use strict;
 
-normalize-path() {
-    perl -ne '
-    if (my ($pre, $url, $post) = $_ =~ /^(.*?\] "[^ ]+ )([^" ]+?)([ "].*)$/) {
-        $url =~ s:/(/|\./)+:/:g;
-        print "$pre$url$post\n";
-    }'
+# compile the user provided rewriting rule
+my $expr = "";
+for my $rule (@ARGV) {
+    if (my ($from, $to) = $rule =~ /(.*?)=(.*)/) {
+        # & in the right-hand-side means the match
+        $to =~ s/\&/\$&/g;
+        $expr .= "\$p =~ s#^$from#$to#;";
+    } else {
+        die "no \`=' found in rule: \`$rule'";
+    }
 }
 
-# normalize path and rewrite them
-normalize-path | sed -e "$e"
+# rewrite them
+while (defined (my $line = <STDIN>)) {
+    if (my ($pre, $p, $post) = $line =~ /^(.*?\] "[^ ]+ )([^" ]+?)([ "].*)$/) {
+        # discard url scheme+host part first,
+        $p =~ s#^\w+://[^/]*##;
+        # normalize path
+        $p =~ s#/(/|\./)+#/#g;
+        # apply user given rules
+        eval $expr;
+        # strip file://
+        $p =~ s#^file://##;
+        # and print it
+        print $pre.$p.$post;
+    } else {
+        print $line;
+    }
+}
