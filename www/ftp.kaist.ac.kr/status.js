@@ -94,7 +94,8 @@ function init() {
             syncfailures    : field(box, 'syncfailures'),
             status          : field(box, 'status'),
             lastupdated     : field(box, 'lastupdated'),
-            age             : field(box, 'age')
+            age             : field(box, 'age'),
+            sizegraph       : field(box, 'sizegraph')
         });
     }
 }
@@ -222,9 +223,12 @@ function update(http_request) {
                 }
                 form.frame.className = 'pkg'     + statusClassName;
                 form.link.className  = 'pkglink' + statusClassName;
+                // TODO: refresh graphs
+                //form.sizegraph.src = form.sizegraph.src;
             }
             setText(document.getElementById("lastupdated"),
-                    formatDate(now));
+                    formatDate(isoDate(xml.selectSingleNode('/packages')
+                    .getAttribute("lastupdated"))));
         }
         document.getElementById('pkgs').className = '';
     }
