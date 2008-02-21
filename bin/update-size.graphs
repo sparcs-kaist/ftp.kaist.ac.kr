@@ -6,8 +6,6 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-filesystems=(/net/ftp/srv /net/ftp2/srv)
-
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
@@ -60,8 +58,8 @@ graph total.png --width 600 --height 400 \
     --end now --start end-1y --base 1024 \
     --upper-limit `{
             echo -n '('
-            df -P -k "${filesystems[@]}" |
-            tail -n +2 | awk '{print $2}' | tr '\n' '+'
+            df -P -k /mirror/nodes/*/storage* | tail -n +2 | sort | uniq |
+            awk '{print $2}' | tr '\n' '+'
             echo '0)*1024'
         } | bc` --rigid "$@"
 

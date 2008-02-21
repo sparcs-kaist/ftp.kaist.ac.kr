@@ -116,12 +116,13 @@ for my $pkg (keys %InLSLR) {
 }
 
 # record df
-our @FS = qw(/net/ftp/srv /net/ftp2/srv);
+# TODO record for each node: /mirror/nodes/*/df.rrd
+our @FS = glob "/mirror/nodes/*/storage*";
 my $blocks = 0;
 my $used = 0;
 my $available = 0;
 my $fsargs = join " ", map {quotemeta} @FS;
-foreach (split "\n", `df -P -k $fsargs | tail -n +2`) {
+foreach (split "\n", `df -P -k $fsargs | tail -n +2 | sort | uniq`) {
     my ($dev, $b, $u, $a) = split /\s+/;
     $blocks += $b;
     $used += $u;
