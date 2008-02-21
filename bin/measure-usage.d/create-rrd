@@ -10,7 +10,7 @@
 
 rrd=$1; shift
 step=${1:-3600}; shift
-heartbeat=$(($step * 2))
+heartbeat=$(($step * 3))
 
 mkdir -p `dirname "$rrd"`
 rrdtool create "$rrd"                   \
