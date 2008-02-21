@@ -1,0 +1,2 @@
+#!/bin/sh
+ps -p `cat /var/run/sshd.pid` >/dev/null

@@ -28,7 +28,6 @@ PATH="$Here:$PATH"
 system_not_degraded
 running_as_mirror_admin "$@"
 
-
 # convert logs & collect to clf
 wd=`mktemp -d $ProcessUnder/XXXXXX`
 logs2clf "$LogConfig" >$wd/clf
@@ -50,17 +49,29 @@ process() {
     # now we have RRD update parameters for each pkg in $wd/usage
 
     # update rrd
-    while read pkg svc params; do
-        rrd=$RRDRoot/$pkg/usage.$svc.rrd
-        [ -e $rrd ] || create-rrd $rrd $RRDStep
-        update-rrd $rrd $params
-    done <$wd/usage
+    update() {
+        ( . /mirror/lib/pkg.sh
+        # for each service
+        for svcd in /mirror/svcs/*; do
+            # check if measuring usage is enabled
+            [ -e $svcd/measure-usage ] || continue
+            svc=`basename $svcd`
+            rrd=$RRDRoot/$pkg/usage.$svc.rrd
+            # create if no rrd is there
+            [ -e $rrd ] || create-rrd $rrd $RRDStep
+            # search rrd update parameters from analyzed usage
+            params=`grep "$pkg	$svc	" <$wd/usage | cut -f3-`
+            # or simply update with zeros
+            params=${params:-0 0}
+            # TODO: updating with $wd/usage's timestamp might be better
+            update-rrd $rrd $params
+        done
+        )
+    }
+    foreachpkg update
 
     # clean up
-#XXX debugging for the moment
-#rm -rf $wd
-    chmod +rX $wd
-    mv -f $wd `dirname $wd`/.`basename $wd`
+    rm -rf $wd
 }
 clean-tsv() {
     # filter lines beginning with ?
