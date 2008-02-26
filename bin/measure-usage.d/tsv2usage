@@ -13,9 +13,12 @@ my $summary = {};
 # read and accumulate
 while (<>) {
     my ($pkg, $svc, $size) = split /\t/;
-    $summary->{$pkg} = {
-        $svc => { size => 0, count => 0 }
-    } unless exists $summary->{$pkg};
+    $summary->{$pkg} = {}
+        unless exists $summary->{$pkg};
+    $summary->{$pkg}->{$svc} = {
+        size    => 0,
+        count   => 0,
+    } unless exists $summary->{$pkg}->{$svc};
     my $r = $summary->{$pkg}->{$svc};
     $r->{size} += $size;
     $r->{count}++;
