@@ -1,0 +1,10 @@
+## periodic jobs for a member node of a Geoul system
+SHELL=/bin/sh
+PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+*/2 *	* * *	root	exec watch-services
+*/3 *	* * *	mirror	exec nice -n  2 maintain-sync >/dev/null
+*/5 *	* * *	mirror	exec nice -n 10 record-nodestats /mirror/nodes/$HOSTNAME/stats.rrd
+53 *	* * *	mirror	exec nice -n 15 measure-usage
+23 8	* * *	mirror	exec nice -n 19 expire-tmp
+@reboot 	mirror	rm -f /mirror/log/*.lock

@@ -1,0 +1,26 @@
+## additional periodic jobs for a leader node of a Geoul system
+SHELL=/bin/sh
+PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# monitor
+0 16	* * *	mirror	exec check-anomalies
+11 *	* * *	mirror	exec stop-dead-syncs
+
+# measure
+17 */5	* * *	mirror	exec nice -n  3 update-ls-lR
+31 */5	* * *	mirror	exec nice -n 15 measure-sizes >/dev/null
+
+# publish
+* *	* * *	mirror	exec nice -n  3 publish-pkgstat.xml
+@reboot 	mirror	publish-pkgstat.xml; publish-pkgindex
+0 *	* * *	mirror	exec nice -n 10 publish-pkgindex
+5 *	* * *	mirror	exec nice -n 10 publish-announce.html
+41 */5	* * *	mirror	exec nice -n 10 update-size.graphs --lazy
+
+# clean
+13 7	* * *	mirror	exec nice -n  19 expire-sync-logs
+
+
+# XXX
+51 9	* * *	mirror	exec nice -n 15 analyze-usages
+0 0	* * *	root	exec nice -n 10 update-rsyncd.conf
