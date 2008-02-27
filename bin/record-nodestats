@@ -11,26 +11,25 @@ set -e
 # vocabularies for manipulating RRD
 create-rrd() {
     local rrd=$1; shift
+    local step=300 hb=900
     # rrdcreate(1)
-    rrdtool create "$rrd" --step 300 \
-        DS:load:GAUGE:900:0:U        \
-        DS:nrprocs:GAUGE:900:0:U     \
-        DS:mem:GAUGE:900:0:U         \
-        DS:memfree:GAUGE:900:0:U     \
-        DS:swap:GAUGE:900:0:U        \
-        DS:swapfree:GAUGE:900:0:U    \
-        DS:buffers:GAUGE:900:0:U     \
-        DS:cached:GAUGE:900:0:U      \
-        DS:netin:DERIVE:900:0:U      \
-        DS:netout:DERIVE:900:0:U     \
-        RRA:AVERAGE:0.5:1:336        \
-        RRA:AVERAGE:0.5:6:372        \
-        RRA:AVERAGE:0.5:24:365       \
-        RRA:AVERAGE:0.5:120:365      \
-    #   1:336 =      1  *  2 * 7 * 24 = 2 weeks
-    #   6:372 =      6  *  3 * 31 * 4 = 3 months
-    #  24:365 =     24  *  365        = 1 year
-    # 120:365 = 24 * 5  *  365        = 5 years
+    rrdtool create "$rrd" --step $step  \
+        DS:load:GAUGE:$hb:0:U           \
+        DS:nrprocs:GAUGE:$hb:0:U        \
+        DS:mem:GAUGE:$hb:0:U            \
+        DS:memfree:GAUGE:$hb:0:U        \
+        DS:swap:GAUGE:$hb:0:U           \
+        DS:swapfree:GAUGE:$hb:0:U       \
+        DS:buffers:GAUGE:$hb:0:U        \
+        DS:cached:GAUGE:$hb:0:U         \
+        DS:netin:DERIVE:$hb:0:U         \
+        DS:netout:DERIVE:$hb:0:U        \
+        RRA:AVERAGE:0.5:2:432           \
+        RRA:AVERAGE:0.5:24:420          \
+        RRA:AVERAGE:0.5:288:365         \
+    #   2:432 =       2  *  6 * 24 * 3  = 3 days
+    #  24:420 =  12 * 2  *  12 * 7 * 5  = 5 weeks
+    # 288:365 = 12 * 24  *  365         = 1 year
 }
 update-rrd() {
     local rrd=$1; shift
