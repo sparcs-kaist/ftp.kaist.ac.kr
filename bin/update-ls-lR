@@ -18,12 +18,8 @@ LANG=$LC_ALL
 LANGUAGE=$LC_ALL
 export LC_ALL LANG LANGUAGE
 
-lock=.ls-lR.updating
-lockfile -r3 $lock 2>/dev/null
-trap "rm -f $lock" EXIT
-
 lslR=`mktemp .tmp/ls-lR.XXXXXX`
-trap "rm -f $lock $lslR $lslR.gz" EXIT
+trap "rm -f $lslR $lslR.gz" EXIT
 
 ls -AlR >$lslR
 chmod a+r $lslR
