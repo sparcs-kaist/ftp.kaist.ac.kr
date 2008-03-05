@@ -8,7 +8,7 @@
 
 lock=$1; shift
 
-if lockfile -r3 "$lock" >/dev/null; then
+if lockfile -r3 "$lock" 2>/dev/null; then
     "$@"
     rm -f "$lock"
 fi
