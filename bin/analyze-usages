@@ -148,7 +148,7 @@ case "$1" in
     ;;
 esac
 
-cd /mirror/log
+cd /var/log/geoul
 
 # http
 analyze http -F combined  httpd/ftp.kaist.ac.kr.log$postfix
