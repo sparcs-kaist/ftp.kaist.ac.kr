@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# expand-paths -- Expand given patterns to actual paths
+# 
+# Usage: expand-paths /root/for/expanding/patterns <patterns >items
+# 
+# Created: 2008-03-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+expand() {
+    find * -maxdepth 0 -type d -name "$patt"
+}
+items() {
+    local items=$1; shift
+    touch $items
+    while read line; do
+        patt=${line#* }
+        mark=${line%% *}
+        case "$mark" in
+            "+")
+            expand "$patt" | cat - $items | sort | uniq >$items.$$
+            mv -f $items.$$ $items
+            ;;
+            "- "*)
+            expand "$patt" | sort | comm -23 $items - >$items.$$
+            mv -f $items.$$ $items
+            ;;
+        esac
+    done
+    cat $items
+}
+
+tmp=`mktemp -d /tmp/lspatt.XXXXXX`
+trap "rm -rf $tmp" EXIT
+
+# move to root
+root=${1:-.}
+cd "$root"
+
+# gather items with patterns from stdin
+items $tmp/items
+
+# and output to stdout
+cat $tmp/items
