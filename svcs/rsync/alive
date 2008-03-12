@@ -1,2 +1,3 @@
-#!/bin/sh
-ps -p `cat /var/run/rsyncd.pid` >/dev/null
+#!/bin/sh -e
+pid=`cat /var/run/rsyncd.pid 2>/dev/null`
+ps -p $pid >/dev/null
