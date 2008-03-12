@@ -13,10 +13,8 @@
 set -e
 
 # some configuration knobs
-LogConfig=${LogConfig:-/mirror/etc/measure-usage.conf}
-ProcessUnder=${ProcessUnder:-/mirror/log/usage/measurement}
-RRDRoot=${RRDRoot:-/mirror/pkgs}
-RRDStep=${RRDStep:-3600}
+: ${LogConfig:=/mirror/etc/measure-usage.conf}
+: ${ProcessUnder:=/var/log/geoul/measure-usage}
 
 # add vocabulary directory to PATH
 Cmd=`readlink -f "$0"`
@@ -31,63 +29,13 @@ running_as_mirror_admin "$@"
 # convert logs & collect to clf
 wd=`mktemp -d $ProcessUnder/XXXXXX`
 logs2clf "$LogConfig" >$wd/clf
+touch $wd/clf.ready
 
-process() {
-    local wd=$1; shift
-
-    # generate webalizer report from clf
-    webalize-clf $wd/clf &
-
-    # process clf
-    if ! [ -e $wd/usage ]; then
-        if ! [ -e $wd/tsv ]; then
-            clf2tsv <$wd/clf >$wd/tsv.all
-        fi
-        clean-tsv <$wd/tsv.all >$wd/tsv
-    fi
-    tsv2usage <$wd/tsv >$wd/usage
-    # now we have RRD update parameters for each pkg in $wd/usage
-
-    # update rrd
-    update() {
-        ( . /mirror/lib/pkg.sh
-        # for each service
-        for svcd in /mirror/svcs/*; do
-            # check if measuring usage is enabled
-            [ -e $svcd/measure-usage ] || continue
-            svc=`basename $svcd`
-            rrd=$RRDRoot/$pkg/usage.$svc.rrd
-            # create if no rrd is there
-            [ -e $rrd ] || create-rrd $rrd $RRDStep
-            # search rrd update parameters from analyzed usage
-            params=`grep "$pkg	$svc	" <$wd/usage | cut -f3-`
-            # or simply update with zeros
-            params=${params:-0 0}
-            # TODO: updating with $wd/usage's timestamp might be better
-            update-rrd $rrd $params
-        done
-        )
-    }
-    foreachpkg update
-
-    # clean up
-    rm -rf $wd
-}
-clean-tsv() {
-    # filter lines beginning with ?
-    touch $wd/tsv.err
-    sed -ne '
-    /^\?/{
-        s/^?//
-        w '$wd/tsv.err'
-        d
-    }
-    p
-    '
-    cat $wd/tsv.err >&2
-}
-
-# check unfinished previous processing dirs
-for wd in $ProcessUnder/*
-do process $wd
+# analyze available clfs
+for wd in $ProcessUnder/*; do
+    [ -e $wd/clf.ready ] || continue
+    synchronized $wd/analysis-in-progress \
+    analyze $wd &
 done
+
+wait
