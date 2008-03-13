@@ -1,39 +1,43 @@
 # automounter map for ftp;  See autofs(5)
 # vim:ts=32
 
-.tmp		localhost:/srv/&
+ftp/.tmp		localhost:/srv/.tmp
 
-debian		ftp:/srv/&
-ubuntu		ftp:/srv/&
-fedora		ftp:/srv/&
-mozilla		ftp:/srv/&
-MPlayer		ftp:/srv/&
-Apache		ftp:/srv/&
-CPAN		ftp:/srv/&
-gentoo		ftp:/srv/&
-cygwin		ftp:/srv/&
-hangul		ftp:/srv/&
+ftp/debian		ftp:/srv/debian
+ftp/ubuntu		ftp:/srv/ubuntu
+ftp/fedora		ftp:/srv/fedora
+ftp/mozilla		ftp:/srv/mozilla
+ftp/MPlayer		ftp:/srv/mplayer
+www/mplayer		ftp:/srv/mplayer-www
+ftp/Apache		ftp:/srv/apache
+ftp/CPAN		ftp:/srv/cpan
+ftp/gentoo		ftp:/srv/gentoo
+ftp/cygwin		ftp:/srv/cygwin
+ftp/hangul		ftp:/srv/hangul
+ftp/debian		ftp:/srv/debian
 
-debian-amd64		ftp2:/srv/&
-debian-archive		ftp2:/srv/&
-debian-cd		ftp2:/srv/&
-ubuntu-cd		ftp2:/srv/&
-opensuse		ftp2:/srv/&
-gnu		ftp2:/srv/&
-gnu-alpha		ftp2:/srv/&
-FreeBSD		ftp2:/srv/&
-FreeBSD-kr		ftp2:/srv/&
-NetBSD		ftp2:/srv/&
-OpenBSD		ftp2:/srv/&
-sunfreeware		ftp2:/srv/&
+ftp/debian-amd64		ftp2:/srv/debian-amd64
+ftp/debian-archive		ftp2:/srv/debian-archive
+ftp/debian-cd		ftp2:/srv/debian-cd
+ftp/ubuntu-cd		ftp2:/srv/ubuntu-cd
+ftp/opensuse		ftp2:/srv/opensuse
+ftp/gnu		ftp2:/srv/gnu
+ftp/gnu-alpha		ftp2:/srv/gnu-alpha
+ftp/FreeBSD		ftp2:/srv/freebsd
+ftp/FreeBSD-kr		ftp2:/srv/freebsd-kr
+ftp/NetBSD		ftp2:/srv/netbsd
+ftp/OpenBSD		ftp2:/srv/openbsd
+ftp/sunfreeware		ftp2:/srv/sunfreeware
 
-openoffice		ftp2:/srv/&
-eclipse		ftp2:/srv/&
-putty		ftp2:/srv/&
-vim		ftp2:/srv/&
-isc		ftp2:/srv/&
-tex-archive		ftp2:/srv/&
+ftp/openoffice		ftp2:/srv/openoffice
+ftp/eclipse		ftp2:/srv/eclipse
+ftp/putty		ftp2:/srv/putty
+ftp/vim		ftp2:/srv/vim
+ftp/isc		ftp2:/srv/isc
+ftp/tex-archive		ftp2:/srv/ctan
 
-rfc		ftp2:/srv/&
-internet-drafts		ftp2:/srv/&
-pdb		ftp2:/srv/&
+ftp/rfc		ftp2:/srv/rfc
+ftp/internet-drafts		ftp2:/srv/ietf
+ftp/pdb		ftp2:/srv/pdb
+
+cvsup		ftp:/srv/cvsup

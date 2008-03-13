@@ -23,7 +23,7 @@ items() {
             expand "$patt" | cat - $items | sort | uniq >$items.$$
             mv -f $items.$$ $items
             ;;
-            "- "*)
+            "-")
             expand "$patt" | sort | comm -23 $items - >$items.$$
             mv -f $items.$$ $items
             ;;
