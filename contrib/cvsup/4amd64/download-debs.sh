@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 sudo wget -c http://ftp.kr.debian.org/debian/pool/main/c/cvsup/cvsup_16.1e-3_i386.deb
 sudo wget -c http://ftp.kr.debian.org/debian/pool/main/c/cvsup/cvsupd_16.1e-3_i386.deb   
 sudo wget -c http://ftp.kr.debian.org/debian/pool/main/d/db3/libdb3_3.2.9-16_i386.deb

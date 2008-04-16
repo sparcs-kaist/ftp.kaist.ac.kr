@@ -6,5 +6,23 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-exec sudo chroot /cvsup sudo -u ${USER:-`whoami`} -H -- \
-cvsup "$@"
+root=/mirror/cvsup
+tmp=`mktemp -d "$root/tmp/cvsup.XXXXXX"`
+trap "rm -rf $tmp" EXIT
+
+args=()
+while arg=$1; shift; do
+    # copy to new root and replace if argument is a path to file
+    if [ -f "$arg" ]; then
+        cp -pf "$arg" "$tmp/"
+        arg="${tmp#$root}/`basename "$arg"`"
+    elif [ -d "$arg" ]; then
+        arg=`readlink -f "$arg"`
+        arg=${arg#$root}
+    fi
+    # accumulate arguments
+    args=("${args[@]}" "$arg")
+done
+
+sudo chroot $root sudo -u ${USER:-`whoami`} -H -- \
+cvsup "${args[@]}"
