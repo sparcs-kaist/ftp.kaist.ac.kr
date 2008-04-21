@@ -1,13 +1,18 @@
 #!/bin/sh
 # Prepare i386 root for amd64 before running cvsup/cvsupd
+set -e
 
 ROOT=$1; shift
 
 bind() {
     orig=$1 target=$2
+    # if not mounted
     if ! mount | grep "$orig on $target" >/dev/null; then
+        # mount it
         mkdir -p $target
         sudo mount --bind $orig $target
+        # confirm
+        mount | grep "$orig on $target" >/dev/null
     fi
 }
 

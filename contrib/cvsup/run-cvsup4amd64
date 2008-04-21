@@ -5,6 +5,7 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
 
 root=/cvsup
 tmp=`mktemp -d "$root/tmp/cvsup.XXXXXX"`
