@@ -1,0 +1,16 @@
+#!/bin/sh
+# Prepare i386 root for amd64 before running cvsup/cvsupd
+
+ROOT=$1; shift
+
+bind() {
+    orig=$1 target=$2
+    if ! mount | grep "$orig on $target" >/dev/null; then
+        mkdir -p $target
+        sudo mount --bind $orig $target
+    fi
+}
+
+bind /mirror $ROOT/mirror
+bind /mirror/cvsup $ROOT/mirror/cvsup
+bind /var/log/geoul $ROOT/var/log/geoul

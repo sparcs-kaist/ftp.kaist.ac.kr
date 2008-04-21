@@ -6,7 +6,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-root=/mirror/cvsup
+root=/cvsup
 tmp=`mktemp -d "$root/tmp/cvsup.XXXXXX"`
 trap "rm -rf $tmp" EXIT
 
@@ -23,6 +23,8 @@ while arg=$1; shift; do
     # accumulate arguments
     args=("${args[@]}" "$arg")
 done
+
+"$(dirname "$(readlink -f "$0")")/prepare4amd64" $root
 
 sudo chroot $root sudo -u ${USER:-`whoami`} -H -- \
 cvsup "${args[@]}"

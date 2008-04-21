@@ -15,12 +15,12 @@ DAEMON=/usr/sbin/cvsupd
 NAME=cvsupd
 DESC="CVSup server"
 
-ROOT=/mirror/cvsup
+ROOT=/cvsup
 USER=cvsupd
 GROUP=mirror
 MODE=a=r,ug+w
 LOG=/var/log/geoul/cvsupd/all.log
-BASE=/data
+BASE=/mirror/cvsup
 
 test -f $ROOT/$DAEMON || exit 0
 
@@ -30,6 +30,9 @@ start() {
     [ -f $LOG ] || touch $LOG
     chmod $MODE $LOG
     chown $USER:$GROUP $LOG
+    self=`readlink -f "$0"`
+    base=`dirname "$self"`
+    "$base/prepare4amd64" $ROOT
     chroot $ROOT sudo -H -u $USER $DAEMON \
     -C 30 -l $LOG -b $BASE \
     -s scan -c sup-freebsd:sup-netbsd:sup-openbsd

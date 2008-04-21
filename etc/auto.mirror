@@ -40,4 +40,4 @@ ftp/rfc		ftp2:/srv/rfc
 ftp/internet-drafts		ftp2:/srv/ietf
 ftp/pdb		ftp2:/srv/pdb
 
-cvsup/data		ftp:/srv/cvsup
+cvsup		ftp:/srv/cvsup
