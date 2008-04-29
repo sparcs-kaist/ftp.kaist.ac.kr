@@ -7,7 +7,7 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-LockValidDays=10 #days
+LockValidDays=7 #days
 
 . /mirror/lib/geoul.sh
 
@@ -114,19 +114,29 @@ lock_expired() { needs_lock
 }
 sync_in_progress() { needs_lock
     # lock exists
-    [ -e "$lock" ]
-    # the owner process is still alive
-    local owner host pgrp
-    eval `lock_owner`
-    ssh $host ps -p $pgrp &>/dev/null
+    if [ -e "$lock" ]; then
+        # the owner process is still alive
+        local owner host pgrp
+        eval `lock_owner`
+        local rsh=
+        [ -z "$host" -o "$host" = "$HOSTNAME" ] || rsh="ssh $host"
+        $rsh ps -p $pgrp &>/dev/null
+    else
+        false
+    fi
 }
 
 acquire_lock() { needs_lock
-    if sync_in_progress && lock_expired; then kill_lock_owner; fi
-    # using lockfile(1) included in procmail(1)
-    lockfile -r3 "$lock" 2>/dev/null
-    # record owner info
-    echo $HOSTNAME:$$ >lock.owner
+    # remove expired, stale lock
+    if ! sync_in_progress; then release_lock; fi
+    if lock_expired; then kill_lock_owner; release_lock; fi
+    # use lockfile(1) included in procmail(1)
+    if lockfile -r3 "$lock" 2>/dev/null; then
+        # record owner info
+        echo $HOSTNAME:$$ >lock.owner
+    else
+        false
+    fi
 }
 release_lock() { needs_lock
     rm -f lock.owner lock.reported "$lock"
@@ -137,15 +147,16 @@ kill_lock_owner() {
     eval `lock_owner`
     if [ -n "$owner" ]; then
         # send TERM
-        ssh $host kill -TERM -$pgrp
-        sleep 2
+        if sync_in_progress; then
+            ssh $host kill -TERM -$pgrp
+            sleep 2
+        fi
         # send KILL if still alive
         while sync_in_progress; do
             ssh $host kill -KILL -$pgrp
             sleep 2
         done
     fi
-    release_lock
 }
 
 in_a_package
