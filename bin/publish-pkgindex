@@ -18,20 +18,6 @@ pkgs.xml -f >$tmp
 chmod a+r $tmp
 
 mv -f $tmp geoul.index.xml
-ln -sf /tmp/geoul.index.xml /mirror/www/ftp.kaist.ac.kr/pkgidx.xml
-
-
-# publish HTMLs
-cd /mirror/www/ftp.kaist.ac.kr
-set +e
-for lang in ko en; do
-    (
-    set -e
-    tmp=`mktemp /tmp/status.html.XXXXXX`
-    xsltproc --param lang "'$lang'" status2html.xsl pkgidx.xml >$tmp
-    chmod a+r $tmp
-    mv -f $tmp .status.html.$lang
-    )
-done
+ln -sf /tmp/geoul.index.xml /mirror/run/pkgidx.xml
 
 # vim:ft=sh

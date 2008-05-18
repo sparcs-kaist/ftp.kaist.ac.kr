@@ -9,7 +9,7 @@ set -e
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
-cd /mirror/www/ftp.kaist.ac.kr
+cd /mirror/ftp
 tmp=`mktemp /tmp/announce.html.XXXXXX`
 trap "rm $tmp" EXIT ERR HUP INT TERM
 chmod a+r $tmp

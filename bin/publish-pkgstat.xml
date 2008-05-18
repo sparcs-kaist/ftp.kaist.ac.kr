@@ -17,6 +17,6 @@ pkgs.xml >$tmp
 chmod a+r $tmp
 
 mv -f $tmp geoul.status.xml
-ln -sf /tmp/geoul.status.xml /mirror/www/ftp.kaist.ac.kr/pkgstat.xml
+ln -sf /tmp/geoul.status.xml /mirror/run/pkgstat.xml
 
 # vim:ft=sh

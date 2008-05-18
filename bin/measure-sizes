@@ -128,5 +128,5 @@ foreach (split "\n", `df -P -k $fsargs | tail -n +2 | sort | uniq`) {
     $used += $u;
     $available += $a;
 }
-my $rrd = "/mirror/www/ftp.kaist.ac.kr/size/df.rrd";
+my $rrd = "/mirror/log/size/df.rrd";
 run("rrdupdate $rrd -t blocks:used:available N:$blocks:$used:$available");

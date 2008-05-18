@@ -7,7 +7,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-rrd=/mirror/www/ftp.kaist.ac.kr/size/df.rrd
+rrd=/mirror/log/size/df.rrd
 
 case "$1" in
     create)

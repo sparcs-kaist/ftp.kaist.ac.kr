@@ -125,7 +125,7 @@ rsync_conf() {
 # run webalizer on given log for given service
 analyze() {
     local svc=$1; shift
-    local usage=/mirror/www/ftp.kaist.ac.kr/usage
+    local usage=/mirror/log/usage.old
     local conf=$usage/webalizer-$svc.conf
     local outdir=$usage/$svc/
     # if config is available,

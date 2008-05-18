@@ -124,7 +124,6 @@ humaninterval() {
 log_uri() {
     local log=$1
     ! [ -L "$log" ] || log=`readlink "$log"`
-    log=${log%.gz}
     log=${log#/mirror/log/sync/}
     echo "$SyncLogRootURL/$log"
 }

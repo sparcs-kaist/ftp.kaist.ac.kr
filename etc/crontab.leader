@@ -14,12 +14,11 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 * *	* * *	mirror	exec nice -n  3 synchronized run/updating-pkgstat.xml      publish-pkgstat.xml
 @reboot 	mirror	                                                           publish-pkgstat.xml; publish-pkgindex
 0 *	* * *	mirror	exec nice -n 10 synchronized run/updating-pkgidx.xml       publish-pkgindex
-5 *	* * *	mirror	exec nice -n 10 synchronized run/updating-announce.html    publish-announce.html
+#5 *	* * *	mirror	exec nice -n 10 synchronized run/updating-announce.html    publish-announce.html
 41 */5	* * *	mirror	exec nice -n 10 synchronized run/updating-size.graphs      update-size.graphs --lazy
 
 # clean
 13 7	* * *	mirror	exec nice -n 19 synchronized run/expiring-sync-logs        expire-sync-logs
-
 
 # XXX
 51 9	* * *	mirror	exec nice -n 15 analyze-usages

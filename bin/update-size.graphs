@@ -40,7 +40,7 @@ graphdu() {
 
 
 timestamp=`date +"%F %T %z"`
-cd /mirror/www/ftp.kaist.ac.kr/size
+cd /mirror/log/size
 {
     foreachpkg defs
     foreachpkg graphdu
