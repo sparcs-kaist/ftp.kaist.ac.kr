@@ -5,7 +5,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-# configs for normal nodes
+## configs for normal nodes
 CONFIGS+=\
 /etc/cron.d/geoul                                                             \
 /etc/semiauto.master                                                          \
@@ -17,9 +17,10 @@ CONFIGS+=\
 /etc/rsyncd.conf                                                              \
 /var/log/geoul/rsyncd/                                                        \
 /var/log/geoul/cvsupd/                                                        \
+/var/log/geoul/measure-usage/                                                 \
 /etc/logrotate.d/geoul                                                        \
 /etc/webalizer/webalizer.conf                                                 \
-/etc/motd                                                                     \
+/etc/motd.tail                                                                \
 #
 
 # package specific httpd configs
@@ -28,21 +29,24 @@ HTTPCONFIGS=$(shell find /mirror/pkgs/*/$(HTTPCONFIGNAME))
 CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-available/80-%.conf)
 
 
-# configs for the leader
+
+## configs for the leader
 LEADERCONFIGS+=\
 /etc/cron.d/geoul.leader                                                      \
 /etc/auto.mirror                                                              \
 #
 
 
-# command for installing
-INSTALL=install
-
-
-# targets by node type
+## node types
 node: $(CONFIGS)
 leader: node $(LEADERCONFIGS)
 
+INSTALL=install -m a+r
+
+
+## special rules for individual config
+
+# sysctl
 /etc/sysctl.conf: sysctl.conf
 	$(INSTALL) $< $@
 	sysctl -p
@@ -67,7 +71,7 @@ leader: node $(LEADERCONFIGS)
 /etc/lighttpd/lighttpd.conf: lighttpd.conf
 	$(INSTALL) $< $@
 	until invoke-rc.d lighttpd restart; do sleep 1; done
-/etc/lighttpd/conf-available/80-%.conf: /mirror/pkgs/%/$(HTTPCONFIGNAME)
+/etc/lighttpd/conf-available/80-%.conf: /mirror/pkgs/%/$(HTTPCONFIGNAME) | /etc/lighttpd/lighttpd.conf
 	$(INSTALL) $< $@
 	lighty-enable-mod $(@F:80-%.conf=%)
 	until invoke-rc.d lighttpd restart; do sleep 1; done
@@ -77,8 +81,12 @@ leader: node $(LEADERCONFIGS)
 	$(INSTALL) $< $@
 	invoke-rc.d vsftpd reload
 
+# motd
+/etc/motd.tail: motd
+	$(INSTALL) $< $@
 
-# search here for same name of config
+
+# default rule is to just install the config file from here
 .SECONDEXPANSION:
 /etc/%: $$(@F)
 	$(INSTALL) $< $@
