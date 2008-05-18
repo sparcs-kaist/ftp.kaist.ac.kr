@@ -6,7 +6,7 @@
     left: 23em; width: auto; height: 22em; overflow: auto;
     padding-right: 1em;">
 <h2 style="margin-top: 0.3em; margin-bottom: 0.3em;">Announcements <a
-        href="announce.feed"><img src="feed-icon-24x24.png" alt="(RSS)"
+        href="http://ftp.kaist.ac.kr/announce.feed"><img src="chrome/feed-icon-24x24.png" alt="(RSS)"
         style="border:none; width:24px; height:24px;
         vertical-align:top;"/></a></h2>
 <!--#include file=".announce.html.en" -->
@@ -60,9 +60,9 @@
 <div id="sponsors-pane" style="padding-top: 21em;
     text-align: center; vertical-align: middle;">
     <span style="display:none;">Brought to you by: </span>
-    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
-    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
-    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
+    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="chrome/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="chrome/kt-logo.png" style="border:none;"/></a>
+    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="chrome/sparcs-logo.png" style="border:none;"/></a>
 </div>
 
 <div id="termsofuse" style="margin-top: 1em;">

@@ -6,7 +6,7 @@
     left: 23em; width: auto; height: 22em; overflow: auto;
     padding-right: 1em;">
 <h2 style="margin-top: 0.3em; margin-bottom: 0.3em;">공지사항 <a
-        href="announce.feed"><img src="feed-icon-24x24.png" alt="(RSS)"
+        href="announce.feed"><img src="chrome/feed-icon-24x24.png" alt="(RSS)"
         style="border:none; width:24px; height:24px;
         vertical-align:top;"/></a></h2>
 <!--#include file=".announce.html.ko" -->
@@ -36,7 +36,7 @@
     </li>
 
     <li><a href="http://sparcs.kaist.ac.kr/">스팍스</a>의
-    <a href="http://ftp.kaist.ac.kr/geoul">거울 모임</a>이 관리합니다.
+    <a href="http://geoul.sparcs.org/trac/wiki/">거울 모임</a>이 관리합니다.
     </li>
 
     <li>다른 여러 이름으로도 알려져 있습니다:
@@ -60,9 +60,9 @@
 <div id="sponsors-pane" style="padding-top: 23em;
     text-align: center; vertical-align: middle;">
     <span style="display:none;">후원:</span>
-    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="/kaist-logo.png" style="border:none;"/></a>
-    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="/kt-logo.png" style="border:none;"/></a>
-    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="/sparcs-logo.png" style="border:none;"/></a>
+    <a href="http://www.kaist.ac.kr"><img id="sponsor-KAIST" alt="KAIST" src="chrome/kaist-logo.png" style="border:none;"/></a>
+    <a href="http://www.kt.co.kr"><img id="sponsor-KT" alt="KT" src="chrome/kt-logo.png" style="border:none;"/></a>
+    <a href="http://sparcs.kaist.ac.kr"><img id="sponsor-SPARCS" alt="SPARCS" src="chrome/sparcs-logo.png" style="border:none;"/></a>
 </div>
 
 <div id="termsofuse" style="margin-top: 1em;">

@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+[ $# -gt 0 ] || exec "$0" -q
+
+wget -N http://ftp.kaist.ac.kr/geoul/pkg{stat,idx}.xml "$@"
+
+for lang in ko en; do
+    xsltproc \
+    --param lang "'$lang'" \
+    --param geoul-root "'http://ftp.kaist.ac.kr/geoul'" \
+    status2html.xsl pkgidx.xml >.status.html.$lang
+done

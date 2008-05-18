@@ -7,7 +7,7 @@
  * (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
  */
 
-var pkgstaturl = '/pkgstat.xml';
+var pkgstaturl = 'pkgstat.xml';
 
 var monthnames = "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec".split(',');
 function isoDate(isoStr) {

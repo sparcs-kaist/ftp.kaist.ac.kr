@@ -67,6 +67,7 @@
 <xsl:variable name="labels" select="exsl:node-set($_msgs)/labels"/>
 
 <xsl:param name="lang" select="$labels[1]/@lang"/>
+<xsl:param name="geoul-root" select="''"/>
 <xsl:variable name="labs" select="$labels[@lang=$lang]/label"/>
 
 <xsl:template match="packages[package]">
@@ -75,8 +76,8 @@
     <script type="text/javascript" src="/status.js">;</script>
     <div id="pkgs">
         <div id="pkgstool">
-            <a href="/pkgs/news.feed"><img alt="[feed]"
-                    src="feed-icon-24x24.png"
+            <a href="{$geoul-root}/pkgs/news.feed"><img alt="[feed]"
+                    src="chrome/feed-icon-24x24.png"
                     style="border:none; vertical-align:middle;"/></a>
             <select onchange="refreshRegularly(this.value);">
                 <option     value=""><xsl:value-of select="$labs[@name='refreshnow']"/></option>
@@ -111,8 +112,8 @@
     <div id="pkg-{@id}" class="pkg {status}">
         <h3 class="pkgname"><xsl:value-of select="name"/>
             <xsl:text> </xsl:text>
-            <a href="/pkgs/{@id}/news.feed"><img alt="[feed]"
-                    src="feed-icon-12x12.png"
+            <a href="{$geoul-root}/pkgs/{@id}/news.feed"><img alt="[feed]"
+                    src="chrome/feed-icon-12x12.png"
                     style="border:none; vertical-align:top;"/></a></h3>
         <ul>
             <xsl:if test="status != 'original'">
@@ -179,7 +180,7 @@
 
             <xsl:if test="size">
                 <li>
-                    <img class="pkgsizegraph" src="/pkgs/{@id}/du.png"
+                    <img class="pkgsizegraph" src="{$geoul-root}/pkgs/{@id}/du.png"
                         alt="{$labs[@name='size']} ({name})"/>
                 </li>
             </xsl:if>

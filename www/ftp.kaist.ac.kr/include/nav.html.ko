@@ -1,5 +1,5 @@
 <div id="nav"
-    ><h2><a href="/">ftp.kaist.ac.kr</a></h2><ul
+    ><h2>ftp.kaist.ac.kr</h2><ul
         ><li><a href="/status">상태</a></li
         ><li><a href="/usage">사용량</a></li
         ><li><a href="/size">크기 변화</a></li
@@ -7,7 +7,7 @@
     ><h2>이용</h2
     ><ul
         ><li><a href="/trac/wiki/UserGuide">도움말</a></li
-        ><li><a href="/pub/">HTTP</a></li
+        ><li><a href="http://ftp.kaist.ac.kr/">HTTP</a></li
         ><li><a href="ftp://ftp.kaist.ac.kr/">FTP</a></li
     ></ul
     ><h2>운영</h2

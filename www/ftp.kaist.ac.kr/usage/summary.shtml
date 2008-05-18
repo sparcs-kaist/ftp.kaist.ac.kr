@@ -1,5 +1,5 @@
 <div style="text-align:center;">
-<a href="http"><img src="http/usage.png" alt="HTTP" height="256" width="512" style="border:none;"/></a>
-<a href="ftp"><img src="ftp/usage.png" alt="FTP" height="256" width="512" style="border:none;"/></a>
-<a href="rsync"><img src="rsync/usage.png" alt="Rsync" height="256" width="512" style="border:none;"/></a>
+<a href="http://ftp.kaist.ac.kr/geoul/usage/http"><img src="http://ftp.kaist.ac.kr/geoul/usage/http/usage.png" alt="HTTP" height="256" width="512" style="border:none;"/></a>
+<a href="http://ftp.kaist.ac.kr/geoul/usage/ftp"><img src="http://ftp.kaist.ac.kr/geoul/usage/ftp/usage.png" alt="FTP" height="256" width="512" style="border:none;"/></a>
+<a href="http://ftp.kaist.ac.kr/geoul/usage/rsync"><img src="http://ftp.kaist.ac.kr/geoul/usage/rsync/usage.png" alt="Rsync" height="256" width="512" style="border:none;"/></a>
 </div>
