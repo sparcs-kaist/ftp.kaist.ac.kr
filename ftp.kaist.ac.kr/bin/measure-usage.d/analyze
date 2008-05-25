@@ -40,7 +40,7 @@ update() {
     # for each service
     for svcd in /mirror/svcs/*; do
         # check if measuring usage is enabled
-        [ -e $svcd/measure-usage ] || continue
+        [ -e $svcd/measure-usage.conf ] || continue
         svc=`basename $svcd`
         rrd=$RRDRoot/$pkg/usage.$svc.rrd
         # create if no rrd is there

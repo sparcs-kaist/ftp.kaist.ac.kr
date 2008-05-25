@@ -12,29 +12,32 @@
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-config=$1; shift || error "logs2clf: no config supplied"
+[ $# -gt 0 ] || error "logs2clf: no config supplied"
 
-if [ -r "$config" ]; then
-    analyze() {
-        local service=$1; shift
-        local path=$1; shift
-        local type=$1; shift
-        converter=logs2clf.$type
-        if type $converter &>/dev/null; then
-            if lockfile -r3 $path.lock 2>/dev/null; then
-                PATH=$PATH:/usr/sbin
-                set +e
-                logtail $path | $converter $service | rewrite-paths "$@" >&3
-                rm -f $path.lock
-                set -e
-            else
-                error "$path: another measurement in progress"
-            fi
+analyze() {
+    local service=$1; shift
+    local path=$1; shift
+    local type=$1; shift
+    converter=logs2clf.$type
+    if type $converter &>/dev/null; then
+        if lockfile -r3 $path.lock 2>/dev/null; then
+            PATH=$PATH:/usr/sbin
+            set +e
+            logtail $path | $converter $service | rewrite-paths "$@" >&3
+            rm -f $path.lock
+            set -e
         else
-            error "logs2clf: analyze: $type: unsupported log type"
+            error "$path: another measurement in progress"
         fi
-    }
-    . "$config" 3>&1 >/dev/null
-else
-    error "logs2clf: $config: Not found"
-fi
+    else
+        error "logs2clf: analyze: $type: unsupported log type"
+    fi
+}
+
+for config in "$@"; do
+    if [ -r "$config" ]; then
+        . "$config" 3>&1 >/dev/null
+    else
+        error "logs2clf: $config: Not found"
+    fi
+done

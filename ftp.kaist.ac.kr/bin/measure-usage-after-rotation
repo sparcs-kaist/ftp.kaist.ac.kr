@@ -1,0 +1,29 @@
+#!/bin/sh
+# measure-usage-after-rotation -- measure usage after log rotation
+# 
+# Created: 2008-05-25
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+confs=()
+
+for svc in "$@"; do
+    conf="/mirror/svcs/$svc/measure-usage.conf"
+    confs=("${confs[@]}" "$conf")
+    # FIXME: get log dirs from $conf instead of $@
+    shift
+    logs=(`find "$@" -name '*.log.offset'`)
+    set --
+    # rename offsets
+    for log in "${logs[@]}"; do
+        mv -f "$log.offset" "$log.0.offset"
+    done
+done
+
+LOGEXT=.0 \
+/mirror/bin/measure-usage "${confs[@]}"
