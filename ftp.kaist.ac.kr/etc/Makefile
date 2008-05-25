@@ -21,6 +21,7 @@ CONFIGS+=\
 /etc/logrotate.d/geoul                                                        \
 /etc/webalizer/webalizer.conf                                                 \
 /etc/motd.tail                                                                \
+/etc/subversion/config
 #
 
 # package specific httpd configs
@@ -32,7 +33,7 @@ CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-avail
 
 ## configs for the leader
 LEADERCONFIGS+=\
-/etc/cron.d/geoul.leader                                                      \
+/etc/cron.d/geoul-leader                                                      \
 /etc/auto.mirror                                                              \
 #
 
@@ -55,7 +56,7 @@ INSTALL=install -m a+r
 /etc/cron.d/geoul: crontab.node
 	$(INSTALL) $< $@
 	invoke-rc.d cron reload
-/etc/cron.d/geoul.leader: crontab.leader
+/etc/cron.d/geoul-leader: crontab.leader
 	$(INSTALL) $< $@
 	invoke-rc.d cron reload
 
@@ -83,6 +84,10 @@ INSTALL=install -m a+r
 
 # motd
 /etc/motd.tail: motd
+	$(INSTALL) $< $@
+
+# subversion
+/etc/subversion/config: subversion.config
 	$(INSTALL) $< $@
 
 
