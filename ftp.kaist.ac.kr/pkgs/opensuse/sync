@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-get $source
+#get $source
+(set -x
+exec rsync -rtlH --perms --delete-after \
+    --partial --temp-dir=/mirror/ftp/.tmp \
+    --exclude='.*.??????' --exclude=.~tmp~ \
+    --verbose --stats \
+    "$source" "$PWD/data/"
+)
