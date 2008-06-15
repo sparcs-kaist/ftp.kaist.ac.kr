@@ -82,6 +82,11 @@ INSTALL=install -m a+r
 	$(INSTALL) $< $@
 	invoke-rc.d vsftpd reload
 
+# rsyncd
+/etc/rsyncd.conf: rsyncd.conf
+	$(INSTALL) $< $@
+	invoke-rc.d rsync restart
+
 # motd
 /etc/motd.tail: motd
 	$(INSTALL) $< $@
