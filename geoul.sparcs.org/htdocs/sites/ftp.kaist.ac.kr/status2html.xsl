@@ -77,7 +77,7 @@
     <div id="pkgs">
         <div id="pkgstool">
             <a href="{$geoul-root}/pkgs/news.feed"><img alt="[feed]"
-                    src="chrome/feed-icon-24x24.png"
+                    src="/chrome/feed-icon-24x24.png"
                     style="border:none; vertical-align:middle;"/></a>
             <select onchange="refreshRegularly(this.value);">
                 <option     value=""><xsl:value-of select="$labs[@name='refreshnow']"/></option>
@@ -113,7 +113,7 @@
         <h3 class="pkgname"><xsl:value-of select="name"/>
             <xsl:text> </xsl:text>
             <a href="{$geoul-root}/pkgs/{@id}/news.feed"><img alt="[feed]"
-                    src="chrome/feed-icon-12x12.png"
+                    src="/chrome/feed-icon-12x12.png"
                     style="border:none; vertical-align:top;"/></a></h3>
         <ul>
             <xsl:if test="status != 'original'">

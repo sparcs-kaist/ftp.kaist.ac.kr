@@ -1,8 +1,8 @@
 <div id="nav"
     ><h2>ftp.kaist.ac.kr</h2><ul
-        ><li><a href="/status">상태</a></li
-        ><li><a href="/usage">사용량</a></li
-        ><li><a href="/size">크기 변화</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/status">상태</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/usage">사용량</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/size">크기 변화</a></li
     ></ul
     ><h2>이용</h2
     ><ul

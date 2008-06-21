@@ -1,13 +1,13 @@
 <div id="nav"
     ><h2>ftp.kaist.ac.kr</h2><ul
-        ><li><a href="/status">Status</a></li
-        ><li><a href="/usage">Usage</a></li
-        ><li><a href="/size">Size</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/status">Status</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/usage">Usage</a></li
+        ><li><a href="/sites/ftp.kaist.ac.kr/size">Size</a></li
     ></ul
     ><h2>User</h2
     ><ul
         ><li><a href="/trac/wiki/UserGuide">Guide</a></li
-        ><li><a href="/pub/">HTTP</a></li
+        ><li><a href="http://ftp.kaist.ac.kr/">HTTP</a></li
         ><li><a href="ftp://ftp.kaist.ac.kr/">FTP</a></li
     ></ul
     ><h2>Admin</h2

@@ -1,9 +1,9 @@
 <!--#set var="id" value="status" -->
 <!--#set var="feedurl" value="http://ftp.kaist.ac.kr/pkgs/news.feed" -->
-<!--#set var="title" value="Mirror Status" -->
+<!--#set var="title" value="복사본 상태" -->
 <!--#include virtual="/include/head.shtml" -->
 
 <!--#include file=".status.html" -->
 
-<!--#set var="urlpath" value="/.status.html" -->
+<!--#set var="urlpath" value="/sites/ftp.kaist.ac.kr/.status.html" -->
 <!--#include virtual="/include/foot.shtml" -->

@@ -1,4 +1,4 @@
 <div style="text-align:center;">
     <img src="http://ftp.kaist.ac.kr/geoul/size/total.png" alt="Total Disk Usage"/>
 </div>
-<!--#set var="urlpath" value="/size/total.png" -->
+<!--#set var="xurlpath" value="/sites/ftp.kaist.ac.kr/size/total.png" -->
