@@ -72,8 +72,8 @@
 
 <xsl:template match="packages[package]">
     <script type="text/javascript" src="/include/mozxpath.js">;</script>
-    <script type="text/javascript" src="/locale.js.{$lang}">;</script>
-    <script type="text/javascript" src="/status.js">;</script>
+    <script type="text/javascript" src="locale.js.{$lang}">;</script>
+    <script type="text/javascript" src="status.js">;</script>
     <div id="pkgs">
         <div id="pkgstool">
             <a href="{$geoul-root}/pkgs/news.feed"><img alt="[feed]"
