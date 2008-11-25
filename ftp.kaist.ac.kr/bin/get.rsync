@@ -6,10 +6,18 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
+permopts=(--no-perms --chmod=a+rX,ug+w)
+
+for a in "$@"; do
+    case "$a" in
+        --perms|-p) permopts=() ;;
+    esac
+done
+
 # simply run rsync
 (set -x
 # TODO: how about --delay-updates? --partial-dir?
-exec rsync -rtlH --no-perms --chmod=a+rX,ug+w --delete-after \
+exec rsync -rtlH "${permopts[@]}" --delete-after \
     --partial --temp-dir=/mirror/ftp/.tmp \
     --exclude='.*.??????' --exclude=.~tmp~ \
     --verbose --stats \
