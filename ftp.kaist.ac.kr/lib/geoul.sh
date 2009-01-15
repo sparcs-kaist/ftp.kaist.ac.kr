@@ -28,10 +28,17 @@ foreachpkg() {
     . /mirror/bin/foreachpkg
 }
 
+realpath_to_self() {
+    readlink -f "$0" || { cd "$OLDPWD" && readlink -f "$0"; }
+}
+
 # switch running user to mirror admin
 running_as_mirror_admin() {
-    local self=`readlink -f "$0" || { cd "$OLDPWD" && readlink -f "$0"; }`
-    [ `whoami` = $MirrorAdmin ] || exec sudo -H -u $MirrorAdmin "$self" "$@"
+    [ x"`whoami`" = x"$MirrorAdmin" ] || exec sudo -H -u "$MirrorAdmin" "`realpath_to_self`" "$@"
+}
+
+running_as_process_group_leader() {
+    [ x"`ps -o pgid= -p $$`" == x"$$" ] || exec setsid "`realpath_to_self`" "$@"
 }
 
 # check nosync

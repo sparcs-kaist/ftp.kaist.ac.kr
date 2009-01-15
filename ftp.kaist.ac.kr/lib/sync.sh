@@ -57,6 +57,7 @@ esac
 
 ## check environment
 running_as_mirror_admin "$@"
+running_as_process_group_leader "$@"
 
 shift
 export GETARGS="$@"

@@ -148,12 +148,12 @@ kill_lock_owner() {
     if [ -n "$owner" ]; then
         # send TERM
         if sync_in_progress; then
-            ssh $host kill -TERM $pgrp
+            ssh $host kill -TERM -$pgrp
             sleep 2
         fi
         # send KILL if still alive
         while sync_in_progress; do
-            ssh $host kill -KILL $pgrp
+            ssh $host kill -KILL -$pgrp
             sleep 2
         done
     fi

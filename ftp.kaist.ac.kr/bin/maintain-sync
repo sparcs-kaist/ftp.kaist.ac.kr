@@ -39,7 +39,7 @@ else
 fi
 trysync() {
     loadavgOK
-    [ -x sync ] && setsid $PWD/sync $trigger &
+    [ -x sync ] && $PWD/sync $trigger &
 }
 
 # first, check load average
