@@ -15,7 +15,7 @@ BaseURL=http://$SITENAME
 StatusURL=$BaseURL/status
 PkgsRootURL=$BaseURL/pkgs
 SyncLogRootURL=$BaseURL/sync
-HTTPRootURL=$BaseURL/pub/
+HTTPRootURL=$BaseURL/
 
 # environment
 LC_ALL=C

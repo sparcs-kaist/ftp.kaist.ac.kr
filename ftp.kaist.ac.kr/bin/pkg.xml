@@ -86,8 +86,8 @@ if $full; then
         [ -f links ] && cat links
         if [ -n "$urlpath" ]; then
             cat <<EOF
-FTP	$FTPRootURL$urlpath
 HTTP	$HTTPRootURL$urlpath
+FTP	$FTPRootURL$urlpath
 EOF
         fi
     } | sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:'
