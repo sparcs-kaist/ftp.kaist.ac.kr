@@ -23,7 +23,7 @@ for l in ../X11R6/lib/*; do
     sudo ln -sfn $l
 done
 
-for f in /etc/{passwd,shadow,group}; do
+for f in /etc/{passwd,shadow,group,gshadow}; do
     sudo sh -c "cp -pf $f $root$f && egrep '^(root|cvsupd|mirror)' $f >$root$f"
 done
 
