@@ -31,4 +31,5 @@ rsync --recursive --times --links --hard-links \
 # now, place a timestamp
 date -u >data/project/trace/${HOSTNAME}
 
-#./push
+# push server (See http://www.debian.org/mirror/push_server#sshtrigger)
+./trigger-downstreams

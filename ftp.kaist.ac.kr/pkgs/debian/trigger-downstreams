@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Push server implementation for secondary push-triggered Debian mirrors
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2009-02-14
+# See: http://www.debian.org/mirror/push_server#sshtrigger
+
+. /mirror/lib/geoul.sh
+
+running_as_mirror_admin "$@"
+
+downstreams=`cat downstreams`
+
+set -e -x
+for site in $downstreams
+do ssh -o "BatchMode yes" -i ~/.ssh/id_rsa $site sleep 1
+done
