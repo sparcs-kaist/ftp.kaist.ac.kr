@@ -8,9 +8,13 @@
 
 running_as_mirror_admin "$@"
 
-downstreams=`cat downstreams`
+options=()
+if [ $# -eq 0 ]; then
+    set -- `cat downstreams`
+    options=("${options[@]}" -o "BatchMode yes")
+fi
 
 set -e -x
-for site in $downstreams
-do ssh -o "BatchMode yes" -i ~/.ssh/id_rsa $site sleep 1
+for downstream in "$@"
+do ssh "${options[@]}" -i ~/.ssh/id_rsa $downstream true
 done
