@@ -12,7 +12,10 @@ options=()
 if [ $# -eq 0 ]; then
     set -- `cat downstreams`
     options=("${options[@]}" -o "BatchMode yes")
+else
+    options=("${options[@]}" -v)
 fi
+unset SSH_AUTH_SOCK
 
 set -e -x
 for downstream in "$@"
