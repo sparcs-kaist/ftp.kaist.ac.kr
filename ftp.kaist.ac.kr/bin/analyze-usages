@@ -65,6 +65,8 @@ http_conf() {
 	GroupAgent	Lynx*		Lynx
 	GroupAgent	Wget		Wget
 	GroupAgent	libwww-perl	libwww-perl
+	GroupAgent	Ubuntu*         Ubuntu APT
+	GroupAgent	Debian*         Debian APT
 	#GroupAgent	*APT-HTTP	APT-HTTP
 	#GroupAgent	*		others
 	SearchEngine	yahoo.com	p=
