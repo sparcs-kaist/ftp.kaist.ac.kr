@@ -1,6 +1,7 @@
 
   Welcome to KAIST File Archive, ftp.kaist.ac.kr!
-   (AKA ftp.kr.debian.org, kr.archive.ubuntu.com, ftp2.kr.freebsd.org)
+  (AKA ftp.kr.debian.org, kr.archive.ubuntu.com, ftp2.kr.vim.org,
+   {cvsup,ftp}2.kr.freebsd.org)
 
   We provide mirrors of open source softwares, e.g. Debian, *BSDs,
   Mozilla, Apache, etc. and publically available files and software.
