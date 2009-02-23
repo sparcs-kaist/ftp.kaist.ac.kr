@@ -8,7 +8,13 @@
 set -e
 
 url=$1; shift
-proto=${url%%://*}
+
+# detect protocol to determine driver
+case "$url" in
+    *://*) proto=${url%%://*} ;;
+    *:*|*@*:*) proto=rsync ;;
+    *) proto=unsupported ;;
+esac
 driver=/mirror/bin/get."$proto"
 
 if [ -x "$driver" ]; then
