@@ -49,7 +49,8 @@ loadavgOK
 pkglst=/mirror/nodes/$HOSTNAME/pkgs.lst
 if [ -e $pkglst.in ]; then
     # use pkg lst for this node if available
-    [ $pkglst -nt $pkglst.in ] || expand-paths /mirror/pkgs <$pkglst.in >$pkglst
+    [ $pkglst -nt $pkglst.in -a $pkglst -nt /mirror/pkgs ] || \
+        expand-paths /mirror/pkgs <$pkglst.in >$pkglst
     cd /mirror/pkgs
     while read <&3; do
         pushd $REPLY >/dev/null
