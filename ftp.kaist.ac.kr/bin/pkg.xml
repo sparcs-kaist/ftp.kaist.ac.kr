@@ -103,7 +103,7 @@ fi
 if [ -n "$source" ]; then
     # synchronization
     cat <<EOF
-<sync${currentref:+ ref='$currentref'}${started:+ started='$started'}${interval:+ frequency='$interval'}>$source</sync>
+<sync${currentref:+ ref='$currentref'}${started:+ started='$started'}${frequency:+ frequency='$frequency'}>$source</sync>
 EOF
     if [ "${failed:-0}" -gt 0 ]; then
         cat <<EOF

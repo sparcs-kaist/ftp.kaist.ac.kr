@@ -78,53 +78,56 @@ humandate() {
     date "$@" +'%Y-%m-%d %H:%M:%S %z'
 }
 
-# convert interval specifier to seconds
+# convert XML Schema duration format to number of seconds
 secondsof() {
-    local period=$1; shift
-    local scale=
-    case $period in
-        daily)  period=1d ;;
-        hourly) period=1h ;;
-        weekly) period=1w ;;
-    esac
-    case $period in
-        *w) scale=$((86400 * 7)) ;;
-        *d) scale=86400 ;;
-        *h) scale=3600 ;;
-        *M|*"'") scale=60 ;;
-        *s|*'"') scale=1 ;;
-        *[0-9]) scale=1; period=${period}x ;;
-    esac
-    if [ -n "$scale" ]; then
-        echo $((${period%?} * $scale))
-    else
-        echo "unknown period: $period" >&2
+    local duration=$1; shift
+    duration-error() {
+        echo "$duration:invalid duration format" >&2
         false
-    fi
+    }
+    local dpos=true
+    [ x"${duration#-}" = x"$duration" ] || dpos=false
+    local ddt=${duration#P}
+    [ x"$ddt" != x"$duration" ] || duration-error
+    local dd=${ddt%%T*}
+    local dt=${ddt##*T}
+    local ddexpr=$dd
+    ddexpr=${ddexpr//Y/*365D }
+    ddexpr=${ddexpr//M/*30D }
+    ddexpr=${ddexpr//D/*86400 }
+    local dtexpr=$dt
+    dtexpr=${dtexpr//H/*3600 }
+    dtexpr=${dtexpr//M/*60 }
+    dtexpr=${dtexpr//S/ }
+    local s=0
+    for e in $ddexpr $dtexpr
+    do let s+=$e || duration-error
+    done
+    $dpos || s=-$s
+    echo $s
 }
 
-# convert seconds to human friendly interval
+# convert number of seconds to XML Schema duration format
 humaninterval() {
     local interval=${1:-0}
+    local dsgn= dd= dt=
     if [ $interval = 0 ]; then
-        echo '0"'
+        dt=0S
     else
         if [ $interval -lt 0 ]; then
-            printf '-'
+            dsgn=-
             interval=-$interval
         fi
         local H=$(( $interval / 3600 ))
-        local d=$(( $H / 24 )); H=$(( $H % 24 ))
-        local w=$(( $d / 7 ));  d=$(( $d % 7 ))
+        local D=$(( $H / 24 )); H=$(( $H % 24 ))
         local M=$(( $interval % 3600 / 60 ))
         local S=$(( $interval % 3600 % 60 ))
-        [ $w = 0 ] || printf '%dw' $w
-        [ $d = 0 ] || printf '%dd' $d
-        [ $H = 0 ] || printf '%dh' $H
-        [ $M = 0 ] || printf '%d'\' $M
-        [ $S = 0 ] || printf '%d'\" $S
-        echo
+        [ $D = 0 ] || dd="$dd${D}D"
+        [ $H = 0 ] || dt="$dt${H}H"
+        [ $M = 0 ] || dt="$dt${M}M"
+        [ $S = 0 ] || dt="$dt${S}S"
     fi
+    echo "${sgn}P${dd}${dt:+T$dt}"
 }
 
 

@@ -158,6 +158,7 @@ function update(http_request) {
                 if (sync) {
                     setText(form.source, getText(sync));
                     if (frequency = sync.getAttribute('frequency')) {
+                        frequency = ISODurationToCentisec(frequency);
                         frequency = formatSeconds(frequency);
                         setText(form.frequency, frequency);
                     } else
