@@ -145,13 +145,3 @@ pkg_uri() {
     echo "$BaseURL/pkgs/$pkg"
 }
 
-excerpt() {
-    local f=$1 l=${2:-10}
-    if [ `zless "$f" 2>/dev/null | wc -l || echo 0` -gt $(($l * 2)) ]; then
-        zless "$f" | head -$l
-        echo "..."
-        zless "$f" | tail -$l
-    else
-        zless "$f"
-    fi
-}

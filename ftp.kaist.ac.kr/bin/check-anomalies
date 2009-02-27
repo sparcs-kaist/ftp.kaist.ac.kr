@@ -56,7 +56,7 @@ check() {
         [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
         item "$pkg: sync failed $failures times; will retry $when"
         echo "== $pkg failed =="
-        quotelog .failure.log.gz
+        quotelog excerpt.failure .failure.log.gz
         rm -f failed.needsreport  # remove it not to report twice
         echo
     # too long syncs
@@ -71,7 +71,7 @@ check() {
             # report
             item "$pkg: sync too long; `humaninterval $synctime`"
             echo "== $pkg too long =="
-            quotelog log
+            quotelog excerpt log
             echo
             # schedule next report
             local reports_lb=$(( $synctime / $ReportLongSyncsEvery + 1 ))
@@ -85,10 +85,11 @@ check() {
 }
 
 quotelog() {
-    local log=$1
+    local excerpt=$1; shift
+    local log=$1; shift
     echo "Excerpt of [`log_uri "$log"`]:"
     echo "-->8--"
-    excerpt "$log"
+    "$excerpt" "$log" "$@"
     echo "--8<--"
 }
 

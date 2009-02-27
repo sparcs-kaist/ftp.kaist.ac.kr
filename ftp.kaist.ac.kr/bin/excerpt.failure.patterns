@@ -1,0 +1,18 @@
+error
+warning
+failed
+failure
+denied
+denial
+refuse
+refusal
+reject
+unauthorized
+could not
+terminate
+interrupt
+quit
+abort
+skip
+^rsync:
+^file has vanished:

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# excerpt.failure -- Analyze clues to the causes of given failure log
+# 
+# Created: 2009-02-27
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+Self=`readlink -f "$0"`
+Patterns="$Self.patterns"
+
+f=$1 l=${2:-10}
+if [ `zless "$f" 2>/dev/null | wc -l || echo 0` -gt $(($l * 2)) ]; then
+    zless "$f" | head -$l
+    if ! zless "$f" | grep -iEf "$Patterns"; then 
+        echo "[...]"
+        zless "$f" | tail -$l
+    fi
+else
+    zless "$f"
+fi
