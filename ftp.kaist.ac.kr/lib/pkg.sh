@@ -35,7 +35,7 @@ in_a_package() {
         # frequency (optional)
         ! [ -f frequency ] || frequency=`cat frequency`
         # valid period (optional; defaults to 1d)
-        [ -f validfor ] && validfor=`cat validfor` || validfor=1d
+        [ -f validfor ] && validfor=`cat validfor` || validfor=P1D
     elif [ -f original ]; then
         # original, no source, frequency, nor valid period
         true

@@ -90,10 +90,12 @@ secondsof() {
     local ddt=${duration#P}
     [ x"$ddt" != x"$duration" ] || duration-error
     local dd=${ddt%%T*}
-    local dt=${ddt##*T}
+    local dt=${ddt#$dd}
+    dt=${dt#T}
+    [ -z "$dt" -o x"$dt" != x"${ddt#$dd}" ] || duration-error
     local ddexpr=$dd
-    ddexpr=${ddexpr//Y/*365D }
-    ddexpr=${ddexpr//M/*30D }
+    ddexpr=${ddexpr//Y/*31557600 }
+    ddexpr=${ddexpr//M/*2629800 }
     ddexpr=${ddexpr//D/*86400 }
     local dtexpr=$dt
     dtexpr=${dtexpr//H/*3600 }
