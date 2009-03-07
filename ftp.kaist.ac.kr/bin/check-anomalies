@@ -7,8 +7,8 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
 MAILTO=${MAILTO:-ftp}
-ReportFailedSyncsAfter=1d
-ReportLongSyncsEvery=12h
+ReportFailedSyncsAfter=P1D
+ReportLongSyncsEvery=PT12H
 
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
