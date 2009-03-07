@@ -36,7 +36,8 @@
     <label name="refresh5mins">매 5분마다</label>
     <label name="refresh20mins">매 20분마다</label>
     <label name="refreshhourly">한 시간마다</label>
-    <label name="size">크기변화</label>
+    <label name="size">크기 변화</label>
+    <label name="usage">네트워크 사용량</label>
 </labels>
 <labels lang="en">
     <label name="status">Status</label>
@@ -62,6 +63,7 @@
     <label name="refresh20mins">Every 20 minutes</label>
     <label name="refreshhourly">Every hour</label>
     <label name="size">Change in size</label>
+    <label name="usage">Network traffic</label>
 </labels>
 </xsl:variable>
 <xsl:variable name="labels" select="exsl:node-set($_msgs)/labels"/>
@@ -176,6 +178,13 @@
                                         select="@href"/></a></li>
                         </xsl:for-each>
                     </ul>
+                </li>
+            </xsl:if>
+
+            <xsl:if test="usage">
+                <li>
+                    <img class="pkgusagegraph" src="{$geoul-root}/pkgs/{@id}/usage.png"
+                        alt="{$labs[@name='usage']} ({name})"/>
                 </li>
             </xsl:if>
 
