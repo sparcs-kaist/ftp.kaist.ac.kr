@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# publish-stats.d/render
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+# See rrdgraph, rrdgraph_graph, rrdgraph_rpn, rrdgraph_examples
+
+defs=()
+while read -r; do
+    defs=("${defs[@]}" "$REPLY")
+done
+rrdtool graph --rigid --slope-mode --imgformat PNG --interlaced \
+    --lower-limit 0 "$@" "${defs[@]}" >/dev/null

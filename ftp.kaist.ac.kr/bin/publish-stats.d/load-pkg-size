@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# publish-stats.d/load-pkg-size
+# 
+# Refactored: 2009-03-07
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/pkg.sh
+pkgid=${pkg//./_}
+
+[ -r du.rrd ]
+
+echo "DEF:${pkgid}_du=$PWD/du.rrd:du:AVERAGE"
+echo "CDEF:${pkgid}_du_bytes=${pkgid}_du,1024,*"
+echo "DEF:${pkgid}_dirs=$PWD/du.rrd:dirs:AVERAGE"
+echo "DEF:${pkgid}_files=$PWD/du.rrd:files:AVERAGE"

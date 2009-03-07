@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-usage-graph-by-pkgs
+# 
+# Created: 2008-02-19
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+
+draw-pkg-usage() {
+    ( . /mirror/lib/pkg.sh
+    pkgid=${pkg//./_}
+    echo "AREA:${pkgid}_usage_size#$color:$name:STACK"
+    )
+}
+cd /mirror/log/usage
+{
+    foreachpkg load-pkg-usage
+    foreachpkg draw-pkg-usage
+    echo "LINE:0#000000::STACK"
+    draw-timestamp
+} |
+render-usage by-pkgs.png \
+    --width 600 --height 400 \
+    --title "Network usage of $SITENAME" \
+    "$@"

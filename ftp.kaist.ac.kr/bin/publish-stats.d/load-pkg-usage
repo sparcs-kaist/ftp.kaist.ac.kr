@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# publish-stats.d/load-pkg-usage
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/pkg.sh
+pkgid=${pkg//./_}
+
+for ds in size count; do
+    sumexpr=0
+    for rrd in usage.*.rrd; do
+        [ -r $rrd ]
+        svc=${rrd%.rrd}; svc=${svc#usage.}
+        echo "DEF:${pkgid}_${svc}_usage_${ds}=$PWD/$rrd:$ds:AVERAGE"
+        sumexpr="$sumexpr,${pkgid}_${svc}_usage_${ds},+"
+    done
+    echo "CDEF:${pkgid}_usage_${ds}=$sumexpr"
+done

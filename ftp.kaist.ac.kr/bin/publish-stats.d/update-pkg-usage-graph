@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-pkg-usage-graph
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/pkg.sh
+pkgid=${pkg//./_}
+
+draw-pkg-usage() {
+    for rrd in usage.*.rrd; do
+        local svc=${rrd%.rrd}; svc=${svc#usage.}
+        local svccolor=`cat /mirror/svcs/$svc/color || echo cccccc`
+        echo "AREA:${pkgid}_${svc}_usage_size#$svccolor:$svc:STACK"
+    done
+    echo "LINE:0#000000::STACK"
+}
+
+{
+    load-pkg-usage
+    draw-pkg-usage
+    draw-timestamp
+} |
+render-usage usage.png \
+    --title "Network usage of $name" \
+    --width 400 --height 100 \
+    "$@"

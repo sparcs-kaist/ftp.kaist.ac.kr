@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-usage-graph-by-svcs
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+
+sum-svc-usage() {
+    ( . /mirror/lib/pkg.sh
+    pkgid=${pkg//./_}
+    echo -n ",${pkgid}_${svc}_usage_size,+"
+    )
+}
+
+draw-svc-usage() {
+    local svc=$1; shift
+    echo -n "CDEF:${svc}_usage_size=0"; foreachpkg sum-svc-usage $svc; echo
+    local svccolor=`cat /mirror/svcs/$svc/color || echo cccccc`
+    echo "AREA:${svc}_usage_size#$svccolor:$svc:STACK"
+}
+
+cd /mirror/log/usage
+{
+    foreachpkg load-pkg-usage
+    for svc in /mirror/svcs/*/measure-usage.conf
+    do draw-svc-usage $(basename $(dirname $svc))
+    done
+    echo "LINE:0#000000::STACK"
+    draw-timestamp
+} |
+render-usage by-svcs.png \
+    --width 600 --height 400 \
+    --title "Network usage of $SITENAME" \
+    "$@"

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-svc-usage-graph
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+
+[ x"$(dirname "$PWD")" = x"/mirror/svcs" ]
+svc=$(basename "$PWD")
+
+draw-pkg-usage() {
+    ( . /mirror/lib/pkg.sh
+    pkgid=${pkg//./_}
+    echo "AREA:${pkgid}_${svc}_usage_size#$color:$name:STACK"
+    )
+}
+
+{
+    foreachpkg load-pkg-usage
+    foreachpkg draw-pkg-usage
+    echo "LINE:0#000000::STACK"
+    draw-timestamp
+} |
+render-usage usage.png \
+    --title "Network usage of $svc" \
+    --width 600 --height 400 \
+    "$@"

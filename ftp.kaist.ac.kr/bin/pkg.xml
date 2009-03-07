@@ -117,6 +117,13 @@ cat <<EOF
 <status${successref:+ ref='$successref'}${lastupdated:+ lastupdated='$lastupdated'}>$status</status>
 EOF
 
+if ls usage.*.rrd &>/dev/null; then
+    # TODO: actual usage info using rrdtool fetch
+    cat <<EOF
+<usage/>
+EOF
+fi
+
 if [ -f du.rrd ]; then
     # TODO: actual size info using rrdtool fetch
     cat <<EOF

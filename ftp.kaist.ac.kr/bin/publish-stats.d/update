@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# publish-stats.d/update -- Update all statistics
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+
+# disk usage
+foreachpkg update-pkg-du-graph "$@"
+update-size-graph-by-pkgs "$@"
+
+# network usage
+update-usage-graph-by-pkgs "$@"
+update-usage-graph-by-svcs "$@"
+foreachpkg update-pkg-usage-graph "$@"
+for svc in /mirror/svcs/*/measure-usage.conf; do 
+    (
+    cd $(dirname "$svc")
+    update-svc-usage-graph "$@"
+    )
+done

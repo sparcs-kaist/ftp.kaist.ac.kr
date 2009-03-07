@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# publish-stats.d/usage
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+cd "`dirname "$0"`"
+cat <<EOF
+publish-stats COMMAND [RRDtool OPTION...]
+
+Available COMMANDs are:
+EOF
+for cmd in update*; do
+    echo "  $cmd"
+done
+echo
