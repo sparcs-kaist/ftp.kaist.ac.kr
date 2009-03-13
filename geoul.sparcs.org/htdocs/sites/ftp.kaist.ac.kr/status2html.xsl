@@ -141,7 +141,7 @@
                     <xsl:text> </xsl:text>
                     <a href="{fail/@ref}" class="pkgsyncfailures"
                         style="display:none;">(<span
-                            class="pkgsyncfailed"><xsl:value-of
+                            class="pkgsyncfailed">0<xsl:value-of
                                 select="fail"/></span><xsl:value-of
                             select="$labs[@name='failures']"/>)</a>
                     <xsl:text> </xsl:text>
@@ -151,21 +151,21 @@
                 </li>
                 <li><xsl:value-of select="$labs[@name='lastupdated']"/>:
                     <span class="pkglastupdated"><xsl:value-of
-                            select="status/@lastupdated"/></span>
+                            select="status/@lastupdated"/>&#160;</span>
                 </li>
 
                 <!-- show locations -->
                 <li><xsl:value-of select="$labs[@name='source']"/>:
-                    <span class="pkgsource"><xsl:value-of select="sync"/></span>
+                    <span class="pkgsource"><xsl:value-of select="sync"/>&#160;</span>
                 </li>
                 <li><xsl:value-of select="$labs[@name='frequency']"/>:
-                    <span class="pkgfrequency"><xsl:value-of select="sync/@frequency"/></span>
+                    <span class="pkgfrequency"><xsl:value-of select="sync/@frequency"/>&#160;</span>
                 </li>
             </xsl:if>
 
             <xsl:if test="note">
                 <li>
-                    <pre class="pkgnote"><xsl:value-of select="note"/></pre>
+                    <pre class="pkgnote"><xsl:value-of select="note"/>&#160;</pre>
                 </li>
             </xsl:if>
 
