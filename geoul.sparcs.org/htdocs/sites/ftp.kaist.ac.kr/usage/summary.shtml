@@ -1,5 +1,8 @@
-<div style="text-align:center;">
+<h2>Overview</h2>
+<img src="http://ftp.kaist.ac.kr/geoul/usage/by-svcs.png" alt="Network Usage by Services"/>
+<img src="http://ftp.kaist.ac.kr/geoul/usage/by-pkgs.png" alt="Network Usage by Packages"/>
+
+<h2>Details</h2>
 <a href="http://ftp.kaist.ac.kr/geoul/usage/http"><img src="http://ftp.kaist.ac.kr/geoul/usage/http/usage.png" alt="HTTP" height="256" width="512" style="border:none;"/></a>
 <a href="http://ftp.kaist.ac.kr/geoul/usage/ftp"><img src="http://ftp.kaist.ac.kr/geoul/usage/ftp/usage.png" alt="FTP" height="256" width="512" style="border:none;"/></a>
 <a href="http://ftp.kaist.ac.kr/geoul/usage/rsync"><img src="http://ftp.kaist.ac.kr/geoul/usage/rsync/usage.png" alt="Rsync" height="256" width="512" style="border:none;"/></a>
-</div>

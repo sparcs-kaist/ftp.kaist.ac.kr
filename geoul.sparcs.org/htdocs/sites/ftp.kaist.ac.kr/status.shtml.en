@@ -1,6 +1,6 @@
 <!--#set var="id" value="status" -->
 <!--#set var="feedurl" value="http://ftp.kaist.ac.kr/pkgs/news.feed" -->
-<!--#set var="title" value="Mirror Status" -->
+<!--#set var="title" value="Status" -->
 <!--#include virtual="/include/head.shtml" -->
 
 <!--#include file=".status.html" -->
