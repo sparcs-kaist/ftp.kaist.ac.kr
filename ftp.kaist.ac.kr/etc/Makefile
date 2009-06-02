@@ -10,6 +10,8 @@ CONFIGS+=\
 /etc/cron.d/geoul                                                             \
 /etc/semiauto.master                                                          \
 /etc/sysctl.conf                                                              \
+/etc/aliases                                                                  \
+/etc/admin-contact                                                            \
 /etc/vsftpd.conf                                                              \
 /var/log/geoul/ftpd/                                                          \
 /etc/lighttpd/lighttpd.conf                                                   \
@@ -67,6 +69,11 @@ INSTALL=install -m a+r
 	chmod g+w $@
 /etc/logrotate.d/geoul: logrotate.conf
 	$(INSTALL) $< $@
+
+# mail
+/etc/aliases: aliases
+	$(INSTALL) $< $@
+	newaliases
 
 # lighttpd
 /etc/lighttpd/lighttpd.conf: lighttpd.conf
