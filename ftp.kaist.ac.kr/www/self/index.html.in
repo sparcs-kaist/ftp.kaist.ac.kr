@@ -35,6 +35,16 @@
 </div>
 
 <div id="message">
+
+<h2>Latest News</h2>
+<div id="news">
+    <ul id="twitter_update_list" class="embedded-feed"><!-- Tweets --></ul>
+    <div style="text-align:right;"><a href="http://twitter.com/kaist_ftp" id="twitter-link">follow us on Twitter</a></div>
+    <script type="text/javascript" defer="defer" src="http://twitter.com/javascripts/blogger.js">;</script>
+    <script type="text/javascript" defer="defer" src="http://twitter.com/statuses/user_timeline/kaist_ftp.json?callback=twitterCallback2&amp;count=5">;</script>
+</div>
+
+<h2>Introduction</h2>
 <p>
 Welcome to KAIST File Archive, ftp.kaist.ac.kr!
 <br/>
@@ -45,24 +55,26 @@ kr.archive.ubuntu.com,
 {ftp,cvsup}2.kr.freebsd.org,
 ftp2.kr.vim.org
 )
-</p><p>
+</p>
+<p>
 We provide mirrors of open source softwares, e.g. Debian, *BSDs,
 Mozilla, Apache, etc. and publically available files and software.
 Various access methods are available: FTP, HTTP, Rsync or CVSup.
-
+</p>
+<p>
 This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
 Two machines with total 6-core x64 CPUs and 12GB of main memory are
 used to keep our 6.5TB RAID storage online.  KAIST and KT sponsored
 hardware and network connectivity.  SPARCS operates the whole service.
 </p>
-
 <p id="sponsors">
 <a href="http://www.kaist.ac.kr"><img alt="KAIST" src=".self/kaist-logo.png"/></a>
 <a href="http://www.kt.co.kr"><img alt="KT" src=".self/kt-logo.png"/></a>
 <a href="http://sparcs.kaist.ac.kr"><img alt="SPARCS" src=".self/sparcs-logo.png"/></a>
 </p>
 
-<div id="legal">
+<h2>Disclaimer</h2>
+<div id="disclaimer">
 Use entirely at your own risk -- no warranty is expressed or implied.
 <ul>
     <li>None of the service providers in any way whatsoever can be
@@ -77,7 +89,8 @@ Use entirely at your own risk -- no warranty is expressed or implied.
 </ul>
 </div>
 
-<p id="references">
+<h2>Pointers</h2>
+<p id="pointers">
 Contact <a href="mailto:ftp@ftp.kaist.ac.kr">ftp@ftp.kaist.ac.kr</a> for any
 problem or suggestion.
 You can receive our latest announcements by following <a
