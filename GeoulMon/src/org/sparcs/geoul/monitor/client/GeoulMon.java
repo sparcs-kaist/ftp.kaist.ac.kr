@@ -1,141 +1,213 @@
 package org.sparcs.geoul.monitor.client;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.sparcs.geoul.monitor.client.data.GeoulPackage;
+import org.sparcs.geoul.monitor.client.data.Status;
+import org.sparcs.geoul.monitor.client.data.GeoulPackage.Link;
+import org.sparcs.geoul.monitor.client.data.GeoulPackage.SyncConfig;
+import org.sparcs.geoul.monitor.client.data.Status.Event;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.ComplexPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
 public class GeoulMon implements EntryPoint {
-	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network "
-			+ "connection and try again.";
 
-	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
-	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final StatusServiceAsync statusService = GWT
+			.create(StatusService.class);
 
-	/**
-	 * This is the entry point method.
-	 */
+	private String geoulURL;
+
+	private Map<String, GeoulPackage> packageIndex = new HashMap<String, GeoulPackage>();
+	private FlowPanel packageLabelsPanel;
+	private SimplePanel packageDetailsPanel;
+
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
+		String siteName = Location.getPath().substring("/sites/".length());
+		geoulURL = "http://" + siteName + "/geoul/";
 
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
+		RootPanel.get("siteName").getElement().setInnerText(siteName);
+		Document.get().setTitle(siteName + " Status");
 
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
+		packageLabelsPanel = new FlowPanel();
+		packageLabelsPanel.getElement().setId("packageLabels");
+		RootPanel.get("dashboard").add(packageLabelsPanel);
+		packageDetailsPanel = new SimplePanel();
+		packageDetailsPanel.getElement().setId("packageDetails");
+		RootPanel.get("dashboard").add(packageDetailsPanel);
 
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
+		updatePackagesStatus();
 
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
-
-		// Add a handler to close the DialogBox
-		closeButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			public void onValueChange(ValueChangeEvent<String> event) {
+				String token = event.getValue();
+				handleHistoryItem(token);
 			}
 		});
 
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
-			public void onClick(ClickEvent event) {
-				sendNameToServer();
+		// ComplexPanel updateControls = new HorizontalPanel();
+		// updateControls.add(new Label("Update "));
+		// final ListBox intervalList = new ListBox();
+		// intervalList.addItem("manually", "-1");
+		// intervalList.addItem("every 1 minute", "60");
+		// intervalList.addItem("every 5 minutes", "300");
+		// intervalList.addItem("every 10 minutes", "600");
+		// intervalList.addItem("every 30 minutes", "1800");
+		// intervalList.addItem("every 1 hour", "3600");
+		// updateControls.add(intervalList);
+		// Button updateButton = new Button("Apply", new ClickHandler() {
+		// public void onClick(ClickEvent event) {
+		// int interval = Integer.parseInt(intervalList
+		// .getValue(intervalList.getSelectedIndex()));
+		// updatePackagesStatus();
+		// if (interval > 0) {
+		// // TODO schedule additional update
+		// }
+		// }
+		// });
+		// updateControls.add(updateButton);
+		// RootPanel.get("controls").add(updateControls);
+
+	}
+
+	private void handleHistoryItem(String token) {
+		if (token.startsWith("pkgs/")) {
+			String pkgId = token.substring("pkgs/".length());
+			GeoulPackage pkg = packageIndex.get(pkgId);
+			if (pkg != null)
+				showPackageDetails(pkg);
+		}
+	}
+
+	private void updatePackagesStatus() {
+		statusService.getSiteStatus(geoulURL,
+				new AsyncCallback<List<GeoulPackage>>() {
+
+					public void onFailure(Throwable caught) {
+						// TODO show this more politely
+						Window.alert(caught.getLocalizedMessage());
+					}
+
+					public void onSuccess(List<GeoulPackage> result) {
+						// populate dashboard with them
+						packageDetailsPanel.clear();
+						packageLabelsPanel.clear();
+						packageIndex.clear();
+						for (GeoulPackage pkg : result) {
+							packageIndex.put(pkg.getId(), pkg);
+							packageLabelsPanel.add(createPackageLabel(pkg));
+						}
+						// handle any history item
+						handleHistoryItem(History.getToken());
+					}
+				});
+	}
+
+	private Widget createPackageLabel(final GeoulPackage pkg) {
+		Hyperlink label = new Hyperlink(pkg.getName(), "pkgs/" + pkg.getId());
+		label.addStyleName("packageLabel");
+		// TODO addStyleName for freshness: good or bad
+		return label;
+	}
+
+	private void showPackageDetails(GeoulPackage pkg) {
+		// TODO caching details might be better
+		Widget details = createPackageDetails(pkg);
+		packageDetailsPanel.setWidget(details);
+	}
+
+	private Widget createPackageDetails(GeoulPackage pkg) {
+		ComplexPanel detailsPanel = new FlowPanel();
+		// title
+		detailsPanel.add(new HTML("<big>" + pkg.getName() + "</big>"));
+		SyncConfig syncConfig = pkg.getSyncConfig();
+		if (syncConfig != null) { // sync configuration
+			StringBuffer syncConfigHTML = new StringBuffer();
+			syncConfigHTML.append("Updates");
+			String frequency = syncConfig.getFrequency();
+			if (frequency != null) {
+				syncConfigHTML.append(" every ");
+				// TODO to a human readable period
+				syncConfigHTML.append(frequency);
 			}
-
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					sendNameToServer();
-				}
+			syncConfigHTML.append(" from ");
+			syncConfigHTML.append(syncConfig.getSource());
+			syncConfigHTML.append(".");
+			detailsPanel.add(new HTML(syncConfigHTML.toString()));
+		}
+		Status status = pkg.getStatus();
+		if (status != null) { // status
+			detailsPanel.add(new HTML(generateEventHTML(
+					"Current update started ", status.getUpdating(), ".")));
+			detailsPanel.add(new HTML(generateEventHTML("Last updated ", status
+					.getUpdated(), ".")));
+			detailsPanel.add(new HTML(generateEventHTML(
+					"Update recently failed ", status.getFailed(), ".")));
+		}
+		List<Link> links = pkg.getLinks();
+		if (!links.isEmpty()) { // links
+			StringBuffer linksHTML = new StringBuffer();
+			linksHTML.append("<ul>");
+			for (Link link : links) {
+				linksHTML.append("<li><a href='");
+				linksHTML.append(link.getHref());
+				linksHTML.append("'>");
+				linksHTML.append(link.getRel());
+				linksHTML.append("</a></li>");
 			}
+			linksHTML.append("</ul>");
+			detailsPanel.add(new HTML(linksHTML.toString()));
+		}
+		{ // usage
+			Image usageGraph = new Image(geoulURL + "/pkgs/" + pkg.getId()
+					+ "/usage.png");
+			usageGraph.addStyleName("statisticalGraph");
+			detailsPanel.add(usageGraph);
+		}
+		{ // size
+			Image sizeGraph = new Image(geoulURL + "/pkgs/" + pkg.getId()
+					+ "/du.png");
+			sizeGraph.addStyleName("statisticalGraph");
+			detailsPanel.add(sizeGraph);
+		}
+		return detailsPanel;
+	}
 
-			/**
-			 * Send the name from the nameField to the server and wait for a response.
-			 */
-			private void sendNameToServer() {
-				sendButton.setEnabled(false);
-				String textToServer = nameField.getText();
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
-						new AsyncCallback<String>() {
-							public void onFailure(Throwable caught) {
-								// Show the RPC error message to the user
-								dialogBox
-										.setText("Remote Procedure Call - Failure");
-								serverResponseLabel
-										.addStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(SERVER_ERROR);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-
-							public void onSuccess(String result) {
-								dialogBox.setText("Remote Procedure Call");
-								serverResponseLabel
-										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-						});
+	private String generateEventHTML(String prefix, Event event, String suffix) {
+		StringBuffer html = new StringBuffer();
+		if (event != null && event.getTimestamp() != null) {
+			String href = event.getHref();
+			if (href != null) {
+				html.append("<a href='");
+				html.append(href);
+				html.append("'>");
+			}
+			html.append(prefix);
+			// TODO use relative time
+			html.append("at ");
+			html.append(event.getTimestamp());
+			html.append(suffix);
+			if (href != null) {
+				html.append("</a>");
 			}
 		}
-
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+		return html.toString();
 	}
 }

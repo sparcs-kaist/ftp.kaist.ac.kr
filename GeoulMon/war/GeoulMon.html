@@ -7,47 +7,48 @@
 <!-- but may lead to some differences in layout.   -->
 
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<base href="/">
+<title>Geoul Status Monitor</title>
+<script type="text/javascript" language="javascript"
+	src="geoulmon/geoulmon.nocache.js"></script>
+<style type="text/css">
+<!--
+html {
+	margin: 10px;
+}
 
-    <!--                                                               -->
-    <!-- Consider inlining CSS to reduce the number of requested files -->
-    <!--                                                               -->
-    <link type="text/css" rel="stylesheet" href="GeoulMon.css">
+#packageLabels {
+	line-height: 30px;
+	margin: 20px;
+}
 
-    <!--                                           -->
-    <!-- Any title is fine                         -->
-    <!--                                           -->
-    <title>Web Application Starter Project</title>
-    
-    <!--                                           -->
-    <!-- This script loads your compiled module.   -->
-    <!-- If you add any GWT meta tags, they must   -->
-    <!-- be added before this line.                -->
-    <!--                                           -->
-    <script type="text/javascript" language="javascript" src="geoulmon/geoulmon.nocache.js"></script>
-  </head>
+#packageDetails {
+	padding: 10px;
+	border: 1px solid #999;
+}
 
-  <!--                                           -->
-  <!-- The body can have arbitrary html, or      -->
-  <!-- you can leave the body empty if you want  -->
-  <!-- to create a completely dynamic UI.        -->
-  <!--                                           -->
-  <body>
+.packageLabel {
+	display: inline;
+	border: 1px solid #ccc;
+	cursor: hand;
+	padding: 2px;
+	margin-right: 5px;
+}
 
-    <!-- OPTIONAL: include this if you want history support -->
-    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+.statisticalGraph {
+	display: block;
+}
+-->
+</style>
+</head>
 
-    <h1>Web Application Starter Project</h1>
-
-    <table align="center">
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Please enter your name:</td>        
-      </tr>
-      <tr>
-        <td id="nameFieldContainer"></td>
-        <td id="sendButtonContainer"></td>
-      </tr>
-    </table>
-  </body>
+<body>
+<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+	style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+<h1><span id="siteName">Geoul Site</span> Status</h1>
+<div id="controls"></div>
+<div id="dashboard"></div>
+</body>
 </html>
