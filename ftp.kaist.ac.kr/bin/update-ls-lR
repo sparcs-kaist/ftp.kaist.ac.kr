@@ -21,8 +21,7 @@ export LC_ALL LANG LANGUAGE
 lslR=`mktemp .tmp/ls-lR.XXXXXX`
 trap "rm -f $lslR $lslR.gz" EXIT
 
-ls -AlR >$lslR
-chmod a+r $lslR
-gzip <$lslR >$lslR.gz
+ls -AlR | tee $lslR | gzip >$lslR.gz
+chmod a+r $lslR $lslR.gz
 mv $lslR ls-lR
 mv $lslR.gz ls-lR.gz
