@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# publish-status -- Publish package status in XML
+# 
+# Created: 2009-09-15
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+# update status.xml
+cd /tmp
+tmp=`mktemp .geoul.status.xml.XXXXXX`
+trap "rm -f $tmp" ERR HUP INT TERM
+
+{
+    # TODO self url
+    echo '<packages href="" timestamp="'`isodate`'">'
+    foreachpkg pkg.xml
+    echo "</packages>"
+} >$tmp
+chmod a+r $tmp
+
+mv -f $tmp geoul.status.xml
+ln -sf /tmp/geoul.status.xml /mirror/run/status.xml
+
+# vim:ft=sh

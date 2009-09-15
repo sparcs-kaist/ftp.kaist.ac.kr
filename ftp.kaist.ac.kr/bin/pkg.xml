@@ -32,6 +32,7 @@ done
 ## gather information
 # sync info
 lastupdated=
+failed=
 started=
 sync_in_progress && started=`isodate -r lock`
 [ -f timestamp ] && lastupdated=`isodate -r timestamp`
@@ -72,64 +73,61 @@ urlpath=${datapath#$FTPRootPath}
 
 
 ## show things in XML
-echo "<package id='$pkg'>"
+echo "<package id='$pkg'"
+# name
+echo " name='${name:-$pkg}'"
+# visibility
+$visible || echo " hidden='true'"
+echo ">"
 
-if $full; then
-    # visibility
-    $visible || echo "<hidden/>"
-
-    # name
-    echo "<name>${name:-$pkg}</name>"
-
-    # links
-    {
-        [ -f links ] && cat links
-        if [ -n "$urlpath" ]; then
-            cat <<EOF
+# links
+{
+    [ -f links ] && cat links
+    if [ -n "$urlpath" ]; then
+        cat <<EOF
 HTTP	$HTTPRootURL$urlpath
 FTP	$FTPRootURL$urlpath
 EOF
-        fi
-    } | sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:'
-
-    # any notes?
-    if [ -f note ]; then
-        echo "<note><![CDATA["
-        cat note
-        echo "]]></note>"
     fi
+} | sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:'
+
+# notes
+if [ -f note ]; then
+    echo "<note><![CDATA["
+    cat note
+    echo "]]></note>"
 fi
 
+# synchronization
 if [ -n "$source" ]; then
-    # synchronization
-    cat <<EOF
-<sync${currentref:+ ref='$currentref'}${started:+ started='$started'}${frequency:+ frequency='$frequency'}>$source</sync>
-EOF
-    if [ "${failed:-0}" -gt 0 ]; then
-        cat <<EOF
-<fail${failureref:+ ref='$failureref'}>${failed:-0}</fail>
-EOF
-    fi
+    echo "<sync${source:+ source='$source'} ${frequency:+ frequency='$frequency'}/>"
 fi
 
 # status
-cat <<EOF
-<status${successref:+ ref='$successref'}${lastupdated:+ lastupdated='$lastupdated'}>$status</status>
-EOF
+echo "<status>"
+{
+    if [ -n "$lastupdated" ]; then
+        echo "<updated${successref:+ href='$successref'}${lastupdated:+ timestamp='$lastupdated'}/>"
+    fi
+    if [ "${failed:-0}" -gt 0 ]; then
+        # TODO failure timestamp
+        echo "<failed${failureref:+ href='$failureref'} count='${failed:-0}'/>"
+    fi
+    if [ -n "$started" ]; then
+        echo "<updating${currentref:+ href='$currentref'}${started:+ timestamp='$started'}/>"
+    fi
 
-if ls usage.*.rrd &>/dev/null; then
-    # TODO: actual usage info using rrdtool fetch
-    cat <<EOF
-<usage/>
-EOF
-fi
+    if ls usage.*.rrd &>/dev/null; then
+        # TODO: actual usage info using rrdtool fetch
+        echo "<usage/>"
+    fi
 
-if [ -f du.rrd ]; then
-    # TODO: actual size info using rrdtool fetch
-    cat <<EOF
-<size/>
-EOF
-fi
+    if [ -f du.rrd ]; then
+        # TODO: actual size info using rrdtool fetch
+        echo "<size/>"
+    fi
+}
+echo "</status>"
 
 echo "</package>"
 
