@@ -1,6 +1,7 @@
 package org.sparcs.geoul.monitor.server.test;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+
+import javax.xml.bind.DataBindingException;
+import javax.xml.bind.JAXB;
 
 import org.apache.tools.ant.filters.StringInputStream;
 import org.sparcs.geoul.monitor.client.data.GeoulPackages;
@@ -19,12 +20,10 @@ public class JaxbTest {
 				+ "</package>";
 		String pidx = "<packages>" + p1 + "</packages>";
 		try {
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance(GeoulPackages.class);
-			GeoulPackages pi = (GeoulPackages) jaxbContext.createUnmarshaller()
-					.unmarshal(new StringInputStream(pidx));
-			jaxbContext.createMarshaller().marshal(pi, System.out);
-		} catch (JAXBException e) {
+			GeoulPackages pi = JAXB.unmarshal(new StringInputStream(pidx),
+					GeoulPackages.class);
+			JAXB.marshal(pi, System.out);
+		} catch (DataBindingException e) {
 			e.printStackTrace();
 		}
 	}
