@@ -1,0 +1,118 @@
+Index: .classpath
+===================================================================
+--- .classpath	(revision 356)
++++ .classpath	(working copy)
+@@ -3,8 +3,7 @@
+ 	<classpathentry kind="src" path="src"/>
+ 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+ 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+-	<classpathentry kind="lib" path="war/WEB-INF/lib/jaxb-2.1.11-api.jar"/>
+-	<classpathentry kind="lib" path="war/WEB-INF/lib/jaxp-1.4.2-api.jar"/>
++	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
++	<classpathentry kind="lib" path="war/WEB-INF/lib/ae-jaxb-api.jar"/>
+ 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+ </classpath>
+Index: .settings/org.eclipse.jdt.core.prefs
+===================================================================
+--- .settings/org.eclipse.jdt.core.prefs	(revision 0)
++++ .settings/org.eclipse.jdt.core.prefs	(revision 0)
+@@ -0,0 +1,12 @@
++#Thu Sep 17 11:36:28 KST 2009
++eclipse.preferences.version=1
++org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
++org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
++org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
++org.eclipse.jdt.core.compiler.compliance=1.6
++org.eclipse.jdt.core.compiler.debug.lineNumber=generate
++org.eclipse.jdt.core.compiler.debug.localVariable=generate
++org.eclipse.jdt.core.compiler.debug.sourceFile=generate
++org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
++org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
++org.eclipse.jdt.core.compiler.source=1.6
+Index: src/org/sparcs/geoul/monitor/server/test/JaxbTest.java
+===================================================================
+--- src/org/sparcs/geoul/monitor/server/test/JaxbTest.java	(revision 358)
++++ src/org/sparcs/geoul/monitor/server/test/JaxbTest.java	(working copy)
+@@ -1,11 +1,11 @@
+ package org.sparcs.geoul.monitor.server.test;
+ 
+-import javax.xml.bind.DataBindingException;
+-import javax.xml.bind.JAXB;
+-
+ import org.apache.tools.ant.filters.StringInputStream;
+ import org.sparcs.geoul.monitor.client.data.GeoulPackages;
+ 
++import ae.javax.xml.bind.DataBindingException;
++import ae.javax.xml.bind.JAXB;
++
+ public class JaxbTest {
+ 
+ 	public static void main(String[] args) {
+Index: src/org/sparcs/geoul/monitor/server/StatusServiceImpl.java
+===================================================================
+--- src/org/sparcs/geoul/monitor/server/StatusServiceImpl.java	(revision 356)
++++ src/org/sparcs/geoul/monitor/server/StatusServiceImpl.java	(working copy)
+@@ -6,14 +6,14 @@
+ import java.net.URL;
+ import java.util.List;
+ 
+-import javax.xml.bind.DataBindingException;
+-import javax.xml.bind.JAXB;
+-
+ import org.sparcs.geoul.monitor.client.StatusService;
+ import org.sparcs.geoul.monitor.client.StatusServiceException;
+ import org.sparcs.geoul.monitor.client.data.GeoulPackage;
+ import org.sparcs.geoul.monitor.client.data.GeoulPackages;
+ 
++import ae.javax.xml.bind.DataBindingException;
++import ae.javax.xml.bind.JAXB;
++
+ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+ 
+ @SuppressWarnings("serial")
+Index: src/org/sparcs/geoul/monitor/client/data/Status.java
+===================================================================
+--- src/org/sparcs/geoul/monitor/client/data/Status.java	(revision 356)
++++ src/org/sparcs/geoul/monitor/client/data/Status.java	(working copy)
+@@ -3,8 +3,8 @@
+ import java.io.Serializable;
+ import java.util.Date;
+ 
+-import javax.xml.bind.annotation.XmlAttribute;
+-import javax.xml.bind.annotation.XmlElement;
++import ae.javax.xml.bind.annotation.XmlAttribute;
++import ae.javax.xml.bind.annotation.XmlElement;
+ 
+ @SuppressWarnings("serial")
+ public class Status implements Serializable {
+Index: src/org/sparcs/geoul/monitor/client/data/GeoulPackages.java
+===================================================================
+--- src/org/sparcs/geoul/monitor/client/data/GeoulPackages.java	(revision 356)
++++ src/org/sparcs/geoul/monitor/client/data/GeoulPackages.java	(working copy)
+@@ -4,8 +4,8 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
+-import javax.xml.bind.annotation.XmlElement;
+-import javax.xml.bind.annotation.XmlRootElement;
++import ae.javax.xml.bind.annotation.XmlElement;
++import ae.javax.xml.bind.annotation.XmlRootElement;
+ 
+ @SuppressWarnings("serial")
+ @XmlRootElement(name = "packages")
+Index: src/org/sparcs/geoul/monitor/client/data/GeoulPackage.java
+===================================================================
+--- src/org/sparcs/geoul/monitor/client/data/GeoulPackage.java	(revision 356)
++++ src/org/sparcs/geoul/monitor/client/data/GeoulPackage.java	(working copy)
+@@ -4,8 +4,8 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
+-import javax.xml.bind.annotation.XmlAttribute;
+-import javax.xml.bind.annotation.XmlElement;
++import ae.javax.xml.bind.annotation.XmlAttribute;
++import ae.javax.xml.bind.annotation.XmlElement;
+ 
+ @SuppressWarnings("serial")
+ public class GeoulPackage implements Serializable {
