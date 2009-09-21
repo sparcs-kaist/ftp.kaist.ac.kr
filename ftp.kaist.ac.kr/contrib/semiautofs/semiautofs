@@ -22,11 +22,35 @@ fetch-master() {
     sed -e's/#.*$//' -e's/^[ 	]*//g' "$master" | grep -v '^$'
 }
 
+# how to transform map to normal form
+normalize-map() {
+    sort |
+    while read -r point source; do
+        case "$source" in
+            $HOSTNAME:*) source=localhost:${source#*:} ;;
+        esac
+        printf "%s\t%s\n" $point $source
+    done
+}
+
+# how to get current map from mounts tab
+mounts2map() {
+    local pointroot=$1
+    mount | sed -n '
+    \#on '"$pointroot"'//*# {
+        s/type.*$//
+        s#^/#'$HOSTNAME':&#
+        s/\([^ ]*\) on \(.*\)/\2\t\1/
+        s#^'"$pointroot"'/*##
+        p
+    }'
+}
+
 # how to translate map to mount/umount commands
 map2mounts() {
     local pointroot=$1; shift
     local options=${@:+-o $@}
-    while read point source; do
+    while read -r point source; do
         local mntpt=$pointroot/$point
         # substitute &'s
         local source=${source//&/$point}
@@ -37,11 +61,11 @@ map2mounts() {
         case "$host" in
             localhost|$HOSTNAME)
             mkdir -p $mntpt
-            mount -t none --bind $path $mntpt
+            mount -v -t none --bind $path $mntpt
             ;;
             *)
             mkdir -p $mntpt
-            mount $options $source $mntpt
+            mount -v -t nfs $options $source $mntpt
             ;;
         esac
         # TODO: print successful mounts and save it for later umounts
@@ -49,9 +73,9 @@ map2mounts() {
 }
 map2umounts() {
     local pointroot=$1
-    while read point source; do
+    while read -r point source; do
         local mntpt=$pointroot/$point
-        umount -l $mntpt
+        umount -v -l $mntpt
         rmdir -p $mntpt 2>/dev/null
     done
 }
@@ -65,17 +89,22 @@ error() {
 # check request
 request=$1; shift
 case "$request" in
-    start|stop|reload|force-reload|restart) ;;
+    status|start|stop|reload|force-reload|restart) ;;
     *)
-    echo "Usage: $0 {start|stop|reload|force-reload|restart}"
+    echo "Usage: $0 {status|start|stop|reload|force-reload|restart}"
     exit 1
     ;;
 esac
 
 # process request for each map
 fetch-master $MASTERMAP |
-while read pointroot map options; do
+while read -r pointroot map options; do
     mapfile="$MAPSTATEDIR/${pointroot//\//_}.map"
+    # show status
+    status() {
+        echo "$pointroot $map $options"
+        mounts2map $pointroot | normalize-map | sed 's/^/ /'
+    }
     # mount everything
     start() {
         if [ -e $mapfile ]; then
@@ -84,7 +113,6 @@ while read pointroot map options; do
             mkdir -p `dirname $mapfile`
             fetch $map >$mapfile
             map2mounts  $pointroot $options <$mapfile
-            # TODO: save successful mounts for later umounts
         fi
     }
     # umount everything
@@ -92,7 +120,6 @@ while read pointroot map options; do
         if [ -r $mapfile ]; then
             map2umounts $pointroot <$mapfile
             rm -f $mapfile
-            # TODO: only remove successful umounts
         else
             error "$pointroot not started"
         fi
@@ -102,15 +129,23 @@ while read pointroot map options; do
         if [ -r $mapfile ]; then
             if lockfile -r3 $mapfile.new 2>/dev/null; then
                 chmod +w $mapfile.new
-                fetch $map >$mapfile.new
+                # fetch new map
+                fetch $map | tee $mapfile.new |
+                normalize-map >$mapfile.normalized.new
+                # query current mounts
+                mounts2map $pointroot |
+                normalize-map >$mapfile.normalized.current
                 diffmap() {
                     local d=$1
-                    diff $mapfile $mapfile.new | grep "^$d " | cut -b 3-
+                    diff $mapfile.normalized.current $mapfile.normalized.new |
+                    grep "^$d " | cut -b 3-
                 }
-                # umount old
+                # umount old ones
                 diffmap '<' | map2umounts $pointroot
-                # mount new
+                # mount new ones
                 diffmap '>' | map2mounts  $pointroot $options
+                # clean up
+                rm -f $mapfile.normalized.*
                 # replace active map
                 mv -f $mapfile.new $mapfile
             else
@@ -122,7 +157,7 @@ while read pointroot map options; do
     }
     # process request for this map
     case "$request" in
-        start|stop|reload) $request "$@" ;;
+        status|start|stop|reload) $request "$@" ;;
         force-reload|restart) stop "$@"; start "$@" ;;
     esac
 done
