@@ -10,6 +10,7 @@ import time
 import xmlrpclib
 import base64
 import bz2
+import socket
 
 class HostConfig(object):
     """Holder for config info from the configuration file"""
@@ -49,32 +50,11 @@ def gen_dirtree(path):
     #   ...
     # }
     # 
+    # 2009-03-09: MM's web app ignores the statfiles dict.  So don't bother generating it.
 
     dirtree = {}
     for dirpath, dirnames, filenames in os.walk(path):
-
-        # trim filenames list
-        date_file_list = []
-        count=0
-        for name in filenames:
-            f = os.path.join(dirpath, name)
-            s = os.stat(f)
-            lastmod_date = time.localtime(s.st_mtime)
-            date_file_tuple = (lastmod_date, name, s.st_size)
-            date_file_list.append(date_file_tuple)
-            if name.endswith('.rpm') or name.endswith('.html'):
-                count=count+1
-            # we only want to remember the most recent 10 if they're
-            # directories full of .rpm or .html (repoview) files
-        if count > 10:
-            date_file_list.sort()
-            date_file_list.reverse()
-            date_file_list = date_file_list[:10]
-            
         statfiles = {}
-        for mtime, name, size in date_file_list:
-            statfiles[name] = size
-
         if path.endswith('/'):
             short_path = dirpath[len(path):]
         else:
@@ -107,11 +87,17 @@ def parse_value(value):
 
 def parse_section(conf, section, item, required_options, optional_options=[]):
     if conf.has_option(section, 'enabled'):
-        if conf.get(section, 'enabled') != '1':
+        if conf.get(section, 'enabled') != '1' and section.lower() in item.config:
+            print 'removing disabled section %s' % (section)
+            del item.config[section.lower()]
             return False
+
     if not check_required_options(conf, section, required_options):
         return False
-    item.config[section.lower()] = {}
+
+    if not section.lower() in item.config:
+        item.config[section.lower()] = {}
+
     for o in required_options:
         item.config[section.lower()][o] = parse_value(conf.get(section, o))
     for o in optional_options:
@@ -123,6 +109,7 @@ def parse_section(conf, section, item, required_options, optional_options=[]):
 def parse_global(conf, section, item):
     required_options = [ 'enabled', 'server' ]
     if not parse_section(conf, section, item, required_options):
+        errorprint('missing required options (server AND enabled) in [%s] section' % (section))
         return False
     return True
 
@@ -156,19 +143,24 @@ def get_stats(conf, section):
                 pass
     return statsdata
 
-def parse_category(conf, section, item):
+def parse_category(conf, section, item, crawl):
     required_options = [ 'enabled', 'path' ]
     if not parse_section(conf, section, item, required_options):
         return False
 
-    dirtree = gen_dirtree(conf.get(section, 'path'))
-    item.config[section.lower()]['dirtree'] = dirtree
+    if crawl:
+        dirtree = gen_dirtree(conf.get(section, 'path'))
+        item.config[section.lower()]['dirtree'] = dirtree
     # database doesn't need to know the disk path
     del item.config[section.lower()]['path']
 
-def config(cfg, item):
+def config(cfg, item, crawl=True):
     broken = False
     conf = ConfigParser.ConfigParser()
+    files = conf.read(cfg)
+    if files == []:
+        errorprint('Configuration file %s not found' % (cfg))
+        return False
     conf.read(cfg)
 
     try:
@@ -185,8 +177,7 @@ def config(cfg, item):
         for section in conf.sections():
             if section in [ 'global', 'site', 'host', 'stats']:
                 continue
-            else:
-                parse_category(conf, section, item)
+            parse_category(conf, section, item, crawl)
 
     except MissingOption:
         errorprint('Invalid configuration - Exiting')
@@ -201,7 +192,7 @@ def main():
     parser = OptionParser(usage= sys.argv[0] + " [options]")
     parser.add_option("-c", "--config",
                       dest="config",
-                      default='/etc/report_mirror.conf',
+                      default='/etc/mirrormanager-client/report_mirror.conf',
                       help='Configuration filename (required)')
     parser.add_option("-s", "--stats",
                       action="store_true",
@@ -230,20 +221,21 @@ def main():
 
     (options, args) = parser.parse_args()
     item = HostConfig()
-    if not options.input:
-        if not config(options.config, item):
+    if options.input:
+        infile = open(options.input, 'rb')
+        item.config = pickle.load(infile)
+        infile.close()
+        if not config(options.config, item, crawl=False):
+            sys.exit(1)
+    else:
+        if not config(options.config, item, crawl=True):
             sys.exit(1)
 
-        if options.debug:
-            pp = pprint.PrettyPrinter(indent=4)
-            pp.pprint(item.config)
-        
-        p = pickle.dumps(item.config, -1)
-    else:
-        infile = open(options.input, 'rb')
-        p = infile.read()
-        infile.close()
-        item.config = pickle.loads(p)
+    p = pickle.dumps(item.config, -1)
+
+    if options.debug:
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(item.config)
         
     if options.output is not None:
         outfile = open(options.output, 'wb')
@@ -267,7 +259,13 @@ def main():
             data = urlsafe_b64encode(bz2.compress(p))
 
         if data is not None:
-            print server.checkin(data)
+            try:
+                print server.checkin(data)
+            except socket.error, m:
+                print "Error checking in: %s.  Please try again later." % (m[1])
+            except xmlrpclib.Fault:
+                print "Error checking in.  Connection closed before checkin complete.  Please try again later."
+                sys.exit(1)                
 
 
 if __name__ == '__main__':
