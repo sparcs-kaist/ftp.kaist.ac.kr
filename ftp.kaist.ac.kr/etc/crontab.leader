@@ -8,16 +8,16 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # measure
 17 */5	* * *	mirror	exec nice -n  3 synchronized run/updating-ls-lR            update-ls-lR
-31 */5	* * *	mirror	exec nice -n 15 synchronized run/measuring-sizes           measure-sizes >/dev/null
+31 */5	* * *	mirror	exec nice -n  5 synchronized run/measuring-sizes           measure-sizes >/dev/null
 
 # publish
-* *	* * *	mirror	exec nice -n  3 synchronized run/updating-status           publish-status
+* *	* * *	mirror	exec nice -n  1 synchronized run/updating-status           publish-status
 @reboot 	mirror	                                                           publish-status
-41 */5	* * *	mirror	exec nice -n 15 synchronized run/updating-stats            publish-stats update --lazy
+41 */5	* * *	mirror	exec nice -n 10 synchronized run/updating-stats            publish-stats update --lazy
 
 # clean
 13 7	* * *	mirror	exec nice -n 19 synchronized run/expiring-sync-logs        expire-sync-logs
 
 # XXX
-51 9	* * *	mirror	exec nice -n 15 analyze-usages
-0 0	* * *	root	exec nice -n 10 update-rsyncd.conf
+51 9	* * *	mirror	exec nice -n 19 analyze-usages
+0 0	* * *	root	exec nice -n 19 update-rsyncd.conf
