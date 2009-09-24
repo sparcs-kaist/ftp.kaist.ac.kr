@@ -16,9 +16,8 @@ done
 
 # simply run rsync
 (set -x
-# TODO: how about --delay-updates? --partial-dir?
 exec rsync -rtlH "${permopts[@]}" --delete-after \
-    --partial --temp-dir=/mirror/ftp/.tmp \
+    --partial --delay-updates \
     --exclude='.*.??????' --exclude=.~tmp~ \
     --verbose --stats \
     "$@"

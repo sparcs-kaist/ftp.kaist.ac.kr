@@ -18,7 +18,7 @@ LANG=$LC_ALL
 LANGUAGE=$LC_ALL
 export LC_ALL LANG LANGUAGE
 
-lslR=`mktemp .tmp/ls-lR.XXXXXX`
+lslR=`mktemp .ls-lR.XXXXXX`
 trap "rm -f $lslR $lslR.gz" EXIT
 
 ls -AlR | tee $lslR | gzip >$lslR.gz

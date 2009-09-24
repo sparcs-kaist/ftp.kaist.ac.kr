@@ -1,7 +1,7 @@
 # automounter map for ftp;  See autofs(5)
 # vim:ts=32
 
-ftp/.tmp		localhost:/srv/.tmp
+#ftp/.tmp		localhost:/srv/.tmp
 
 ftp/debian		ftp:/srv/debian
 ftp/ubuntu		ftp:/srv/ubuntu

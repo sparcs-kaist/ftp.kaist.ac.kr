@@ -3,6 +3,6 @@
 # The semi-automounter can handle autofs maps semi-automatically. :)
 # For details of the format look at autofs(5).
 
-/mirror	yp:auto.mirror	rw,rsize=32768,wsize=32768,nfsvers=3,tcp,hard,intr,nodev
+/mirror	yp:auto.mirror	rw,nodev,noexec,nosuid,noatime,async,nfsvers=3,tcp,rsize=65536,wsize=65536,bg,hard,intr,nolock
 
 # vim:ts=20:ft=conf

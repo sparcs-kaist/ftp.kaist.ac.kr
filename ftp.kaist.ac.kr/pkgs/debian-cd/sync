@@ -24,10 +24,12 @@ rsync -rtlHv --stats --delete --delete-after --timeout 7200 \
 # image generation
 currentVersion=`readlink data/current`
 versionDir=data/$currentVersion
-tmpDirBase=/mirror/ftp/pub/.tmp/debian-cd
-jigdoConf=$tmpDirBase/jigdo-mirror.conf
-rm -rf $tmpDirBase
-mkdir -p $tmpDirBase
+tmpDir=data/.~tmp~
+jigdoConf=$tmpDir/jigdo-mirror.conf
+rm -rf $tmpDir
+mkdir -p $tmpDir
+chmod u=rwx,go= $tmpDir
+tmpDirBase=$PWD/$tmpDir
 for arch in $versionDir/*/; do
     a=`basename $arch`
     [ -f data/project/build/$currentVersion/$a ] || continue
@@ -45,6 +47,7 @@ for arch in $versionDir/*/; do
         jigdo-mirror $jigdoConf.$a.$s
     done
 done
+rm -rf $tmpDir
 
 # final sync
 rsync -rlHv --stats --delete --delete-after --timeout 7200 --size-only \
