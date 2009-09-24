@@ -11,11 +11,11 @@ export SITENAME=ftp.kaist.ac.kr
 MirrorAdmin=mirror
 FTPRootPath=/mirror/ftp/
 FTPRootURL=ftp://$SITENAME/
-BaseURL=http://$SITENAME
-StatusURL=$BaseURL/status
+HTTPRootURL=http://$SITENAME/
+BaseURL=http://$SITENAME/geoul
 PkgsRootURL=$BaseURL/pkgs
 SyncLogRootURL=$BaseURL/sync
-HTTPRootURL=$BaseURL/
+StatusURL=http://geoulmon.appspot.com/sites/$SITENAME
 
 # environment
 LC_ALL=C
