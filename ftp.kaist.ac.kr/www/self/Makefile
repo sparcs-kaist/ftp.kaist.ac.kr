@@ -3,7 +3,7 @@
 # Created: 2008-06-22
 
 FTPROOT=/mirror/ftp
-FILES=.message index.html announce.feed
+FILES=.message index.html id_rsa.pub
 
 all: $(FILES:%=$(FTPROOT)/%)
 
