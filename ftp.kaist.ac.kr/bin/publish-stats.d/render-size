@@ -6,7 +6,5 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2009, Geoul Project. (http://geoul.sparcs.org)
 
-exec render \
-    --vertical-label="bytes" \
-    --end now --start end-26w --base 1024 \
-    "$@"
+exec render "$@" \
+    --vertical-label="bytes" --base 1024
