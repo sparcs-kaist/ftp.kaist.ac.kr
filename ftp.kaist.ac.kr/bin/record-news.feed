@@ -18,15 +18,25 @@ running_as_mirror_admin "$@"
 
 home=`pkg_uri $pkg`
 
-# create feed if not exists
-[ -f "$pkgsfeed" ] ||
-    allim "$pkgsfeed" new "$PkgsRootURL" \
-        "News for mirrors on $SITENAME" "$StatusURL" duration=$pkgskeep <<<""
-
-# create feed if not exists
-[ -f "$feed" ] ||
-    allim "$feed" new "$home/$feed" \
-        "$name mirror on $SITENAME" "$home" duration=$keep <<<""
+# how to create feeds
+create() {
+    local f=$1
+    case "$f" in
+        "$feed")
+        allim "$feed" new "$home/$feed" \
+            "$name mirror on $SITENAME" "$home" duration=$keep <<<""
+        ;;
+        "$pkgsfeed")
+        allim "$pkgsfeed" new "$PkgsRootURL" \
+            "News for mirrors on $SITENAME" "$StatusURL" duration=$pkgskeep <<<""
+        ;;
+        "$problemsfeed")
+        allim "$problemsfeed" new "$PkgsRootURL" \
+            "Current Problems of $SITENAME" "$StatusURL" duration=$pkgskeep \
+            <<<"Problems affecting $SITENAME service are reported via this feed."
+        ;;
+    esac
+}
 
 event=$1
 case "$event" in
@@ -44,13 +54,29 @@ case "$event" in
     trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
     { echo "<pre>"; "$excerpt" "$log" 20; echo "</pre>"; } >$desc
     # record feed items
-    for f in "$feed" "$pkgsfeed"; do
+    feeds=("$feed" "$pkgsfeed")
+    [ "$eventtype" != failure ] || feeds+=("$problemsfeed")
+    add() {
+        local f=$1
         allim "$f" add "$title" "$uri" <$desc
+    }
+    add-reliably() {
+        local f=$1
+        if [ -e "$f" ]; then
+            if ! add "$f"; then
+                # add to a newly created one if there's some problem
+                rm -f "$f"
+                create "$f"
+                add "$f"
+            fi
+        else
+            create "$f"
+            add "$f"
+        fi
+    }
+    for f in "${feeds[@]}"
+    do add-reliably "$f"
     done
-    # record failure to problems
-    if [ "$eventtype" = failure ]; then
-        allim "$problemsfeed" add "$title" "$uri" <$desc
-    fi
     ;;
 
     "") # usage

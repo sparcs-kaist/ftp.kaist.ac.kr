@@ -120,7 +120,7 @@ RSS=$1; shift
 Cmd=$1; shift
 set -e
 Tmp=`mktemp -d /tmp/allim.XXXXXX`
-trap "rm -rf $Tmp" EXIT ERR HUP INT TERM
+trap "unlock $RSS; rm -rf $Tmp" EXIT
 
 case "$Cmd" in
     new) # <rss-url> <title> <link> < <description> [duration=<duration>] [img-url=<img-url>] [date=<date>]
