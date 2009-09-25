@@ -3,7 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
     <title>ftp.kaist.ac.kr</title>
-    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss"/>
+    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="Latest News"/>
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="Latest Updates on Mirrored Package"/>
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="Current Problems of Our Mirrors"/>
     <style type="text/css"><!--
         #contents {
             position: absolute;
@@ -13,12 +15,14 @@
             left: 12em;
             right: 1em;
         }
+        a img {
+            border: none;
+        }
         .logos {
             text-align: center;
             vertical-align: middle;
         }
         .logos a img {
-            border: none;
             margin-left: 20px;
             margin-right: 20px;
         }
@@ -108,14 +112,16 @@ Use entirely at your own risk -- no warranty is expressed or implied.
 <h2>Pointers</h2>
 <p id="pointers">
 Contact <a href="mailto:ftp@ftp.kaist.ac.kr">ftp@ftp.kaist.ac.kr</a> for any
-problem or suggestion.
-You can receive our latest announcements by following <a
-    href="http://twitter.com/kaist_ftp">kaist_ftp on Twitter</a> and check the
+problem or suggestion.  You can receive our latest announcements by following
+<a href="http://twitter.com/kaist_ftp">kaist_ftp on Twitter</a> and check the
 status of our archive from the <a
     href="http://geoulmon.appspot.com/sites/ftp.kaist.ac.kr">status monitoring
-    page</a>.
-Find more information from the <a href="http://project.sparcs.org/geoul/">Geoul
-    Project site</a> (in Korean).
+    page</a>.  We also provide some details as RSS feeds for those who are
+interested in <a href="/geoul/pkgs/news.feed"><img
+    src=".self/feed-icon-12x12.png" alt=""/> all updates on our mirrors</a> or
+<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
+    alt=""/> problematic updates on them</a>.  Find more information at our <a
+    href="http://project.sparcs.org/geoul/">Geoul Project site</a> (in Korean).
 </p>
 
 </div>

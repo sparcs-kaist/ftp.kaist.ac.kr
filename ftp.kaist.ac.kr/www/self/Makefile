@@ -9,7 +9,7 @@ all: $(FILES:%=$(FTPROOT)/%)
 
 index.html: index.html.in $(FTPROOT)
 	cp -f $< $@
-	vim $@ +1 +'/\(begin\|end\) of contents' +'norm jVnkdk' \
+	screen -Dm vim $@ +1 +'/\(begin\|end\) of contents' +'norm jVnkdk' \
 	    +'r!cd $(FTPROOT) && find * -maxdepth 0 -type d | sort -f | \
 	    	sed -e '\''s:.*:<li><a href="&/">&</a></li>:'\' \
 	    +'norm VNj=ZZ'
