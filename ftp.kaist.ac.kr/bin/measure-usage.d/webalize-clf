@@ -17,6 +17,21 @@ new=$1; shift
 cp -f $new $log
 savelog -qd $log
 
+# archive it under the year/month/ directory
+(cd /mirror/log/unified
+for l in *.gz; do
+    dt=${l#clf.}
+    ym=${dt%????????.gz}
+    y=${ym%??}
+    m=${ym#$y}
+    if ! mv $l $y/$m/; then
+        mkdir -p $y/$m
+        mv $l $y/$m/
+    fi
+done
+)
+
+
 # TODO
 #webalizer -Q -N 3 -D $usage/dnscache.db \
 #          -c $conf -o $outdir -n "$SITENAME ($svc)" \
