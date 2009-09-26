@@ -7,7 +7,6 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # take care of sync
 */3 *	* * *	mirror	exec nice -n  2 maintain-sync >/dev/null
-23 8	* * *	mirror	exec nice -n 19 expire-tmp
 
 # take care of svcs
 */2 *	* * *	root	exec watch-services
