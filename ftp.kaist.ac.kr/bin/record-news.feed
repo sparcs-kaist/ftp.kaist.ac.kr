@@ -7,11 +7,12 @@
 # (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 
-pkgsfeed=../news.feed
-problemsfeed=../problems.feed
-pkgskeep=P3D
-feed=news.feed
+newsfeed=news.feed
+problemsfeed=problems.feed
 keep=P7D
+allnewsfeed=../news.feed
+allproblemsfeed=../problems.feed
+allkeep=P3D
 
 . /mirror/lib/pkg.sh
 running_as_mirror_admin "$@"
@@ -22,17 +23,21 @@ home=`pkg_uri $pkg`
 create() {
     local f=$1
     case "$f" in
-        "$feed")
-        allim "$feed" new "$home/$feed" \
-            "$name mirror on $SITENAME" "$home" duration=$keep <<<""
-        ;;
-        "$pkgsfeed")
-        allim "$pkgsfeed" new "$PkgsRootURL" \
-            "News for mirrors on $SITENAME" "$StatusURL" duration=$pkgskeep <<<""
+        "$newsfeed")
+        allim "$newsfeed" new "$home/$newsfeed" \
+            "Updates on $name mirror of $SITENAME" "$home" duration=$keep <<<""
         ;;
         "$problemsfeed")
-        allim "$problemsfeed" new "$PkgsRootURL" \
-            "Current Problems of $SITENAME" "$StatusURL" duration=$pkgskeep \
+        allim "$problemsfeed" new "$home/$problemsfeed" \
+            "Current problems of $name mirror of $SITENAME" "$home" duration=$keep <<<""
+        ;;
+        "$allnewsfeed")
+        allim "$allnewsfeed" new "$PkgsRootURL" \
+            "Updates on $SITENAME" "$StatusURL" duration=$allkeep <<<""
+        ;;
+        "$allproblemsfeed")
+        allim "$allproblemsfeed" new "$PkgsRootURL" \
+            "Current problems of $SITENAME" "$StatusURL" duration=$allkeep \
             <<<"Problems affecting $SITENAME service are reported via this feed."
         ;;
     esac
@@ -54,8 +59,8 @@ case "$event" in
     trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
     { echo "<pre>"; "$excerpt" "$log" 20; echo "</pre>"; } >$desc
     # record feed items
-    feeds=("$feed" "$pkgsfeed")
-    [ "$eventtype" != failure ] || feeds+=("$problemsfeed")
+    feeds=("$newsfeed" "$allnewsfeed")
+    [ "$eventtype" != failure ] || feeds+=("$problemsfeed" "$allproblemsfeed")
     add() {
         local f=$1
         allim "$f" add "$title" "$uri" <$desc
