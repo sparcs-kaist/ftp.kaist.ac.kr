@@ -127,16 +127,30 @@ rsync_conf() {
 # run webalizer on given log for given service
 analyze() {
     local svc=$1; shift
-    local usage=/mirror/log/usage.old
-    local conf=$usage/webalizer-$svc.conf
-    local outdir=$usage/$svc/
+    local reportroot=/mirror/log/usage/reports/webalizer
+    local conf=$reportroot/$svc/webalizer.conf
+    local year=`date +%Y`
+    local outdir=$reportroot/$svc/$year
     # if config is available,
+    mkdir -p `dirname $conf`
     if ${svc}_conf >$conf; then
+        echo IncrementalName ../webalizer.current >>$conf
+        echo HistoryName     ../webalizer.hist    >>$conf
         mkdir -p $outdir &&
         # then run webalizer
-        webalizer -Q -N 3 -D $usage/dnscache.db \
+        webalizer -Q -N 3 -D $reportroot/dnscache.db \
                   -c $conf -o $outdir -n "$SITENAME ($svc)" \
                   "$@"
+        # archive old stuffs
+        (cd $outdir
+        local y=
+        for y in $(seq 2002 $(($year-2))); do
+            if ls *_$y??.* &>/dev/null; then
+                mkdir -p ../$y
+                mv *_$y??.* ../$y/ && cp -f index.html usage.png ../$y/
+            fi
+        done
+        )
     fi
 }
 
