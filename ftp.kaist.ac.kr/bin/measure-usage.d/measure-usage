@@ -13,7 +13,6 @@
 set -e
 
 # some configuration knobs
-: ${LogConfig:=/mirror/etc/measure-usage.conf}
 : ${ProcessUnder:=/var/log/geoul/measure-usage}
 
 # add vocabulary directory to PATH
@@ -26,9 +25,9 @@ PATH="$Here:$PATH"
 system_not_degraded
 running_as_mirror_admin "$@"
 
-# convert logs & collect to clf
+# convert logs & collect to clf following instructions on given scripts
 wd=`mktemp -d $ProcessUnder/XXXXXX`
-logs2clf "$LogConfig" >$wd/clf
+logs2clf "$@" >$wd/clf
 touch $wd/clf.ready
 
 # analyze available clfs

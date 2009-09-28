@@ -10,5 +10,5 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # take care of svcs
 */2 *	* * *	root	exec watch-services
-53 *	* * *	mirror	exec nice -n  5 measure-usage
-@reboot 	mirror	rm -f /var/log/geoul/*.lock
+53 *	* * *	mirror	exec nice -n  5 measure-usage /mirror/svcs/*/measure-usage.conf
+@reboot 	mirror	rm -f /var/log/geoul/*/*.lock

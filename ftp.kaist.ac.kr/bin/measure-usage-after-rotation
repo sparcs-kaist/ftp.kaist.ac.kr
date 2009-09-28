@@ -14,8 +14,8 @@ running_as_mirror_admin "$@"
 logs=()
 for conf; do
     logs+=(`
-        analyze() { readlink -f "$2"; }
-        . "$conf"
+        analyze() { readlink -f "$2" >&3; }
+        . "$conf" 3>&1 >/dev/null
     `)
 done
 
@@ -26,4 +26,4 @@ done
 
 # measure usages from rotated logs
 LOGEXT=.0 \
-/mirror/bin/measure-usage "$@" # FIXME measure-usage doesn't make use of these arguments
+/mirror/bin/measure-usage "$@"
