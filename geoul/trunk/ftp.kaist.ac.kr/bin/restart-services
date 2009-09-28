@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# restart-services -- Restart running services
+# 
+# Created: 2007-07-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+cd /mirror/etc
+
+read -p"Proceed to restart all service"
+
+echo stopping...
+# stop services
+services=()
+for s in cron vsftpd apache2 rsync cvsupd; do
+    invoke-rc.d "$s" stop
+    services=("$s" "${services[@]}")
+done
+# stop active syncs
+for l in /mirror/pkgs/*/lock; do
+    [ -e $l ] || continue
+    ${l%lock}sync stop
+done
+# stop semiautofs
+invoke-rc.d semiautofs stop
+
+
+echo "Exit with code 0 when everything's ready go back"
+bash
+
+
+echo starting...
+# start semiautofs
+invoke-rc.d semiautofs start
+# start services
+for s in "${services[@]}"; do
+    invoke-rc.d "$s" start
+done
+

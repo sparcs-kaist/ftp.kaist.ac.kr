@@ -1,0 +1,11 @@
+Title: Notes on semiautofs
+Author: Jaeho Shin <netj@sparcs.org>
+Created: 2008-02-08
+
+`semiautofs' handles the automounter map semi-automatically.
+
+= Installation =
+1. Copy the `semiautofs' file into `/etc/init.d'.
+2. Create an auto.master-like file at `/etc/semiauto.master'.
+3. Everything else is identical to autofs(5).
+

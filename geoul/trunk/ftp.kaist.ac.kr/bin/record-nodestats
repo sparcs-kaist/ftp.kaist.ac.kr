@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# record-nodestats -- record node statistics
+# 
+# Created: 2008-02-25
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+
+# vocabularies for manipulating RRD
+create-rrd() {
+    local rrd=$1; shift
+    local step=300 hb=900
+    # rrdcreate(1)
+    rrdtool create "$rrd" --step $step  \
+        DS:load:GAUGE:$hb:0:U           \
+        DS:nrprocs:GAUGE:$hb:0:U        \
+        DS:mem:GAUGE:$hb:0:U            \
+        DS:memfree:GAUGE:$hb:0:U        \
+        DS:swap:GAUGE:$hb:0:U           \
+        DS:swapfree:GAUGE:$hb:0:U       \
+        DS:buffers:GAUGE:$hb:0:U        \
+        DS:cached:GAUGE:$hb:0:U         \
+        DS:netin:DERIVE:$hb:0:U         \
+        DS:netout:DERIVE:$hb:0:U        \
+        RRA:AVERAGE:0.5:2:432           \
+        RRA:AVERAGE:0.5:24:420          \
+        RRA:AVERAGE:0.5:288:365         \
+    #   2:432 =       2  *  6 * 24 * 3  = 3 days
+    #  24:420 =  12 * 2  *  12 * 7 * 5  = 5 weeks
+    # 288:365 = 12 * 24  *  365         = 1 year
+}
+update-rrd() {
+    local rrd=$1; shift
+    local template= data=
+    local t= d=
+    while read t; read d; do
+        template=${template:+$template:}$t
+        data=${data:+$data:}$d
+    done
+    # rrdupdate(1)
+    rrdtool update "$rrd" -t $template N:$data "$@"
+}
+
+
+# vocabularies for collecting statistics
+procstats() {
+    set -- `cat /proc/loadavg`
+    # 5min loadavg, nrprocs
+    echo load:nrprocs
+    echo "$2:${4#*/}"
+}
+memstats() {
+    echo mem:memfree:swap:swapfree:buffers:cached
+    perl </proc/meminfo -e'
+    my %s;
+    while (<>) {
+        my ($name, $value) = split /\s*:\s*/, $_, 2;
+        $value = $1 * 1024 if $value =~ /(\d+) kB$/;
+        $s{$name} = $value;
+    }
+    print join ":", map {$s{$_}}
+        qw(MemTotal MemFree SwapTotal SwapFree Buffers Cached);
+    '
+    echo
+}
+netstats() {
+    echo netin:netout
+    # ifconfig(8)
+    awk '
+    /eth.+/ {gsub(/.*:/, "")}
+            {rx += $1; tx += $9}
+    END     {printf "%.0f:%.0f\n", rx, tx}
+    ' </proc/net/dev
+}
+
+
+# record statistics in given RRD
+rrd=$1; shift
+
+# make sure we have an RRD to record
+[ -e "$rrd" ] || create-rrd "$rrd"
+
+# collect stats and update RRD
+{
+    procstats
+    memstats
+    netstats
+} | update-rrd "$rrd" "$@"

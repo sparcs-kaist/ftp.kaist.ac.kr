@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source
+date -u >data/.trace/`hostname -f`

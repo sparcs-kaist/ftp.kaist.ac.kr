@@ -1,0 +1,34 @@
+#!/bin/sh
+#!/usr/bin/perl
+# create-df.rrd -- Create RRD for accumulating disk sizes
+# 
+# Created: 2006-04-27
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+rrd=/mirror/log/size/df.rrd
+
+case "$1" in
+    create)
+    # Step is 6h,
+    # DSs for disk blocks (K), used, available
+    # RRAs holding 3m=~90d, 1y=~52w, 5y=~60m
+    rrdtool create "$rrd" --step 21600 \
+     DS:blocks:GAUGE:86400:0:U \
+     DS:used:GAUGE:86400:0:U \
+     DS:available:GAUGE:86400:0:U \
+     RRA:AVERAGE:0.5:2:180 \
+     RRA:AVERAGE:0.5:14:104 \
+     RRA:AVERAGE:0.5:60:120
+    ;;
+
+    *)
+    cmd=`basename "$0"`
+    cat <<EOF
+Usage:
+ $cmd create
+  creates $rrd.
+EOF
+    ;;
+esac

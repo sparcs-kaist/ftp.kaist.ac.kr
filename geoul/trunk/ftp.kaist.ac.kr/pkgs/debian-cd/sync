@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+
+set -e
+
+#HOSTNAME=`hostname -f`
+HOSTNAME=ftp.kr.debian.org
+umask 002
+
+# load private info
+set +x
+. debian-cd-mirror.conf
+export RSYNC_PASSWORD
+source=${source/:\/\//:\/\/$RSYNC_USER@}
+set -x
+
+# jigdo sync
+rsync -rtlHv --stats --delete --delete-after --timeout 7200 \
+     --exclude "Archive-Update-in-Progress-$HOSTNAME" \
+     --exclude "project/trace/$HOSTNAME" \
+     --exclude "*.iso" \
+     $source data/
+
+# image generation
+currentVersion=`readlink data/current`
+versionDir=data/$currentVersion
+tmpDir=data/.~tmp~
+jigdoConf=$tmpDir/jigdo-mirror.conf
+rm -rf $tmpDir
+mkdir -p $tmpDir
+chmod u=rwx,go= $tmpDir
+tmpDirBase=$PWD/$tmpDir
+for arch in $versionDir/*/; do
+    a=`basename $arch`
+    [ -f data/project/build/$currentVersion/$a ] || continue
+    sets=`cat data/project/build/$currentVersion/$a`
+    for s in $sets; do
+        jigdoDir=$PWD/data/$currentVersion/$a/jigdo-$s
+        imageDir=$PWD/data/$currentVersion/$a/iso-$s
+        [ -d $imageDir ] || mkdir -p $imageDir
+        cp -pf $jigdoDir/MD5SUMS $imageDir/MD5SUMS
+        echo "jigdoDir=$jigdoDir"       >  $jigdoConf.$a.$s
+        echo "templateDir=$jigdoDir"    >> $jigdoConf.$a.$s
+        echo "imageDir=$imageDir"       >> $jigdoConf.$a.$s
+        echo "tmpDir=$tmpDirBase/$a.$s" >> $jigdoConf.$a.$s
+        cat jigdo-mirror.conf           >> $jigdoConf.$a.$s
+        jigdo-mirror $jigdoConf.$a.$s
+    done
+done
+rm -rf $tmpDir
+
+# final sync
+rsync -rlHv --stats --delete --delete-after --timeout 7200 --size-only \
+     --exclude "Archive-Update-in-Progress-$HOSTNAME" \
+     --exclude "project/trace/$HOSTNAME" \
+     $source data/
+
+# now, place a timestamp
+date -u > data/project/trace/$HOSTNAME
+
+#./push

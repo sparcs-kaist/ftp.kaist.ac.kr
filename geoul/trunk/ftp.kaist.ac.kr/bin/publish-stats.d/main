@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# publish-stats.d/main -- User interface to internal commands
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+running_as_mirror_admin "$@"
+
+Self=`readlink -f "$0"`
+Base=`dirname "$Self"`
+
+export PATH="$Base:$PATH"
+
+cmd=$1; shift || true
+if type "$cmd" &>/dev/null; then
+    "$cmd" "$@"
+else
+    [ -z "$cmd" ] || echo "$cmd: Unknown command." >&2
+    echo "Try \`publish-stats usage' for usage."
+    false
+fi

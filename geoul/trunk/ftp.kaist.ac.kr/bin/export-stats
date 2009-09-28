@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# export-stats -- Export Statistics in RRD into XML format
+# 
+# Created: 2008-06-22
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+: ${res:=86400} ${term:=3m} ${end:=00:00}
+dump-rrd() {
+    rrd=$1; shift
+    rrdtool fetch -r $res -s end-$term -e $end $rrd AVERAGE |
+    tail -n +3 | tr -d :
+}
+
+into-usage-xml() {
+    echo "<usage of='$pkg' via='$svc'>"
+    while read t bytes reqs; do
+        echo "<rate time='$t' bytes='$bytes' reqs='$reqs'/>";
+    done;
+    echo "</usage>";
+}
+
+into-size-xml() {
+    echo "<size of='$pkg'>"
+    while read t kbytes dirs files; do
+        echo "<gauge time='$t' kbytes='$kbytes' dirs='$dirs' files='$files'/>";
+    done;
+    echo "</size>";
+}
+
+
+. /mirror/lib/pkg.sh
+
+type=$1; shift
+case "$type" in
+    usage)
+    svc=$1; shift
+    dump-rrd usage.$svc.rrd | into-usage-xml
+    ;;
+    size)
+    dump-rrd du.rrd | into-size-xml
+    ;;
+esac

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+
+set -e
+
+#HOSTNAME=`hostname -f`
+HOSTNAME=kr.archive.ubuntu.com
+
+# first, download actual packages
+rsync --recursive --times --links --hard-links \
+    --verbose --stats \
+    --exclude "Packages*" --exclude "Sources*" \
+    --exclude "Release*" \
+    --exclude ".~tmp~" \
+    $source data/
+
+# then, download the indexes
+rsync --recursive --times --links --hard-links \
+    --verbose --stats --delete --delete-after \
+    --exclude "project/trace/$HOSTNAME" \
+    --exclude ".~tmp~" \
+    $source data/
+
+# timestamp
+date -u >data/project/trace/$HOSTNAME

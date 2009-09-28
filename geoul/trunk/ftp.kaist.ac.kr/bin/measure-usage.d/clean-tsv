@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# clean-tsv -- Filter lines containing unknown packages in given tsv
+# 
+# Created: 2008-03-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# optional file for saving error lines
+err=${1:-/dev/null}
+
+# filter lines beginning with ?
+sed -ne '
+/^\?/{
+    s/^?//
+        w '$err'
+        d
+}
+p
+'
+cat $err >&2

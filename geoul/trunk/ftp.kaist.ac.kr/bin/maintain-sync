@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# maintain-sync -- Trigger regular sync
+# 
+# Created: 2006-01-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+system_not_degraded
+running_as_mirror_admin "$@"
+
+# parse arguments
+force=false
+while getopts "f" o; do
+    case $o in
+        f) force=true ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+# define stuffs
+if $force; then
+    loadavgOK() { true; }
+    trigger=now
+else
+    nomorethan=20 # tasks per cpu
+    loadavgOK() {
+        loadavg=$(set -- `cat /proc/loadavg`; echo $2)
+        nrcpus=`grep -c '^processor[ 	]*:' /proc/cpuinfo`
+        if [ `bc <<<"${loadavg:-0} / ${nrcpus:-1}"` -ge $nomorethan ]; then
+            ! [ -t 1 ] ||
+            echo "load average too high: $loadavg / $nrcpus >= $nomorethan"
+            return 8
+        fi
+    }
+    trigger=regularly
+fi
+trysync() {
+    loadavgOK
+    [ -x sync ] && $PWD/sync $trigger &
+}
+
+# first, check load average
+loadavgOK
+
+# try sync for each package
+pkglst=/mirror/nodes/$HOSTNAME/pkgs.lst
+if [ -e $pkglst.in ]; then
+    # use pkg lst for this node if available
+    [ $pkglst -nt $pkglst.in -a $pkglst -nt /mirror/pkgs ] || \
+        expand-paths /mirror/pkgs <$pkglst.in >$pkglst
+    cd /mirror/pkgs
+    while read <&3; do
+        pushd $REPLY >/dev/null
+        trysync
+        popd >/dev/null
+    done 3<$pkglst
+else
+    # otherwise, try sync every pkg
+    foreachpkg trysync
+fi
+
+wait

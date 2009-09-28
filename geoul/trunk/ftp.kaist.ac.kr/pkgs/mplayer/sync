@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source --times --whole-file \
+    --exclude '/benchmark' --exclude '/old_stuff' --exclude '/tests'

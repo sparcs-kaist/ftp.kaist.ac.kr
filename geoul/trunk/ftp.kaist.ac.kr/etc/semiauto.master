@@ -1,0 +1,8 @@
+# This is a semi-automounter map and it has the following format
+# key location [ -mount-options-separated-by-comma ]
+# The semi-automounter can handle autofs maps semi-automatically. :)
+# For details of the format look at autofs(5).
+
+/mirror	yp:auto.mirror	rw,nodev,noexec,nosuid,noatime,async,nfsvers=3,tcp,rsize=65536,wsize=65536,bg,hard,intr,nolock
+
+# vim:ts=20:ft=conf

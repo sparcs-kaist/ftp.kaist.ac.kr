@@ -1,0 +1,37 @@
+#!/bin/sh
+#!/usr/bin/perl
+# create-du.rrd -- Create RRD for accumulating disk usages
+# 
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+case "$1" in
+    create)
+    # don't overwrite!
+    if [ -f du.rrd ]; then
+        echo du.rrd already exists >&2
+        exit 1
+    fi
+    # Step is 6h,
+    # DSs for disk usage (Kbytes), # directories, # files
+    # RRAs holding 3m=~90d, 1y=~52w, 5y=~60m
+    rrdtool create du.rrd --step 21600 \
+     DS:du:GAUGE:86400:0:U \
+     DS:dirs:GAUGE:86400:0:U \
+     DS:files:GAUGE:86400:0:U \
+     RRA:AVERAGE:0.5:2:180 \
+     RRA:AVERAGE:0.5:14:104 \
+     RRA:AVERAGE:0.5:60:120
+    ;;
+
+    *)
+    cmd=`basename "$0"`
+    cat <<EOF
+Usage:
+ $cmd create
+  creates du.rrd in the current directory.
+EOF
+    ;;
+esac

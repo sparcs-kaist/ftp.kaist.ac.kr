@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# record-news.feed -- Record events to news.feed
+# 
+# Created: 2007-04-04
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+newsfeed=news.feed
+problemsfeed=problems.feed
+keep=P7D
+allnewsfeed=../news.feed
+allproblemsfeed=../problems.feed
+allkeep=P3D
+
+. /mirror/lib/pkg.sh
+running_as_mirror_admin "$@"
+
+home=`pkg_uri $pkg`
+
+# how to create feeds
+create() {
+    local f=$1
+    case "$f" in
+        "$newsfeed")
+        allim "$newsfeed" new "$home/$newsfeed" \
+            "Updates on $name mirror of $SITENAME" "$home" duration=$keep <<<""
+        ;;
+        "$problemsfeed")
+        allim "$problemsfeed" new "$home/$problemsfeed" \
+            "Current problems of $name mirror of $SITENAME" "$home" duration=$keep <<<""
+        ;;
+        "$allnewsfeed")
+        allim "$allnewsfeed" new "$PkgsRootURL" \
+            "Updates on $SITENAME" "$StatusURL" duration=$allkeep <<<""
+        ;;
+        "$allproblemsfeed")
+        allim "$allproblemsfeed" new "$PkgsRootURL" \
+            "Current problems of $SITENAME" "$StatusURL" duration=$allkeep \
+            <<<"Problems affecting $SITENAME service are reported via this feed."
+        ;;
+    esac
+}
+
+event=$1
+case "$event" in
+    sync-*) shift # synchronization
+    log=$1
+    eventtype=${event#sync-}
+    excerpt=excerpt
+    case "$eventtype" in
+        success) title="$name updated" ;;
+        failure) title="$name failed" excerpt=excerpt.failure ;;
+        *)       title="$name $eventtype" ;;
+    esac
+    uri=`log_uri "$log"`
+    desc=`mktemp /tmp/record-news.feed.XXXXXX`
+    trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
+    { echo "<pre>"; "$excerpt" "$log" 20; echo "</pre>"; } >$desc
+    # record feed items
+    feeds=("$newsfeed" "$allnewsfeed")
+    [ "$eventtype" != failure ] || feeds+=("$problemsfeed" "$allproblemsfeed")
+    add() {
+        local f=$1
+        allim "$f" add "$title" "$uri" <$desc
+    }
+    add-reliably() {
+        local f=$1
+        if [ -e "$f" ]; then
+            if ! add "$f"; then
+                # add to a newly created one if there's some problem
+                rm -f "$f"
+                create "$f"
+                add "$f"
+            fi
+        else
+            create "$f"
+            add "$f"
+        fi
+    }
+    for f in "${feeds[@]}"
+    do add-reliably "$f"
+    done
+    ;;
+
+    "") # usage
+    usage "
+Usage:
+  `basename "$0"` <event> [<argument> ...]
+Events:
+  sync <log>
+"
+    ;;
+    # TODO: more events?
+    *)
+    usage "$event: Unknown type of event"
+    ;;
+esac

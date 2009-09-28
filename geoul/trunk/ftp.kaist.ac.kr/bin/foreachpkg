@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# foreachpkg -- Apply given command to each package
+# 
+# Created: 2006-01-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+push() { pushd "$@" >/dev/null; }
+pop()  { popd "$@"  >/dev/null; }
+
+push /mirror/pkgs
+for pkg in */; do
+    push "$pkg" && { "$@"; pop; } || true
+done
+pop

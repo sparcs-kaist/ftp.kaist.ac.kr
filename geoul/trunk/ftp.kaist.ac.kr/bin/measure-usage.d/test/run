@@ -1,0 +1,19 @@
+#!/bin/sh
+# run test cases
+
+cd "`dirname "$0"`"
+
+[ $# -gt 0 ] || exec ./"`basename "$0"`" *.tc
+
+for tc in "$@"; do
+    echo running $tc...
+    (
+    cd $tc
+    export LogConfig=measure-usage.conf
+    export ProcessUnder=tmp
+    export RRDRoot=$PWD/rrds
+    rm -rf $RRDRoot $ProcessUnder *.offset
+    mkdir -p $ProcessUnder
+    ../../measure-usage
+    )
+done

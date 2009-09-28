@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# create-rrd -- Create a Round Robin Database
+# 
+# See http://oss.oetiker.ch/rrdtool/ for RRDtool.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+rrd=$1; shift
+step=${1:-3600}; shift
+heartbeat=$(($step * 3))
+
+mkdir -p `dirname "$rrd"`
+rrdtool create "$rrd"                   \
+    --step $step                        \
+    DS:size:ABSOLUTE:$heartbeat:0:U     \
+    DS:count:ABSOLUTE:$heartbeat:0:U    \
+    RRA:AVERAGE:0.5:1:336               \
+    RRA:AVERAGE:0.5:6:372               \
+    RRA:AVERAGE:0.5:24:365              \
+    RRA:AVERAGE:0.5:120:365             \
+#   1:336 =      1  *  2 * 7 * 24 = 2 weeks
+#   6:372 =      6  *  3 * 31 * 4 = 3 months
+#  24:365 =     24  *  365        = 1 year
+# 120:365 = 24 * 5  *  365        = 5 years
+# See rrdcreate(1)
+# TODO: consider using a special RRA, e.g. HWPREDICT or DEVPREDICT

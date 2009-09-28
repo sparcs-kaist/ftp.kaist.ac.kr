@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# validate-pkg -- Validate package configuration
+#  
+# Created: 2007-06-16
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+. /mirror/lib/geoul.sh
+
+warn() {
+    local part=$1; shift
+    echo "warning: $part: $@"
+}
+
+error() {
+    local part=$1; shift
+    echo "error: $part: $@"
+}
+
+# TODO: name
+
+# color
+if [ -f color ]; then
+    h="[0-9a-fA-F]"
+    if ! expr "`cat color`" : "$h$h$h$h$h$h" >/dev/null; then
+        error color "must be 6 hexadecimals: \`HHHHHH'"
+    fi
+fi
+
+# TODO: source
+
+# TODO: links
+

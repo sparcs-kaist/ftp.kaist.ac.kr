@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-size-graph-by-pkgs
+# 
+# Refactored: 2009-03-07
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/geoul.sh
+
+draw-pkg-size() {
+    ( . /mirror/lib/pkg.sh
+    pkgid=${pkg//./_}
+    if [ -r du.rrd ]; then
+        echo "AREA:${pkgid}_du_bytes#$color:$name:STACK"
+    fi
+    )
+}
+
+draw-disk-size() {
+    echo "DEF:df=df.rrd:blocks:AVERAGE"
+    echo "CDEF:df_bytes=df,1024,*"
+    echo "DEF:used=df.rrd:used:AVERAGE"
+    echo "CDEF:used_bytes=used,1024,*"
+    echo "LINE2:df_bytes#ff0000"
+    echo "LINE:used_bytes#000000"
+}
+
+cd /mirror/log/size
+{
+    foreachpkg load-pkg-size
+    foreachpkg draw-pkg-size
+    draw-disk-size
+    draw-timestamp
+} |
+render-size by-pkgs.png \
+    --title "Total disk usage of $SITENAME" \
+    --width 600 --height 400 \
+    --upper-limit `{
+            echo -n '('
+            df -P -k /mirror/nodes/*/storage* | tail -n +2 | sort | uniq |
+            awk '{print $2}' | tr '\n' '+'
+            echo '0)*1024'
+        } | bc` \
+    "$@"

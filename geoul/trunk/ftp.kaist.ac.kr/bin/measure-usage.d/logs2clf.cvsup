@@ -1,0 +1,55 @@
+#!/usr/bin/perl -w
+# logs2clf.cvsup -- Convert cvsupd's log to CLF
+#  
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+use strict;
+
+our $svc = shift;
+
+our @month = qw(XXX Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+
+my $sessions = {};
+while (<>) {
+    if (/(\d+)\.(\d{2})\.(\d{2}) (.+?) \[.+?\]: ([+=-])([^ ]+) (.*)/) {
+        my $y = $1;
+        my $m = $2;
+        my $d = $3;
+        my $t = $4;
+        my $type = $5;
+        my $session = $6;
+        my $rest = $7;
+        if ($type eq '+') {
+            if ($rest =~ /(\w+)@(\S+) (\((.+?)\) )?\[(.*)\]/) {
+                $sessions->{$session} = {
+                    id   => $1,
+                    ip      => $2,
+                    name    => $4,
+                    agent   => $5,
+                };
+            }
+        } elsif (exists $sessions->{$session}) {
+            if ($type eq '=') {
+                if ($rest =~ /\[(\d+)Kin\+(\d+)Kout\] (.*)/) {
+                    my $in = $1;
+                    my $out = $2;
+                    my $path = $3;
+                    my $size = $in + $out; $size *= 1024;
+                    my $s = $sessions->{$session};
+                    printf '%s %s - [%2d/%s/%d:%s] "GET %s %s" 200 %d "-" "%s"'."\n",
+                    $s->{name} || $s->{ip}, $s->{id}, $d, $month[$m], $y, $t,
+                    $path, $svc, $size, $s->{agent};
+                }
+            } elsif ($type eq '-') {
+                delete $sessions->{$session};
+            }
+        }
+    }
+}

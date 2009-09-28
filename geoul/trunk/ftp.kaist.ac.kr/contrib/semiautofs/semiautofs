@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+# semiautofs - tool for automating mount point administration using autofs maps
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2007-09-18
+
+MASTERMAP=/etc/semiauto.master
+MAPSTATEDIR=/var/run/semiautofs
+
+# how to fetch map
+fetch() {
+    local map=$1
+    case "$map" in
+        # NIS
+        yp:*) ypcat -k ${map#yp:} ;;
+        # file system
+        *)    cat "$map"          ;;
+    esac
+}
+fetch-master() {
+    local master=$1; shift
+    # remove comments and empty lines
+    sed -e's/#.*$//' -e's/^[ 	]*//g' "$master" | grep -v '^$'
+}
+
+# how to transform map to normal form
+normalize-map() {
+    sort |
+    while read -r point source; do
+        case "$source" in
+            $HOSTNAME:*) source=localhost:${source#*:} ;;
+        esac
+        printf "%s\t%s\n" $point $source
+    done
+}
+
+# how to get current map from mounts tab
+mounts2map() {
+    local pointroot=$1
+    mount | sed -n '
+    \#on '"$pointroot"'//*# {
+        s/type.*$//
+        s#^/#'$HOSTNAME':&#
+        s/\([^ ]*\) on \(.*\)/\2\t\1/
+        s#^'"$pointroot"'/*##
+        p
+    }'
+}
+
+# how to translate map to mount/umount commands
+map2mounts() {
+    local pointroot=$1; shift
+    local options=${@:+-o $@}
+    while read -r point source; do
+        local mntpt=$pointroot/$point
+        # substitute &'s
+        local source=${source//&/$point}
+        # parse host & path
+        local host=${source%%:*}
+        local path=${source#*:}
+        # determine command depending on host is local or not
+        case "$host" in
+            localhost|$HOSTNAME)
+            mkdir -p $mntpt
+            mount -v -t none --bind $path $mntpt
+            ;;
+            *)
+            mkdir -p $mntpt
+            mount -v -t nfs $options $source $mntpt
+            ;;
+        esac
+        # TODO: print successful mounts and save it for later umounts
+    done
+}
+map2umounts() {
+    local pointroot=$1
+    while read -r point source; do
+        local mntpt=$pointroot/$point
+        umount -v -l $mntpt
+        rmdir -p $mntpt 2>/dev/null
+    done
+}
+
+# error message
+error() {
+    echo "semiautofs: $@" >&2
+}
+
+
+# check request
+request=$1; shift
+case "$request" in
+    status|start|stop|reload|force-reload|restart) ;;
+    *)
+    echo "Usage: $0 {status|start|stop|reload|force-reload|restart}"
+    exit 1
+    ;;
+esac
+
+# process request for each map
+fetch-master $MASTERMAP |
+while read -r pointroot map options; do
+    mapfile="$MAPSTATEDIR/${pointroot//\//_}.map"
+    # show status
+    status() {
+        echo "$pointroot $map $options"
+        mounts2map $pointroot | normalize-map | sed 's/^/ /'
+    }
+    # mount everything
+    start() {
+        if [ -e $mapfile ]; then
+            error "$pointroot already started"
+        else
+            mkdir -p `dirname $mapfile`
+            fetch $map >$mapfile
+            map2mounts  $pointroot $options <$mapfile
+        fi
+    }
+    # umount everything
+    stop() {
+        if [ -r $mapfile ]; then
+            map2umounts $pointroot <$mapfile
+            rm -f $mapfile
+        else
+            error "$pointroot not started"
+        fi
+    }
+    # umount & mount changes
+    reload() {
+        if [ -r $mapfile ]; then
+            if lockfile -r3 $mapfile.new 2>/dev/null; then
+                chmod +w $mapfile.new
+                # fetch new map
+                fetch $map | tee $mapfile.new |
+                normalize-map >$mapfile.normalized.new
+                # query current mounts
+                mounts2map $pointroot |
+                normalize-map >$mapfile.normalized.current
+                diffmap() {
+                    local d=$1
+                    diff $mapfile.normalized.current $mapfile.normalized.new |
+                    grep "^$d " | cut -b 3-
+                }
+                # umount old ones
+                diffmap '<' | map2umounts $pointroot
+                # mount new ones
+                diffmap '>' | map2mounts  $pointroot $options
+                # clean up
+                rm -f $mapfile.normalized.*
+                # replace active map
+                mv -f $mapfile.new $mapfile
+            else
+                error "$pointroot reload in progress"
+            fi
+        else
+            start
+        fi
+    }
+    # process request for this map
+    case "$request" in
+        status|start|stop|reload) $request "$@" ;;
+        force-reload|restart) stop "$@"; start "$@" ;;
+    esac
+done

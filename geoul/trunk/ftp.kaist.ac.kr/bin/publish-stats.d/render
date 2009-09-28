@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# publish-stats.d/render
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+# See rrdgraph, rrdgraph_graph, rrdgraph_rpn, rrdgraph_examples
+
+template=$1; shift
+basename=`basename "$template" .png`
+
+defs=()
+while read -r; do
+    defs=("${defs[@]}" "$REPLY")
+done
+
+render1() {
+    rrdtool graph --rigid --slope-mode --imgformat PNG --interlaced \
+        --lower-limit 0 "$@" "${defs[@]}" >/dev/null
+}
+
+# render several graphs with different period
+rm -f "$basename".*.png
+render1 "$basename.P1W.png" "$@" --end now --start end-1w
+render1 "$basename.P1M.png" "$@" --end now --start end-1m
+render1 "$basename.P6M.png" "$@" --end now --start end-26w
+ln -sfn "$basename.P1M.png" "$template"

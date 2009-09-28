@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# collect-sync-cost -- Analyze synchronization cost from logs
+#  
+# Created: 2007-01-08
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2007 Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+analyze() {
+    perl -MDate::Parse -e'
+    my $in = 0;
+    my $out = 0;
+    my $begin;
+    my $end;
+    my $failed = 0;
+
+    while (defined (my $l = <>)) {
+        ## Rsync
+        # "sent 928 bytes  received 91854705 bytes  185006.31 bytes/sec"
+        if ($l =~ /^sent ([0-9]+) bytes  received ([0-9]+) bytes.*/) {
+            $in += $2;
+            $out += $1;
+        }
+        # "rsync error: timeout in data send/receive (code 30) at io.c(171) [sender=2.6.8]
+        #  rsync: connection unexpectedly closed (22548868 bytes received so far) [receiver]
+        #  rsync error: error in rsync protocol data stream (code 12) at io.c(453) [receiver=2.6.9]
+        #  rsync: connection unexpectedly closed (12381826 bytes received so far) [generator]"
+        elsif ($l =~ /^rsync: connection unexpectedly closed \((\d+) bytes received so far\) \[(receiver|generator)\]/) {
+            $in  += $1 if $2 eq "receiver";
+            $out += $1 if $2 eq "generator";
+        }
+        # TODO: more rsync error cases?
+
+        ## lftp 
+        # "Total: 8 directories, 11550 files, 172 symlinks
+        #  Modified: 191 files, 0 symlinks
+        #  13875147 bytes transferred in 408 seconds (33.2K/s)"
+        elsif ($l =~ /^([0-9]+) bytes transferred in ([0-9]+) seconds.*/) {
+            $in += $1;
+        }
+        # TODO: more lftp error cases?
+
+        # begin/end
+        # "apache: sync begins at 2007-01-08 13:03:02 +0900"
+        # "apache: sync success at 2007-01-08 13:11:38 +0900"
+        # "cpan: sync failure at 2006-12-09 18:42:54 +0900"
+        elsif ($l =~ /^.*: sync (begins|success|failure) at (.*)$/) {
+            if ($1 eq "begins") {
+                $begin = str2time($2);
+            } else {
+                $end   = str2time($2);
+                $failed = 1 if $1 eq "failure";
+            }
+        }
+    }
+
+    # network traffic
+    printf "in=%d\n",  $in  if $in;
+    printf "out=%d\n", $out if $out;
+    my $traffic = $in + $out if $in and $out;
+    printf "io=%d\n", $traffic if $traffic;
+
+    # sync duration, bandwidth
+    my $duration = $end - $begin if defined $end and $begin;
+    printf "duration=%d\n", $duration if $duration;
+    printf "bandwidth=%d\n", $traffic / $duration if $traffic and $duration;
+    '
+}
+
+if [ $# -eq 0 ]; then
+    zcat -q .success.log.gz | analyze
+else
+    zcat -q "$@" | analyze
+fi

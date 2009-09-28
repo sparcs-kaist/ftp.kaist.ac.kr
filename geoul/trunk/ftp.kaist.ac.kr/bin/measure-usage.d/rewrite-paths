@@ -1,0 +1,46 @@
+#!/usr/bin/perl -w
+# rewrite-paths -- Rewrite paths in CLF
+# 
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+#  
+# Created: 2008-02-18
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+use strict;
+
+# compile the user provided rewriting rule
+my $expr = "";
+for my $rule (@ARGV) {
+    if (my ($from, $to) = $rule =~ /(.*?)=(.*)/) {
+        # & in the right-hand-side means the match
+        $to =~ s/\&/\$&/g;
+        $expr .= "\$p =~ s#^$from#$to#;";
+    } else {
+        die "no \`=' found in rule: \`$rule'";
+    }
+}
+
+# rewrite them
+while (defined (my $line = <STDIN>)) {
+    chomp $line;
+    if (my ($pre, $p, $post) = $line =~ /^(.*?\] "[^ ]+ )([^" ]+?)([ "].*)$/) {
+        # discard url scheme+host part first,
+        $p =~ s#^\w+://[^/]*##;
+        # normalize path
+        $p =~ s#/(/|\./)+#/#g;
+        # apply user given rules
+        eval $expr;
+        # strip file://
+        $p =~ s#^file://##;
+        # and print it
+        print $pre.$p.$post;
+    } else {
+        print $line;
+    }
+    print "\n";
+}

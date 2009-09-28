@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+# 알림(Allim) -- a command-line tool for authoring RSS 1.0
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2006-07-12
+# 
+# Prerequisites:
+#  BASH
+#  xmllint (libxml2)
+#  xsltproc (libxslt)
+# 
+# RSS 1.0 specification:
+#  http://web.resource.org/rss/1.0/spec
+
+usage() {
+    cat <<-EOF
+	Usage: $Name <rss> <command> [<argument>...]
+	
+	Command:
+	 help
+	   shows this usage.
+	
+	 new <rss-url> <title> <link> [<optional>...] < <description>
+	   creates a new <rss> file.
+	   Optional arguments:
+	     duration=<duration>
+	     img-url=<img-url>
+	     date=<date>
+	
+	 add <title> <link> [<optional>...] < <description>
+	   adds an item with <title>.  You may supply the description over
+	   standard input, or you can compose it with your \$EDITOR.
+	
+	 remove <link>
+	   removes the item identified by <link>.
+	
+	 keep [<optional>...]
+	   expires all items older than <duration>.
+	   Optional arguments:
+             duration=<duration>
+	     now=<date>
+	
+	 list
+	   lists items in plain text format.
+	
+	 html-list
+	   shows the RSS content in HTML list(<ul>).
+	
+	EOF
+    exit $1
+}
+
+error() {
+    local code=$1; shift
+    echo "$Name: $@" >&2
+    exit $code
+}
+
+xml() {
+    # run xmllint in libxml2
+    xmllint --format --encode utf-8 -
+}
+
+xslt() {
+    local xsl=$1; shift
+    local a= args; args=()
+    # prepare arguments
+    for a in "$@"; do
+        local v=${a#*=}
+        if [ "${v/"'"/}" = "$v" ]; then
+            v="'$v'"
+        else
+            # need to escape using "concat('$l',"'",'$r')" for each $l'$r
+            v=$(echo "$v" |
+                sed -e 's/'"'"'/'"'"',"'"'"'",'"'"'/g' \
+                    -e '1 s/^/concat('"'"'/' -e '$ s/$/'"'"')/')
+        fi
+        args=("${args[@]}" --param "${a%%=*}" "$v")
+    done
+    # run xsltproc in libxslt
+    xsltproc "${args[@]}" "$xsl" -
+}
+
+compose() {
+    local what=$1; shift
+    local tmp=$Tmp/compose.$what
+    if [ -t 0 ]; then
+        # use editor on terminal
+        echo "Enter $what here" >$tmp
+        "$EDITOR" $tmp
+        eval $what'=`cat $tmp`'
+    else
+        # or just use stdin
+        eval $what'=`cat`'
+    fi
+}
+
+lock() {
+    local f=$1
+    lockfile -3 -r10 -l60 "$f.allim.lock" ||
+    error 34 "$RSS: resource is busy"
+}
+
+unlock() {
+    local f=$1
+    rm -f "$f.allim.lock"
+}
+
+
+
+Path=$0
+! [ -L "$Path" ] || Path=`readlink -f "$Path"`
+Base=$(cd "`dirname "$Path"`" && pwd)
+Name=`basename "$0"`
+
+LANG=C LANGUAGE=C LC_ALL=C
+EDITOR=${EDITOR:-vi}
+NS="http://netj.org/2006/allim"
+
+RSS=$1; shift
+Cmd=$1; shift
+set -e
+Tmp=`mktemp -d /tmp/allim.XXXXXX`
+trap "unlock $RSS; rm -rf $Tmp" EXIT
+
+case "$Cmd" in
+    new) # <rss-url> <title> <link> < <description> [duration=<duration>] [img-url=<img-url>] [date=<date>]
+    if [ -e "$RSS" ]; then
+        error 33 "$RSS: already exists"
+    else
+        [ $# -ge 3 ] || usage 1
+        url=$1 title=$2 link=$3; shift 3
+        compose description
+        lock "$RSS"
+        cat "$Base/new.rss" \
+        |xslt "$Base/new.xsl" \
+            rss-url="$url" \
+            title="$title" \
+            link="$link" \
+            description="$description" \
+            "$@" \
+        |xml \
+        >"$RSS"
+        ! [ -t 0 ] || "$EDITOR" "$RSS"
+        unlock "$RSS"
+    fi
+    ;;
+
+    add) # <title> <link> < <description> [date=<date>]
+    [ $# -ge 2 ] || usage 1
+    title=$1 link=$2; shift 2
+    compose description
+    lock "$RSS"
+    cat "$RSS" \
+    |xslt "$Base/add.xsl" \
+        title="$title" \
+        link="$link" \
+        description="$description" \
+        "$@" \
+    |xml \
+    >"$Tmp/rss"
+    cp -f "$RSS" "$RSS~"
+    cat "$Tmp/rss" >"$RSS"
+    unlock "$RSS"
+    ;;
+
+    remove) # <link>
+    [ $# -ge 1 ] || usage 1
+    lock "$RSS"
+    cat "$RSS" \
+    |xslt "$Base/remove.xsl" \
+        link="$1" \
+    |xml \
+    >"$Tmp/rss"
+    cp -f "$RSS" "$RSS~"
+    cat "$Tmp/rss" >"$RSS"
+    unlock "$RSS"
+    ;;
+
+    keep) # [duration=<duration>] [now=<now>]
+    lock "$RSS"
+    cat "$RSS" \
+    |xslt "$Base/expire.xsl" \
+        "$@" \
+    |xml \
+    >"$Tmp/rss"
+    cp -f "$RSS" "$RSS~"
+    cat "$Tmp/rss" >"$RSS"
+    unlock "$RSS"
+    ;;
+
+    list|html|html-*)
+    xslt "$Base/$Cmd.xsl" <"$RSS"
+    ;;
+
+    ""|help|*)
+    usage
+    ;;
+esac

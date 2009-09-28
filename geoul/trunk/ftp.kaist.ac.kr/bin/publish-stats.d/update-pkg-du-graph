@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# publish-stats.d/update-pkg-size-graph
+# 
+# Refactored: 2009-03-07
+# Created: 2006-04-26
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+. /mirror/lib/pkg.sh
+pkgid=${pkg//./_}
+
+[ -r du.rrd ]
+
+draw-pkg-size() {
+    echo "AREA:${pkgid}_du_bytes#$color::STACK"
+    echo "LINE:0#000000::STACK"
+}
+
+{
+    load-pkg-size
+    draw-pkg-size
+    draw-timestamp
+} |
+render-size du.png \
+    --title "Disk usage of $name" \
+    --width 400 --height 100 \
+    "$@"

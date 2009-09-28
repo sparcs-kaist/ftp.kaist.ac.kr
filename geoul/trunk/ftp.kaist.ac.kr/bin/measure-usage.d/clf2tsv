@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# clf2tsv -- Extract raw usage data of each package from CLF
+# 
+# Emits tab-separated values: pkg, svc, size
+# for the Combined Log Format given thru stdin.
+# Lines containing path whose package is unknown are prefixed with `?'.
+# 
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+. /mirror/lib/geoul.sh
+
+datapath-s() {
+    (
+    . /mirror/lib/pkg.sh
+    echo "\\#$datapath/#{s%^[^	]\+%$pkg%;p;d;};"
+    )
+}
+path2pkg() {
+    sed -ne "
+    # map to package
+    `foreachpkg datapath-s`
+    # or it's unknown :(
+    s/^[^	]\+/?&/p
+    "
+}
+
+extract-fields() {
+    # path, svc, size  extracted from CLF
+    sed -ne '
+    /\] "[^"]\+" 2.. /{
+        s%.*\] "[^ ]\+ \([^" ]\+\)\( \([^" ]\+\)\)\?" [^ ]\+ \([0-9]\+\).*%\1	\3	\4%p
+    }
+    '
+}
+
+extract-fields | path2pkg

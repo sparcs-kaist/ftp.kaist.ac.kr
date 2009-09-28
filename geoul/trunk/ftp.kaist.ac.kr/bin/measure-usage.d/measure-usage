@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# measure-usage -- measure usages from service logs and keep them in RRDs
+# 
+# See http://oss.oetiker.ch/rrdtool/ for RRDtool.
+# CLF here, stands for Combined Log Format rather than Common Log Format.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+#  
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+# some configuration knobs
+: ${ProcessUnder:=/var/log/geoul/measure-usage}
+
+# add vocabulary directory to PATH
+Cmd=`readlink -f "$0"`
+Here=`dirname "$Cmd"`
+PATH="$Here:$PATH"
+
+# yes, we are one of the Geoul tool chain
+. /mirror/lib/geoul.sh
+system_not_degraded
+running_as_mirror_admin "$@"
+
+# convert logs & collect to clf following instructions on given scripts
+wd=`mktemp -d $ProcessUnder/XXXXXX`
+logs2clf "$@" >$wd/clf
+touch $wd/clf.ready
+
+# analyze available clfs
+for wd in $ProcessUnder/*; do
+    [ -e $wd/clf.ready ] || continue
+    synchronized $wd/analysis-in-progress \
+    analyze $wd &
+done
+
+wait

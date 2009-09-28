@@ -1,0 +1,17 @@
+#!/bin/sh
+# logs2clf.clf -- Convert the real Common Log Format to CLF
+#  
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+# 
+# Created: 2008-02-15
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+svc=$1
+
+# need to amend the protocol part of the request and append referer, user-agent
+sed -e 's%\(\] "[^ ]\+ [^" ]*\)[^"]*"%\1 '$svc'"%' -e 's/$/ "-" "-"/'

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# publish-stats.d/draw-timestamp
+# 
+# Created: 2009-03-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2009, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+timestamp=`date +"%F %T %z"`
+echo "COMMENT:\\n"
+echo "COMMENT:${timestamp//:/\\:}\\r"

@@ -1,0 +1,43 @@
+#!/usr/bin/perl -w
+# logs2clf.xferlog -- Convert ftpd's xferlog to CLF
+# 
+# See http://docs.sun.com/app/docs/doc/819-2251/xferlog-4 for xferlog.
+#  
+# CLF here, stands for Combined Log Format which is a slight extension to the
+# Common Log Format what usually CLF stands for.
+# See http://httpd.apache.org/docs/1.3/logs.html#combined for combined
+# and http://en.wikipedia.org/wiki/Common_Log_Format for common.
+# 
+# Created: 2008-02-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+use strict;
+
+our $svc = shift @ARGV;
+
+our $tz = `date +%z`; chomp $tz;
+
+# read
+while (<>) {
+    if (/^\w{3} (\w{3}) ([ 0-9]{2}) ([:0-9]{8}) (\d+) (\d+) (\S+) (\d+) (\S+) \S+ \S+ \S+ \S+ (\S+) \S+ \d+ \S+ \S+/) {
+        # date-time
+        my $month = $1;
+        my $day = $2;
+        my $time = $3;
+        my $year = $4;
+        # request
+        my $transfertime = $5;
+        my $client = $6;
+        my $size = $7;
+        my $path = $8;
+        my $authuser = $9;
+        # determine response code
+        my $response = "200";
+        $response = "404" if ($transfertime == 1 and $size == 0);
+        # print
+        printf '%s - %s [%2d/%s/%d:%s %s] "GET %s %s" %s %d "-" "-"'."\n",
+        $client, $authuser, $day, $month, $year, $time, $tz,
+        $path, $svc, $response, $size;
+    }
+}
