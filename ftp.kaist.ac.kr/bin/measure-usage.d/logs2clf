@@ -16,18 +16,20 @@ set -e
 
 analyze() {
     local service=$1; shift
-    local path=$1; shift
+    local log=$1; shift
     local type=$1; shift
     converter=logs2clf.$type
     if type $converter &>/dev/null; then
-        if lockfile -r3 $path.lock 2>/dev/null; then
+        # append extension when analyzing a rotated log
+        [ -z "$LogRotationExtension" ] || log="$log$LogRotationExtension"
+        if lockfile -r3 "$log.lock" 2>/dev/null; then
             PATH=$PATH:/usr/sbin
             set +e
-            logtail $path | $converter $service | rewrite-paths "$@" >&3
-            rm -f $path.lock
+            logtail "$log" | $converter $service | rewrite-paths "$@" >&3
+            rm -f "$log.lock"
             set -e
         else
-            error "$path: another measurement in progress"
+            error "$log: another measurement in progress"
         fi
     else
         error "logs2clf: analyze: $type: unsupported log type"

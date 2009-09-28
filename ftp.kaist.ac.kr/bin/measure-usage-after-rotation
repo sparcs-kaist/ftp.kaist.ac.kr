@@ -25,5 +25,5 @@ for log in "${logs[@]}"; do
 done
 
 # measure usages from rotated logs
-LOGEXT=.0 \
+LogRotationExtension=.0 \
 /mirror/bin/measure-usage "$@"
