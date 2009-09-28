@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # measure-usage-after-rotation -- measure usage after log rotation
 # 
 # Created: 2008-05-25
@@ -10,20 +10,20 @@ set -e
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
 
-confs=()
-
-for svc in "$@"; do
-    conf="/mirror/svcs/$svc/measure-usage.conf"
-    confs=("${confs[@]}" "$conf")
-    # FIXME: get log dirs from $conf instead of $@
-    shift
-    logs=(`find "$@" -name '*.log.offset'`)
-    set --
-    # rename offsets
-    for log in "${logs[@]}"; do
-        mv -f "$log.offset" "$log.0.offset"
-    done
+# gather configurations and logs
+logs=()
+for conf; do
+    logs+=(`
+        analyze() { readlink -f "$2"; }
+        . "$conf"
+    `)
 done
 
+# move offsets for logs
+for log in "${logs[@]}"; do
+    mv -f "$log.offset" "$log.0.offset"
+done
+
+# measure usages from rotated logs
 LOGEXT=.0 \
-/mirror/bin/measure-usage "${confs[@]}"
+/mirror/bin/measure-usage "$@" # FIXME measure-usage doesn't make use of these arguments
