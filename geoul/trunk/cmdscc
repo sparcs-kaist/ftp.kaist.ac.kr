@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# cmdscc -- A Commands Compiler Compiler
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2009-09-29
+set -e
+
+OutRoot=$1; shift
+InRoot=$1; shift
+
+Targets=()
+
+compile-rules() {
+    local name=$1; shift
+    local input=$1; shift
+    local target="$OutRoot/$name"
+    if [ -d "$input" ]; then
+        # a complex command directory with bundled contents
+        local outdir="$OutRoot/$name.d"
+        local i items
+        items=()
+        for i in "$input"/*; do
+            local item=${i##*/}
+            if [ -d "$i" ]; then
+                if [ -x "$i/main" ]; then
+                    compile-rules "$name.d/$item" "$i"
+                else
+                    echo "$outdir/$item: $i $outdir"
+                    echo -e '\t$(INSTALLTREE) "$<" "$@"'
+                fi
+            elif [ -e "$i" ]; then
+                echo "$outdir/$item: $i $outdir"
+                echo -e '\t$(INSTALL) "$<" "$@"'
+            else
+                continue
+            fi
+            items+=("$outdir/$item")
+        done
+        if [ ${#items[@]} -gt 0 ]; then
+            if [ ${#items[@]} -eq 1 -a x"${items[0]}" = x"$outdir/main" ]; then
+                # optimization: treat complex commands which have only main executable as simple commands
+                printf '%s: %s\n' "$target" "$input/main"
+                printf '\t%s\n' '$(INSTALL) "$<" "$@"'
+            else
+                # rule for directory
+                echo "$outdir:"
+                echo -e '\tmkdir -p "$@"'
+                # rule for wrapper
+                echo -n "$target:"
+                printf ' %s' "${items[@]}"
+                echo
+                printf '\t%s\n' \
+                    "{ echo '#!/bin/sh'; echo 'Self=\`readlink -f \"\$\$0\"\`'; echo 'PATH=\"\$\$Self.d:\$\$PATH\" exec \"\$\$Self\".d/main \"\$\$@\"'; } >\"\$@\"" \
+                    'chmod +x "$@"'
+            fi
+            Targets+=("$target")
+        else
+            printf '# XXX: %s/ ignored: no contents\n' "$input"
+        fi
+    elif [ -x "$input" ]; then
+        # a simple command
+        printf '%s: %s\n' "$target" "$input"
+        printf '\t%s\n' '$(INSTALL) "$<" "$@"'
+        Targets+=("$target")
+    else
+        printf '# XXX: %s ignored: unknown command format\n' "$input"
+    fi
+    printf '\n'
+}
+
+cat <<HEAD
+#!/usr/bin/make -f
+# A Commands Compiler
+#  generated at `date +%FT%T%:z`
+# 
+# This compiles commands under $OutRoot from following inputs:
+HEAD
+for input
+do echo "#  $input"
+done
+# TODO help message on source structure
+cat <<HEAD
+# 
+# You can include this file in your makefile as below:
+#  
+#  all: stage/lib/program
+#  
+#  [...]
+#  
+#  include .cmds.mk
+#  .cmds.mk: src/*/*
+#  	cmdscc stage/lib/program 'src/*/' $^ >\$@
+#  
+
+INSTALL:=cp --preserve=mode,link --force
+INSTALLTREE:=\$(INSTALL) -r
+
+$OutRoot:
+HEAD
+
+for input; do
+    name=${input#$InRoot}
+    name=${name//%\//}
+    input=${input//%\//}
+    compile-rules "$name" "$input"
+done
+
+echo -n "$OutRoot:"
+printf ' %s' "${Targets[@]}"
+printf '\n'
