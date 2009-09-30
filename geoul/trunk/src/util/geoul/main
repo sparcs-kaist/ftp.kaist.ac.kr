@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# geoul -- A mirror management solution
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+GEOULSELF=`readlink -f "$0"`
+GEOULBASE=`dirname "$GEOULSELF"`
+PATH="$GEOULBASE:$PATH"
+export GEOULSELF GEOULBASE PATH
+
+if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOULBASE/$Cmd" ]; then
+    exec "$Cmd" "$@"
+else
+    [ -z "$Cmd" ] || echo "$Cmd: unknown command" >&2
+    echo "Try \`geoul help' for usage."
+    exit 1
+fi

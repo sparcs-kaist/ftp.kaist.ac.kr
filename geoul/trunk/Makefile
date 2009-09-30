@@ -4,14 +4,19 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
-#COMMANDS := $(shell find src/*/*/main | sed 's:/main$$::; s:^src/[^/]*/::; s:/:.d/:g')
-#EXPOSED_COMMANDS := $(shell find src/*/*/.expose | sed 's:/.expose$$::; s:^src/[^/]*/::; s:/:.d/:g')
+COMMANDS := geoul regularly synchronized
 
 .PHONY: all clean
-all: stage/lib/geoul
+STAGED_COMMANDS := $(COMMANDS:%=stage/bin/%)
+all: $(STAGED_COMMANDS) stage/lib/geoul
 clean:
 	rm -rf stage .cmds.mk
 
-include .cmds.mk
+$(STAGED_COMMANDS): stage/bin
+	ln -sfn ../$(@:stage/bin/%=lib/geoul/%) $@
+stage/bin:
+	mkdir -p $@
+
 .cmds.mk: src/*/*
 	./cmdscc stage/lib/geoul 'src/*/' $^ >$@
+include .cmds.mk
