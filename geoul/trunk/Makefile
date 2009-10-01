@@ -10,13 +10,13 @@ COMMANDS := geoul regularly synchronized
 STAGED_COMMANDS := $(COMMANDS:%=stage/bin/%)
 all: $(STAGED_COMMANDS) stage/lib/geoul
 clean:
-	rm -rf stage .cmds.mk
+	rm -rf stage .ctk.mk
 
 $(STAGED_COMMANDS): stage/bin
 	ln -sfn ../$(@:stage/bin/%=lib/geoul/%) $@
 stage/bin:
 	mkdir -p $@
 
-.cmds.mk: src/*/*
-	./cmdscc stage/lib/geoul 'src/*/' $^ >$@
-include .cmds.mk
+.ctk.mk: src/*/*
+	./ctkcc stage/lib/geoul 'src/*/' $^ >$@
+include .ctk.mk

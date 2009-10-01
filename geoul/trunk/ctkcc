@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cmdscc -- A Commands Compiler Compiler
+# ctkcc -- A Command-line Toolkit Compiler Compiler
 # Author: Jaeho Shin <netj@sparcs.org>
 # Created: 2009-09-29
 set -e
@@ -69,7 +69,7 @@ compile-rules() {
 
 cat <<HEAD
 #!/usr/bin/make -f
-# A Commands Compiler
+# A Command-line Toolkit Compiler
 #  generated at `date +%FT%T%:z`
 # 
 # This compiles commands under $OutRoot from following inputs:
@@ -86,9 +86,9 @@ cat <<HEAD
 #  
 #  [...]
 #  
-#  include .cmds.mk
-#  .cmds.mk: src/*/*
-#  	cmdscc stage/lib/program 'src/*/' $^ >\$@
+#  include .ctk.mk
+#  .ctk.mk: src/*/*
+#  	ctkcc stage/lib/program 'src/*/' $^ >\$@
 #  
 
 INSTALL:=cp --preserve=mode,link --force
