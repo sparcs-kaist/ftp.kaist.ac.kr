@@ -27,9 +27,8 @@ CONFIGS+=\
 #
 
 # package specific httpd configs
-HTTPCONFIGNAME=lighttpd.conf
-HTTPCONFIGS=$(shell find /mirror/pkgs/*/$(HTTPCONFIGNAME))
-CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-available/80-%.conf)
+HTTPCONFIGS=$(shell find /mirror/pkgs/*/lighttpd.conf)
+CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/lighttpd.conf=/etc/lighttpd/conf-available/80-%.conf)
 
 
 
@@ -50,15 +49,15 @@ INSTALL=install -m a+r
 ## special rules for individual config
 
 # sysctl
-/etc/sysctl.conf: sysctl.conf
+/etc/sysctl.conf: etc/sysctl.conf
 	$(INSTALL) $< $@
 	sysctl -p
 
 # cron
-/etc/cron.d/geoul: crontab.node
+/etc/cron.d/geoul: svcs/cron/crontab.node
 	$(INSTALL) $< $@
 	invoke-rc.d cron reload
-/etc/cron.d/geoul-leader: crontab.leader
+/etc/cron.d/geoul-leader: svcs/cron/crontab.leader
 	$(INSTALL) $< $@
 	invoke-rc.d cron reload
 
@@ -67,39 +66,39 @@ INSTALL=install -m a+r
 	mkdir -p $@
 	chown mirror:mirror $@
 	chmod g+w $@
-/etc/logrotate.d/geoul: logrotate.conf
+/etc/logrotate.d/geoul: etc/logrotate.conf
 	$(INSTALL) $< $@
 
 # mail
-/etc/aliases: aliases
+/etc/aliases: etc/aliases
 	$(INSTALL) $< $@
 	newaliases
 
 # lighttpd
-/etc/lighttpd/lighttpd.conf: lighttpd.conf
+/etc/lighttpd/lighttpd.conf: svcs/http/lighttpd.conf
 	$(INSTALL) $< $@
-	until invoke-rc.d lighttpd restart; do sleep 1; done
-/etc/lighttpd/conf-available/80-%.conf: /mirror/pkgs/%/$(HTTPCONFIGNAME) | /etc/lighttpd/lighttpd.conf
+	until svcs/http/rc restart; do sleep 1; done
+/etc/lighttpd/conf-available/80-%.conf: pkgs/%/lighttpd.conf | /etc/lighttpd/lighttpd.conf
 	$(INSTALL) $< $@
 	lighty-enable-mod $(@F:80-%.conf=%)
-	until invoke-rc.d lighttpd restart; do sleep 1; done
+	until svcs/http/rc restart; do sleep 1; done
 
 # vsftpd
-/etc/vsftpd.conf: vsftpd.conf
+/etc/vsftpd.conf: svcs/ftp/vsftpd.conf
 	$(INSTALL) $< $@
-	invoke-rc.d vsftpd reload
+	svcs/ftp/rc reload
 
 # rsyncd
-/etc/rsyncd.conf: rsyncd.conf
+/etc/rsyncd.conf: svcs/rsync/rsyncd.conf
 	$(INSTALL) $< $@
-	invoke-rc.d rsync restart
+	svcs/rsync/rc restart
 
 # motd
-/etc/motd.tail: motd
+/etc/motd.tail: www/self/.message
 	$(INSTALL) $< $@
 
 # subversion
-/etc/subversion/config: subversion.config
+/etc/subversion/config: etc/subversion.config
 	$(INSTALL) $< $@
 
 

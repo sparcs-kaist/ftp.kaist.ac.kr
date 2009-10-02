@@ -1,0 +1,3 @@
+#!/bin/sh -e
+pid=`cat /var/run/crond.pid 2>/dev/null`
+ps -p $pid >/dev/null
