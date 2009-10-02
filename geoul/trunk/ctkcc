@@ -56,7 +56,7 @@ compile-rules() {
         else
             printf '# XXX: %s/ ignored: no contents\n' "$input"
         fi
-    elif [ -x "$input" ]; then
+    elif [ -e "$input" ]; then
         # a simple command
         printf '%s: %s\n' "$target" "$input"
         printf '\t%s\n' '$(INSTALL) "$<" "$@"'
