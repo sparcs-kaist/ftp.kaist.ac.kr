@@ -11,10 +11,9 @@ ReportFailedSyncsAfter=P1D
 ReportLongSyncsEvery=PT12H
 
 . /mirror/lib/geoul.sh
-running_as_mirror_admin "$@"
 
-ReportFailedSyncsAfter=`secondsof $ReportFailedSyncsAfter`
-ReportLongSyncsEvery=`secondsof $ReportLongSyncsEvery`
+ReportFailedSyncsAfter=`nrsecs $ReportFailedSyncsAfter`
+ReportLongSyncsEvery=`nrsecs $ReportLongSyncsEvery`
 
 tmp=`mktemp -d /tmp/check-anomalies.XXXXXX`
 report=$tmp/report
@@ -53,7 +52,7 @@ check() {
     # failed syncs
     if [ -f failed.needsreport -a $timepast -ge $ReportFailedSyncsAfter ]; then
         local when="soon"
-        [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
+        [ $remaining -gt 0 ] && when="after `iso-interval $remaining`"
         item "$pkg: sync failed $failures times; will retry $when"
         echo "== $pkg failed =="
         quotelog excerpt.failure .failure.log.gz
@@ -69,7 +68,7 @@ check() {
         # if sync is taking too much time and we have been quiet for a while,
         if [ $synctime -gt $nextreport ]; then
             # report
-            item "$pkg: sync too long; `humaninterval $synctime`"
+            item "$pkg: sync too long; `iso-interval $synctime`"
             echo "== $pkg too long =="
             quotelog excerpt log
             echo
@@ -87,10 +86,10 @@ check() {
 quotelog() {
     local excerpt=$1; shift
     local log=$1; shift
-    echo "Excerpt of [`log_uri "$log"`]:"
+    echo "Excerpt of [`log-uri "$log"`]:"
     echo "-->8--"
     "$excerpt" "$log" "$@"
     echo "--8<--"
 }
 
-foreachpkg check >$report 2>&1
+for-each-package check >$report 2>&1

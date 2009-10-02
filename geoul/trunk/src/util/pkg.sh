@@ -60,8 +60,8 @@ in_a_package() {
 compute_times() {
     lasttime=`mtime timestamp`
     timepast=$((`now` - $lasttime))
-    [ -n "$frequency" ] && interval=`secondsof $frequency` || interval=
-    [ -n "$validfor" ] && validsecs=`secondsof $validfor` || validsecs=
+    [ -n "$frequency" ] && interval=`nrsecs $frequency` || interval=
+    [ -n "$validfor" ] && validsecs=`nrsecs $validfor` || validsecs=
     failures=`number_of_failures`
     penalty=`penalty_for $failures`
     delay=$(( $interval + $penalty ))

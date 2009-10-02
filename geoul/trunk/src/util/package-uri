@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# package-uri -- URI for log
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+pkg=$1
+echo "$BaseURL/pkgs/$pkg"

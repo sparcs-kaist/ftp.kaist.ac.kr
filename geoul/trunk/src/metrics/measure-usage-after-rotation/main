@@ -8,7 +8,6 @@
 set -e
 
 . /mirror/lib/geoul.sh
-running_as_mirror_admin "$@"
 
 # gather configurations and logs
 logs=()

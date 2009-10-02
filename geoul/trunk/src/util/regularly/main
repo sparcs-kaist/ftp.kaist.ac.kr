@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# regularly -- Wrapper command for regular tasks
+# 
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+set -e
+
+knob="$GEOULDIR"/run/no-regular-tasks
+
+if [ -e "$knob" ]; then
+    echo "$knob: skipped $1" >&2
+    exit 36
+else
+    exec "$@"
+fi

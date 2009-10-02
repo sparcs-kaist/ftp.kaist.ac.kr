@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# mtime -- file modification time in numeric value
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+f=$1
+# XXX: works on GNU only :-|
+t=`date -r "$f" +%s 2>/dev/null || echo 0`
+echo ${t:-0}

@@ -8,8 +8,6 @@
 set -e
 
 . /mirror/lib/geoul.sh
-system_not_degraded
-running_as_mirror_admin "$@"
 
 # parse arguments
 force=false
@@ -59,7 +57,8 @@ if [ -e $pkglst.in ]; then
     done 3<$pkglst
 else
     # otherwise, try sync every pkg
-    foreachpkg trysync
+    # FIXME for-each-package does not work for functions
+    for-each-package trysync
 fi
 
 wait

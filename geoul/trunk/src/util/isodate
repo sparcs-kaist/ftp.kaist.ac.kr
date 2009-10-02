@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# isodate -- ISO8601:2000 date format
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+exec date "$@" +'%FT%T%:z'

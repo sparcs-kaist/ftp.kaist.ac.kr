@@ -10,13 +10,13 @@ set -e
 . /mirror/lib/geoul.sh
 
 # disk usage
-foreachpkg update-pkg-du-graph "$@"
+for-each-package update-pkg-du-graph "$@"
 update-size-graph-by-pkgs "$@"
 
 # network usage
 update-usage-graph-by-pkgs "$@"
 update-usage-graph-by-svcs "$@"
-foreachpkg update-pkg-usage-graph "$@"
+for-each-package update-pkg-usage-graph "$@"
 for svc in /mirror/svcs/*/measure-usage.conf; do 
     (
     cd $(dirname "$svc")

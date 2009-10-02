@@ -15,9 +15,8 @@ allproblemsfeed=../problems.feed
 allkeep=P3D
 
 . /mirror/lib/pkg.sh
-running_as_mirror_admin "$@"
 
-home=`pkg_uri $pkg`
+home=`package-uri $pkg`
 
 # how to create feeds
 create() {
@@ -54,7 +53,7 @@ case "$event" in
         failure) title="$name failed" excerpt=excerpt.failure ;;
         *)       title="$name $eventtype" ;;
     esac
-    uri=`log_uri "$log"`
+    uri=`log-uri "$log"`
     desc=`mktemp /tmp/record-news.feed.XXXXXX`
     trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
     { echo "<pre>"; "$excerpt" "$log" 20; echo "</pre>"; } >$desc

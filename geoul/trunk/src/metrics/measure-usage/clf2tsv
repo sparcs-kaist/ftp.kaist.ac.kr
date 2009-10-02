@@ -27,7 +27,7 @@ datapath-s() {
 path2pkg() {
     sed -ne "
     # map to package
-    `foreachpkg datapath-s`
+    `for-each-package datapath-s`
     # or it's unknown :(
     s/^[^	]\+/?&/p
     "

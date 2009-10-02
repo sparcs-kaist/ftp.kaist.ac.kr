@@ -3,12 +3,12 @@ SHELL=/bin/sh
 PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # self maintanance
-*/5 *	* * *	mirror	exec nice -n  5 record-nodestats /mirror/nodes/$HOSTNAME/stats.rrd
+*/5 *	* * *	mirror	exec nice -n  5 regularly record-nodestats /mirror/nodes/$HOSTNAME/stats.rrd
 
 # take care of sync
-*/3 *	* * *	mirror	exec nice -n  2 maintain-sync >/dev/null
+*/3 *	* * *	mirror	exec nice -n  2 regularly maintain-sync >/dev/null
 
 # take care of svcs
-*/2 *	* * *	root	exec watch-services
-53 *	* * *	mirror	exec nice -n  5 measure-usage /mirror/svcs/*/measure-usage.conf
+*/2 *	* * *	root	exec            regularly watch-services
+53 *	* * *	mirror	exec nice -n  5 regularly measure-usage /mirror/svcs/*/measure-usage.conf
 @reboot 	mirror	rm -f /var/log/geoul/*/*.lock

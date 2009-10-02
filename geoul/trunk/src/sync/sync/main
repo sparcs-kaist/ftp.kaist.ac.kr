@@ -47,7 +47,6 @@ case "$triggered" in
     now|pushed) ;;
     regularly)
     [ -n "$frequency" ] || exit 6
-    system_not_degraded
     ;;
     stop) ;;
     watch) ;;
@@ -56,8 +55,8 @@ esac
 
 
 ## check environment
-running_as_mirror_admin "$@"
-running_as_process_group_leader "$@"
+# FIXME "$0"
+[ x"`ps -o pgid= -p $$`" == x"$$" ] || exec setsid "$0" "$@"
 
 shift
 export GETARGS="$@"
@@ -105,12 +104,12 @@ compute_times # defines: timepast interval failures penalty delay remaining
 if [ "$triggered" = regularly ]; then
     desc=
     if [ $penalty -gt 0 ]; then
-        desc="=`humaninterval $interval`+`humaninterval $penalty`(${failures} failures)"
+        desc="=`iso-interval $interval`+`iso-interval $penalty`(${failures} failures)"
     fi
     if [ $timepast -lt $delay ]; then
-        die 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
+        die 8 "not yet (age=`iso-interval $timepast` < `iso-interval $delay`$desc)"
     else
-        msg "old enough (age = `humaninterval $timepast` >= `humaninterval $delay`$desc)"
+        msg "old enough (age = `iso-interval $timepast` >= `iso-interval $delay`$desc)"
     fi
 fi
 
@@ -190,7 +189,7 @@ cat <<EOF
 + node=$HOSTNAME
 + triggered=$triggered
 + frequency=$frequency
-+ timepast=`humaninterval $timepast`
++ timepast=`iso-interval $timepast`
 + failures=$failures
 EOF
 set +e -x

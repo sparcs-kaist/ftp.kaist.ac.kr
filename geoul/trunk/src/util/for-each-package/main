@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# foreachpkg -- Apply given command to each package
+# for-each-package -- Apply given command to each package
 # 
 # Created: 2006-01-26
 # 

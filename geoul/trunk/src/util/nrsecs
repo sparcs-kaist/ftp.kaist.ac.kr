@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# nrsecs -- convert XML Schema duration format to number of seconds
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+duration=$1; shift
+duration-error() {
+    echo "$duration:invalid duration format" >&2
+    false
+}
+dpos=true
+[ x"${duration#-}" = x"$duration" ] || dpos=false
+ddt=${duration#P}
+[ x"$ddt" != x"$duration" ] || duration-error
+dd=${ddt%%T*}
+dt=${ddt#$dd}
+dt=${dt#T}
+[ -z "$dt" -o x"$dt" != x"${ddt#$dd}" ] || duration-error
+ddexpr=$dd
+ddexpr=${ddexpr//Y/*31557600 }
+ddexpr=${ddexpr//M/*2629800 }
+ddexpr=${ddexpr//D/*86400 }
+dtexpr=$dt
+dtexpr=${dtexpr//H/*3600 }
+dtexpr=${dtexpr//M/*60 }
+dtexpr=${dtexpr//S/ }
+s=0
+for e in $ddexpr $dtexpr
+do let s+=$e || duration-error
+done
+$dpos || s=-$s
+echo $s

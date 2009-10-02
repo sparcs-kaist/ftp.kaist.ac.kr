@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# now -- current date & time as some numeric value
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+date "$@" +%s

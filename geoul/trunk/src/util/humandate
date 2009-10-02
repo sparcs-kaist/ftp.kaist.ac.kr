@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# humandate -- human friendly date
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+exec date "$@" +'%Y-%m-%d %H:%M:%S %z'

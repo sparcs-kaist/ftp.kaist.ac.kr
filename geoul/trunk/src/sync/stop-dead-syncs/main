@@ -29,4 +29,5 @@ watch() {
     )
 }
 
-foreachpkg watch
+# FIXME for-each-package does not work for functions
+for-each-package watch

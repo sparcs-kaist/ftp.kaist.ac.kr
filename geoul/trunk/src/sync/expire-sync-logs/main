@@ -9,7 +9,6 @@
 days=60
 
 . /mirror/lib/geoul.sh
-running_as_mirror_admin "$@"
 
 cd /mirror/log/sync
 

@@ -11,7 +11,12 @@ PATH="$GEOULBASE:$PATH"
 export GEOULSELF GEOULBASE PATH
 
 if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOULBASE/$Cmd" ]; then
-    exec "$Cmd" "$@"
+    # switch running user if defined
+    if [ -z "$MirrorAdmin" -o x"`whoami`" = x"$MirrorAdmin" ]; then
+        exec "$Cmd" "$@"
+    else
+        exec sudo -H -u "$MirrorAdmin" "$Cmd" "$@"
+    fi
 else
     [ -z "$Cmd" ] || echo "$Cmd: unknown command" >&2
     echo "Try \`geoul help' for usage."

@@ -30,8 +30,8 @@ draw-disk-size() {
 
 cd /mirror/log/size
 {
-    foreachpkg load-pkg-size
-    foreachpkg draw-pkg-size
+    for-each-package load-pkg-size
+    for-each-package draw-pkg-size
     draw-disk-size
     draw-timestamp
 } |

@@ -55,7 +55,7 @@ update() {
     done
     )
 }
-foreachpkg update
+for-each-package update
 
 # clean up
 rm -rf $wd

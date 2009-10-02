@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# log-uri -- URI for log
+#
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+log=$1
+! [ -L "$log" ] || log=`readlink "$log"`
+log=${log#/mirror/log/sync/}
+echo "$SyncLogRootURL/$log"

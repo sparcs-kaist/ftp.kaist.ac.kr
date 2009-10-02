@@ -7,7 +7,6 @@
 # (C) 2006-2009, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
 . /mirror/lib/geoul.sh
-running_as_mirror_admin "$@"
 
 # update status.xml
 cd /tmp
@@ -17,7 +16,7 @@ trap "rm -f $tmp" ERR HUP INT TERM
 {
     # TODO self url
     echo '<packages href="" timestamp="'`isodate`'">'
-    foreachpkg pkg.xml
+    for-each-package pkg.xml
     echo "</packages>"
 } >$tmp
 chmod a+r $tmp

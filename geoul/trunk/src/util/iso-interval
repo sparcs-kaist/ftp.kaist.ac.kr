@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# iso-interval -- convert number of seconds to XML Schema duration format
+# 
+# Created: 2009-10-02
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+interval=${1:-0}
+dsgn=
+dd=
+dt=
+
+if [ $interval = 0 ]; then
+    dt=0S
+else
+    if [ $interval -lt 0 ]; then
+        dsgn=-
+        interval=-$interval
+    fi
+    local H=$(( $interval / 3600 ))
+    local D=$(( $H / 24 )); H=$(( $H % 24 ))
+    local M=$(( $interval % 3600 / 60 ))
+    local S=$(( $interval % 3600 % 60 ))
+    [ $D = 0 ] || dd="$dd${D}D"
+    [ $H = 0 ] || dt="$dt${H}H"
+    [ $M = 0 ] || dt="$dt${M}M"
+    [ $S = 0 ] || dt="$dt${S}S"
+fi
+
+echo "${sgn}P${dd}${dt:+T$dt}"
