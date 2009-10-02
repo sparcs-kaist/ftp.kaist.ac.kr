@@ -6,6 +6,7 @@
 
 COMMANDS := geoul regularly synchronized
 
+.SUFFIXES:
 .PHONY: all clean
 STAGED_COMMANDS := $(COMMANDS:%=stage/bin/%)
 all: $(STAGED_COMMANDS) stage/lib/geoul
