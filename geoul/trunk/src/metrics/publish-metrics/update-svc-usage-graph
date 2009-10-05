@@ -6,8 +6,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2009, Geoul Project. (http://geoul.sparcs.org)
 set -e
-
-. /mirror/lib/geoul.sh
+. "$GEOUL.sh"
 
 [ x"$(dirname "$PWD")" = x"/mirror/svcs" ]
 svc=$(basename "$PWD")

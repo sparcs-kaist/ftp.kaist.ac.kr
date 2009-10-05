@@ -6,8 +6,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
-
-. /mirror/lib/geoul.sh
+. "$GEOUL.sh"
 
 # parse arguments
 force=false

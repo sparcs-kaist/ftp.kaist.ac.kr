@@ -5,10 +5,9 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. "$GEOUL.sh"
 
 days=60
-
-. /mirror/lib/geoul.sh
 
 cd /mirror/log/sync
 

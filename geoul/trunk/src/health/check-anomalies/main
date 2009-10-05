@@ -5,12 +5,11 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. "$GEOUL.sh"
 
 MAILTO=${MAILTO:-ftp}
 ReportFailedSyncsAfter=P1D
 ReportLongSyncsEvery=PT12H
-
-. /mirror/lib/geoul.sh
 
 ReportFailedSyncsAfter=`nrsecs $ReportFailedSyncsAfter`
 ReportLongSyncsEvery=`nrsecs $ReportLongSyncsEvery`

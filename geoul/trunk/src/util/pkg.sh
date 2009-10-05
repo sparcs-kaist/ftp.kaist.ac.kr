@@ -6,10 +6,9 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
+. "$GEOUL.sh"
 
 LockValidDays=7 #days
-
-. /mirror/lib/geoul.sh
 
 if ! type usage >/dev/null 2>&1; then
     usage() {

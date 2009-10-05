@@ -2,14 +2,14 @@
 # geoul -- A mirror management solution
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
-# (C) 2006-2009, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 set -e
 
 GEOULSELF=`readlink -f "$0"`
-GEOULBASE=`dirname "$GEOULSELF"`
-export GEOULSELF GEOULBASE
+GEOUL=`dirname "$GEOULSELF"/`
+export GEOULSELF GEOUL
 
-export PATH="$GEOULBASE:$PATH"
+export PATH="$GEOUL:$PATH"
 export LC_ALL=C
 export LANG=C
 export LANGUAGE=C
@@ -17,7 +17,7 @@ export LANGUAGE=C
 [ -d "$GEOULDIR" ] || GEOULDIR=$PWD
 export GEOULDIR
 
-if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOULBASE/$Cmd" ]; then
+if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOUL/$Cmd" ]; then
     # switch running user if defined
     eval `load-config owner`
     if [ -z "$owner" -o x"`whoami`" = x"$owner" ]; then

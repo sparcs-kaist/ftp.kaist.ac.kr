@@ -18,6 +18,6 @@ $(STAGED_COMMANDS): stage/bin
 stage/bin:
 	mkdir -p $@
 
-.ctk.mk: src/*/*
+.ctk.mk: src/*/* src/util/.sh
 	./ctkcc stage/lib/geoul 'src/*/' $^ >$@
 include .ctk.mk

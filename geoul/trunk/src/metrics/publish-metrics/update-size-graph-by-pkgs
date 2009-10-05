@@ -7,8 +7,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://geoul.sparcs.org)
 set -e
-
-. /mirror/lib/geoul.sh
+. "$GEOUL.sh"
 
 draw-pkg-size() {
     ( . /mirror/lib/pkg.sh

@@ -6,8 +6,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2009, Geoul Project. (http://geoul.sparcs.org)
 set -e
-
-. /mirror/lib/geoul.sh
+. "$GEOUL.sh"
 
 Self=`readlink -f "$0"`
 Base=`dirname "$Self"`

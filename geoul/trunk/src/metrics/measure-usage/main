@@ -11,6 +11,8 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 set -e
+# yes, we are one of the Geoul tool chain
+. "$GEOUL.sh"
 
 # some configuration knobs
 : ${ProcessUnder:=/var/log/geoul/measure-usage}
@@ -19,9 +21,6 @@ set -e
 Cmd=`readlink -f "$0"`
 Here=`dirname "$Cmd"`
 PATH="$Here:$PATH"
-
-# yes, we are one of the Geoul tool chain
-. /mirror/lib/geoul.sh
 
 # convert logs & collect to clf following instructions on given scripts
 wd=`mktemp -d $ProcessUnder/XXXXXX`
