@@ -7,15 +7,23 @@ set -e
 
 GEOULSELF=`readlink -f "$0"`
 GEOULBASE=`dirname "$GEOULSELF"`
-PATH="$GEOULBASE:$PATH"
-export GEOULSELF GEOULBASE PATH
+export GEOULSELF GEOULBASE
+
+export PATH="$GEOULBASE:$PATH"
+export LC_ALL=C
+export LANG=C
+export LANGUAGE=C
+
+[ -d "$GEOULDIR" ] || GEOULDIR=$PWD
+export GEOULDIR
 
 if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOULBASE/$Cmd" ]; then
     # switch running user if defined
-    if [ -z "$MirrorAdmin" -o x"`whoami`" = x"$MirrorAdmin" ]; then
+    eval `load-config owner`
+    if [ -z "$owner" -o x"`whoami`" = x"$owner" ]; then
         exec "$Cmd" "$@"
     else
-        exec sudo -H -u "$MirrorAdmin" "$Cmd" "$@"
+        exec sudo -H -u "$owner" "$Cmd" "$@"
     fi
 else
     [ -z "$Cmd" ] || echo "$Cmd: unknown command" >&2

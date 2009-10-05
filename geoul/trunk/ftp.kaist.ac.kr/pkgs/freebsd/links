@@ -1,1 +1,3 @@
 list	http://mirrorlist.freebsd.org/
+HTTP	http://ftp.kaist.ac.kr/FreeBSD
+FTP	ftp://ftp.kaist.ac.kr/FreeBSD

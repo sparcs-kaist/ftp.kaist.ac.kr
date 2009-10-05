@@ -7,4 +7,5 @@
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
 pkg=$1
-echo "$BaseURL/pkgs/$pkg"
+eval `load-config siteurl`
+echo "$siteurl/pkgs/$pkg"

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# status-uri -- URI for GeoulMon status page
+#
+# Created: 2009-10-05
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+GeoulMonURL=http://geoulmon.appspot.com/sites/
+
+pkg=$1
+pkghash=
+[ -z "$pkg" ] || pkghash="#pkgs/$pkg"
+eval `load-config siteurl`
+sitepath=$siteurl
+sitepath=${sitepath#http://}
+sitepath=${sitepath//%\//}
+sitepath=${sitepath%/geoul}
+echo "$GeoulMonURL$sitepath$pkghash"

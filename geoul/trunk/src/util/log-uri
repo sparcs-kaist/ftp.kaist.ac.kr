@@ -9,4 +9,5 @@
 log=$1
 ! [ -L "$log" ] || log=`readlink "$log"`
 log=${log#/mirror/log/sync/}
-echo "$SyncLogRootURL/$log"
+eval `load-config siteurl`
+echo "$siteurl/sync/$log"

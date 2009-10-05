@@ -1,1 +1,3 @@
 list	http://www.vim.org/mirrors.php
+HTTP	http://ftp.kaist.ac.kr/vim
+FTP	ftp://ftp.kaist.ac.kr/vim

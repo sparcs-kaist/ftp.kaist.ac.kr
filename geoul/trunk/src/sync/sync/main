@@ -181,11 +181,13 @@ finish() {
 trap 'exitcode=$?; set +x; finish' EXIT ERR
 trap 'exit 2' INT HUP TERM
 
+eval `load-config sitename`
+
 ## now, the real synchronization begins
 msg "sync begins at `humandate`"
 cat <<EOF
 + source=$source
-+ site=$SITENAME
++ site=$sitename
 + node=$HOSTNAME
 + triggered=$triggered
 + frequency=$frequency

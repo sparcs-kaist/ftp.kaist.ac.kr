@@ -1,1 +1,3 @@
 list    http://www.gentoo.org/main/en/mirrors.xml 
+HTTP	http://ftp.kaist.ac.kr/gentoo
+FTP	ftp://ftp.kaist.ac.kr/gentoo

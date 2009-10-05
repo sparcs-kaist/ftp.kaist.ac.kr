@@ -1,1 +1,3 @@
 List	http://mirrors.fedoraproject.org/publiclist
+HTTP	http://ftp.kaist.ac.kr/fedora
+FTP	ftp://ftp.kaist.ac.kr/fedora

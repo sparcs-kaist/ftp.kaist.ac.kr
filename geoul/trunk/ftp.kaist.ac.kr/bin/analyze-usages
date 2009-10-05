@@ -12,6 +12,9 @@
 system_not_degraded
 running_as_mirror_admin "$@"
 
+SITENAME=ftp.kaist.ac.kr
+FTPRootPath=/mirror/ftp
+
 ## webalizer.conf for each service
 ftp_conf() {
     cat <<-EOF

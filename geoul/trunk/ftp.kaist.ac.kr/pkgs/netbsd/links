@@ -1,1 +1,3 @@
 list	http://www.netbsd.org/mirrors/
+HTTP	http://ftp.kaist.ac.kr/NetBSD
+FTP	ftp://ftp.kaist.ac.kr/NetBSD

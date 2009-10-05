@@ -28,6 +28,8 @@ draw-disk-size() {
     echo "LINE:used_bytes#000000"
 }
 
+eval `load-config sitename`
+
 cd /mirror/log/size
 {
     for-each-package load-pkg-size
@@ -36,7 +38,7 @@ cd /mirror/log/size
     draw-timestamp
 } |
 render-size by-pkgs.png \
-    --title "Total disk usage of $SITENAME" \
+    --title "Total disk usage of $sitename" \
     --width 600 --height 400 \
     --upper-limit `{
             echo -n '('

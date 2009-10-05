@@ -1,1 +1,3 @@
 list    http://distribution.openoffice.org/mirrors/index.html
+HTTP	http://ftp.kaist.ac.kr/openoffice
+FTP	ftp://ftp.kaist.ac.kr/openoffice

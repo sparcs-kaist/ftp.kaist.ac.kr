@@ -1,1 +1,3 @@
 list	http://www.openbsd.org/ftp.html
+HTTP	http://ftp.kaist.ac.kr/OpenBSD
+FTP	ftp://ftp.kaist.ac.kr/OpenBSD

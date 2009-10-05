@@ -16,28 +16,31 @@ allkeep=P3D
 
 . /mirror/lib/pkg.sh
 
-home=`package-uri $pkg`
+baseuri=`package-uri $pkg`
+statusuri=`status-uri $pkg`
+allstatusuri=`status-uri`
+eval `load-config sitename`
 
 # how to create feeds
 create() {
     local f=$1
     case "$f" in
         "$newsfeed")
-        allim "$newsfeed" new "$home/$newsfeed" \
-            "Updates on $name mirror of $SITENAME" "$home" duration=$keep <<<""
+        allim "$newsfeed" new "$baseuri/$newsfeed" \
+            "Updates on $name mirror of $sitename" "$statusuri" duration=$keep <<<""
         ;;
         "$problemsfeed")
-        allim "$problemsfeed" new "$home/$problemsfeed" \
-            "Current problems of $name mirror of $SITENAME" "$home" duration=$keep <<<""
+        allim "$problemsfeed" new "$baseuri/$problemsfeed" \
+            "Current problems of $name mirror of $sitename" "$statusuri" duration=$keep <<<""
         ;;
         "$allnewsfeed")
-        allim "$allnewsfeed" new "$PkgsRootURL" \
-            "Updates on $SITENAME" "$StatusURL" duration=$allkeep <<<""
+        allim "$allnewsfeed" new "$allstatusuri" \
+            "Updates on $sitename" "$allstatusuri" duration=$allkeep <<<""
         ;;
         "$allproblemsfeed")
-        allim "$allproblemsfeed" new "$PkgsRootURL" \
-            "Current problems of $SITENAME" "$StatusURL" duration=$allkeep \
-            <<<"Problems affecting $SITENAME service are reported via this feed."
+        allim "$allproblemsfeed" new "$allstatusuri" \
+            "Current problems of $sitename" "$allstatusuri" duration=$allkeep \
+            <<<"Problems affecting $sitename service are reported via this feed."
         ;;
     esac
 }

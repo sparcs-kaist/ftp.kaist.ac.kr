@@ -66,11 +66,6 @@ else
 fi
 [ $failures -gt 0 ] && failed=$failures || failed=
 
-# urlpath
-urlpath=${datapath#$FTPRootPath}
-[ "$datapath" = "$urlpath" ] && urlpath=
-
-
 
 ## show things in XML
 echo "<package id='$pkg'"
@@ -81,15 +76,9 @@ $visible || echo " hidden='true'"
 echo ">"
 
 # links
-{
-    [ -f links ] && cat links
-    if [ -n "$urlpath" ]; then
-        cat <<EOF
-HTTP	$HTTPRootURL$urlpath
-FTP	$FTPRootURL$urlpath
-EOF
-    fi
-} | sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:'
+if [ -f links ]; then
+    sed -e 's:\(.*\)	\(.*\):<link rel="\1" href="\2"/>:' <links
+fi
 
 # notes
 if [ -f note ]; then

@@ -1,1 +1,3 @@
 home	http://www.debian.org/CD/
+HTTP	http://ftp.kaist.ac.kr/debian-cd
+FTP	ftp://ftp.kaist.ac.kr/debian-cd

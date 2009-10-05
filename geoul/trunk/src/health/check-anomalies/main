@@ -25,19 +25,20 @@ send_report() {
     trap "exit $exitcode" EXIT ERR HUP INT TERM
     # report anything exists
     if [ -s $report -o -s $items ]; then
+        eval `load-config sitename`
         {
             if [ -s $items ]; then
                 echo "= Summary ="
                 cat $items 2>/dev/null |
                 while read; do printf "* %s\n" "$REPLY"; done
-                echo "Check the [$StatusURL status page] for current data"
+                echo "Check the [`status-uri` status page] for current data"
                 echo
             fi
             if [ -s $report ]; then
                 echo "= Log ="
                 cat $report
             fi
-        } | mail -s "$SITENAME STATUS ALERT" "$MAILTO"
+        } | mail -s "$sitename STATUS ALERT" "$MAILTO"
     fi
     rm -rf $tmp
     exit $exitcode

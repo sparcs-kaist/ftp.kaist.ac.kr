@@ -1,2 +1,4 @@
 list	http://www.debian.org/mirror/list
 Debian Mirror Checker	http://www.de.debian.org/dmc/today/
+HTTP	http://ftp.kaist.ac.kr/debian
+FTP	ftp://ftp.kaist.ac.kr/debian

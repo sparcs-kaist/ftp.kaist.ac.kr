@@ -9,6 +9,8 @@ set -e
 
 . /mirror/lib/geoul.sh
 
+eval `load-config sitename`
+
 sum-svc-usage() {
     ( . /mirror/lib/pkg.sh
     pkgid=${pkg//./_}
@@ -34,5 +36,5 @@ cd /mirror/log/usage
 } |
 render-usage by-svcs.png \
     --width 600 --height 400 \
-    --title "Network usage of $SITENAME" \
+    --title "Network usage of $sitename" \
     "$@"

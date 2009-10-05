@@ -1,2 +1,4 @@
 list	http://opensuse.org/Mirrors_Released_Version
 list2	http://opensuse.org/Mirrors_Development_Build
+HTTP	http://ftp.kaist.ac.kr/opensuse
+FTP	ftp://ftp.kaist.ac.kr/opensuse

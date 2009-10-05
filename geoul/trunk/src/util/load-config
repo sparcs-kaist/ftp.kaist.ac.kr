@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# config -- read configuration
+#
+# Created: 2009-10-05
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+set -e
+
+for key; do
+    name=$key
+    name=${name//\//_}
+    name=${name//./_}
+    name=${name//-/_}
+    # FIXME not to open config file everytime
+    if value=`cat "$GEOULDIR/etc/$key" 2>/dev/null`; then
+        printf "%s='%s'\n" "$name" "${value//"'"/"'"\\"''"}"
+    else
+        printf "%s= # XXX undefined\n" "$name"
+    fi
+done
