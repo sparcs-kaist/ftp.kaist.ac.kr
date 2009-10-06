@@ -4,7 +4,7 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
-COMMANDS := geoul regularly synchronized
+COMMANDS := geoul regularly synchronized geoul-sync
 
 .SUFFIXES:
 .PHONY: all clean

@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 (
 cd data
 wget $source \
@@ -8,3 +7,5 @@ wget $source \
     --recursive --relative --no-parent --no-directories \
     
 )
+
+# vim:ft=sh

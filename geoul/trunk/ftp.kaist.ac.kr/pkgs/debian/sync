@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 
 set -e
 
@@ -33,3 +32,5 @@ date -u >data/project/trace/${HOSTNAME}
 
 # push server (See http://www.debian.org/mirror/push_server#sshtrigger)
 ./trigger-downstreams
+
+# vim:ft=sh

@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 
 set -e
 
@@ -59,3 +58,5 @@ rsync -rlHv --stats --delete --delete-after --timeout 7200 --size-only \
 date -u > data/project/trace/$HOSTNAME
 
 #./push
+
+# vim:ft=sh

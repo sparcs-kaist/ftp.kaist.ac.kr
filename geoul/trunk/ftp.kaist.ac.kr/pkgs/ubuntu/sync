@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 
 set -e
 
@@ -23,3 +22,5 @@ rsync --recursive --times --links --hard-links \
 
 # timestamp
 date -u >data/project/trace/$HOSTNAME
+
+# vim:ft=sh

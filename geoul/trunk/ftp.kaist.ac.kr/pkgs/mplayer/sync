@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source --times --whole-file \
     --exclude '/benchmark' --exclude '/old_stuff' --exclude '/tests'
+
+# vim:ft=sh

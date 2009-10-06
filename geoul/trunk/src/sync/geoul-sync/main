@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# sync.sh -- Common pieces of synchronizing scripts
+# geoul-sync -- A driver for synchronization scripts
 # 
 # Created: 2006-01-22
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
-# (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
 
 ## printers

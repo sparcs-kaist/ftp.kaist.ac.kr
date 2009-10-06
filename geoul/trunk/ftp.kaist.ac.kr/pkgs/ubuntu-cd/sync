@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source
 date -u >data/.trace/`hostname -f`
+
+# vim:ft=sh

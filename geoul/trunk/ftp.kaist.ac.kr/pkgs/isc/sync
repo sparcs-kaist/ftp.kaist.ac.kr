@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source --exclude=bind4/src/DEPRECATED/4.9.5/contrib/old --exclude=RCS --exclude=MIRRORS,v --exclude=pubs/tn/isc-tn-2008-1.tn
+
+# vim:ft=sh

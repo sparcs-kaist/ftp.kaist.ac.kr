@@ -1,6 +1,7 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source <<SUP
 netbsd            release=cvs  prefix=prefixes/NetBSD.cvs
 netbsd-distrib    release=self prefix=prefixes/NetBSD-distrib.self
 SUP
+
+# vim:ft=sh

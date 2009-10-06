@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source <<SUP
 OpenBSD-all      release=cvs  prefix=prefixes/OpenBSD.cvs
 
 # NOTE: -distrib collection is available from cvsup.jp.OpenBSD.org only
 OpenBSD-distrib  release=self prefix=prefixes/OpenBSD-distrib.self
 SUP
+
+# vim:ft=sh

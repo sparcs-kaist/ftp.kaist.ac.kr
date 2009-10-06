@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 
 set -e
 #HOSTNAME=`hostname -f`
@@ -9,3 +8,5 @@ get $source \
     --exclude=Archive-Update-in-Progress-$HOSTNAME \
     --exclude=data/project/trace/$HOSTNAME
 date -u >data/project/trace/$HOSTNAME
+
+# vim:ft=sh

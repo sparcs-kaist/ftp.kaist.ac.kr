@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source --exclude=.notar --exclude=.*.??????
+
+# vim:ft=sh

@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
-. /mirror/lib/sync.sh
+#!/usr/bin/env geoul-sync
 get $source --exclude=/misc/matt/OMAP2420_PublicTRM.zip
+
+# vim:ft=sh
