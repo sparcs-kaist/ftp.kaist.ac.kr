@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# load-package -- read package configuration
+# 
+# Usage: load-package PACKAGEID CONFIG...
+# 
+#  Reads configuration of package PACKAGEID and print out bash
+#  variable definitions.  Available CONFIGs are:
+#   pkg
+#   name
+#   dataPath
+#   source
+#   frequency
+#   validFor
+#   isOriginal
+#   isVisible
+#   color
+#   lastUpdatedSecs
+#   timePastSecs
+#   numFailures
+#   intervalSecs
+#   validForSecs
+#   penaltySecs
+#   delaySecs
+#   remainingSecs
+#   syncInProgress
+#
+# Created: 2009-10-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+set -e
+
+value-of() {
+    local name=$1; shift
+    case "$name" in
+        pkg) # package identifier
+        basename "`readlink -f .`"
+        ;;
+
+        name) # optional; defaults to $pkg
+        [ -f name ] && cat name || false
+        ;;
+
+        dataPath) # actual path for data
+        readlink -f data
+        ;;
+
+        source) # sync source
+        [ -f source ] && cat source || false
+        ;;
+
+        frequency) # optional
+        [ -f frequency ] && cat frequency || false
+        ;;
+
+        validFor) # valid period (optional; defaults to 1d)
+        [ -f validfor ] && cat validfor || echo P1D
+        ;;
+
+        isOriginal) # original, no source, frequency, nor valid period
+        if [ -f original ]; then
+            echo true
+        else
+            echo false
+        fi
+        ;;
+
+        isVisible) # visibility
+        [ -e HIDDEN ] && echo false || echo true
+        ;;
+
+        color) # color (for graphs)
+        if [ -f color ]; then
+            cat color
+        else
+            color=`value-of pkg | md5sum`
+            color="${color:0:6}"
+            echo "$color"
+        fi
+        ;;
+
+        lastUpdatedSecs)
+        mtime timestamp
+        ;;
+
+        timePastSecs)
+        echo $((`now` - `value-of lastUpdatedSecs`))
+        ;;
+
+        intervalSecs)
+        nrsecs `value-of frequency`
+        ;;
+
+        validForSecs)
+        nrsecs `value-of validFor`
+        ;;
+
+        penaltySecs)
+        # penalty according to failures
+        # 600s * failures^2 = ( 0min, 10min, 4*10min, 9*10min, 16*10min, ... )
+        local failures=${1:-`value-of numFailures`}
+        echo $(( 100 * $failures * ($failures+1) * (2*$failures+1) ))
+        # this must return sum of all delays until current amount of failures
+        # i.e. sum(600 * x^2) = 600 * 1/6*x*(x+1)*(2*x+1)
+        ;;
+
+        delaySecs)
+        echo $(( `value-of intervalSecs` + `value-of penaltySecs` ))
+        ;;
+
+        remainingSecs)
+        echo $(( `value-of delaySecs` - `value-of timePastSecs` ))
+        ;;
+
+        syncInProgress) # whether lock exists
+        if lockproc lock alive; then
+            echo true
+        else
+            echo false
+        fi
+        ;;
+
+        numFailures)
+        [ -e failed ] && cat failed || echo 0
+        ;;
+    esac
+}
+
+for name; do
+    if value=`value-of "$name"`; then
+        printf "%s='%s'\n" "$name" "${value//"'"/"'"\\"''"}"
+    else
+        printf "%s= # XXX undefined\n" "$name"
+    fi
+done
+
+# TODO validate package configuration

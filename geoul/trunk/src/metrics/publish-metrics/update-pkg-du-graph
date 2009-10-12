@@ -8,7 +8,7 @@
 # (C) 2009, Geoul Project. (http://geoul.sparcs.org)
 set -e
 
-. /mirror/lib/pkg.sh
+eval `load-package pkg name color`
 pkgid=${pkg//./_}
 
 [ -r du.rrd ]

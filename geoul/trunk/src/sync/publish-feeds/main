@@ -14,7 +14,7 @@ allnewsfeed=../news.feed
 allproblemsfeed=../problems.feed
 allkeep=P3D
 
-. /mirror/lib/pkg.sh
+eval `load-package pkg name`
 
 baseuri=`package-uri $pkg`
 statusuri=`status-uri $pkg`
@@ -87,6 +87,7 @@ case "$event" in
     ;;
 
     "") # usage
+    # FIXME: usage
     usage "
 Usage:
   `basename "$0"` <event> [<argument> ...]

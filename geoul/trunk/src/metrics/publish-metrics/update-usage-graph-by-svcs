@@ -11,10 +11,10 @@ set -e
 eval `load-config sitename`
 
 sum-svc-usage() {
-    ( . /mirror/lib/pkg.sh
+    local pkg= name= color=
+    eval `load-package pkg`
     pkgid=${pkg//./_}
     echo -n ",${pkgid}_${svc}_usage_size,+"
-    )
 }
 
 draw-svc-usage() {

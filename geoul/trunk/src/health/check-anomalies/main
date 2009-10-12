@@ -46,20 +46,19 @@ trap send_report EXIT ERR HUP INT TERM
 
 check() {
     (
-    . /mirror/lib/pkg.sh
-    local timepast interval failures penalty delay
-    compute_times # defines: timepast interval failures penalty delay remaining
+    local pkg= timePastSecs= intervalSecs= numFailures= penaltySecs= remainingSecs=
+    eval `load-package pkg syncInProgress timePastSecs intervalSecs numFailures penaltySecs remainingSecs`
     # failed syncs
-    if [ -f failed.needsreport -a $timepast -ge $ReportFailedSyncsAfter ]; then
+    if [ -f failed.needsreport -a $timePastSecs -ge $ReportFailedSyncsAfter ]; then
         local when="soon"
-        [ $remaining -gt 0 ] && when="after `iso-interval $remaining`"
-        item "$pkg: sync failed $failures times; will retry $when"
+        [ $remainingSecs -gt 0 ] && when="after `iso-interval $remainingSecs`"
+        item "$pkg: sync failed $numFailures times; will retry $when"
         echo "== $pkg failed =="
         quotelog excerpt.failure .failure.log.gz
         rm -f failed.needsreport  # remove it not to report twice
         echo
     # too long syncs
-    elif sync_in_progress; then
+    elif $syncInProgress; then
         local synctime=$(( `now` - `mtime lock` ))
         local reports=`cat lock.reported 2>/dev/null || echo 0`
         let ++reports

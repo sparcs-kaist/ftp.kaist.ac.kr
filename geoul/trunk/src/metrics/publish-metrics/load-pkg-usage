@@ -7,7 +7,7 @@
 # (C) 2009, Geoul Project. (http://geoul.sparcs.org)
 set -e
 
-. /mirror/lib/pkg.sh
+eval `load-package pkg`
 pkgid=${pkg//./_}
 
 for ds in size count; do

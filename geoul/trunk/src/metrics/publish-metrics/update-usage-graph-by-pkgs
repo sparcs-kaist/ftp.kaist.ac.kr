@@ -11,10 +11,10 @@ set -e
 eval `load-config sitename`
 
 draw-pkg-usage() {
-    ( . /mirror/lib/pkg.sh
+    local pkg= name= color=
+    eval `load-package pkg name color`
     pkgid=${pkg//./_}
     echo "AREA:${pkgid}_usage_size#$color:$name:STACK"
-    )
 }
 cd /mirror/log/usage
 {

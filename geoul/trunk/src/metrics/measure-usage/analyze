@@ -35,7 +35,8 @@ tsv2usage <$wd/tsv >$wd/usage
 
 # update rrd
 update() {
-    ( . /mirror/lib/pkg.sh
+    local pkg=
+    eval `load-package pkg`
     # for each service
     for svcd in /mirror/svcs/*; do
         # check if measuring usage is enabled
@@ -52,7 +53,6 @@ update() {
         synchronized $rrd.lock \
         update-rrd $rrd $params
     done
-    )
 }
 for-each-package update
 

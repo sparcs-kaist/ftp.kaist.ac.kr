@@ -18,10 +18,9 @@ set -e
 . "$GEOUL.sh"
 
 datapath-s() {
-    (
-    . /mirror/lib/pkg.sh
-    echo "\\#$datapath/#{s%^[^	]\+%$pkg%;p;d;};"
-    )
+    local dataPath=
+    eval `load-package pkg dataPath`
+    echo "\\#$dataPath/#{s%^[^	]\+%$pkg%;p;d;};"
 }
 path2pkg() {
     sed -ne "

@@ -27,14 +27,17 @@ while getopts "hf" o; do
     esac
 done
 
-. /mirror/lib/pkg.sh
+eval `load-package pkg name color isOriginal isVisible \
+    source frequency validFor syncInProgress \
+    validForSecs timePastSecs intervalSecs numFailures`
 
 ## gather information
 # sync info
 lastupdated=
 failed=
 started=
-sync_in_progress && started=`isodate -r lock`
+# TODO move these to load-package
+$syncInProgress && started=`isodate -r lock`
 [ -f timestamp ] && lastupdated=`isodate -r timestamp`
 
 # references
@@ -43,13 +46,12 @@ successref=`log-uri .success.log.gz`
 failureref=`log-uri .failure.log.gz`
 
 # status
-compute_times # defines: timepast interval failures penalty delay remaining
 if [ -n "$source" ]; then
     if [ -n "$frequency" ]; then
         if [ -f timestamp ]; then
             status=good
-            #if [ $timepast -ge $interval ]; then
-            ratio=$(( $timepast / $validsecs ))
+            #if [ $timePastSecs -ge $intervalSecs ]; then
+            ratio=$(( $timePastSecs / $validForSecs ))
             if   [ $ratio -ge 7 ]; then status=dead
             elif [ $ratio -ge 3 ]; then status=bad
             elif [ $ratio -ge 1 ]; then status=old
@@ -64,7 +66,7 @@ if [ -n "$source" ]; then
 else
     status=original
 fi
-[ $failures -gt 0 ] && failed=$failures || failed=
+[ $numFailures -gt 0 ] && failed=$numFailures || failed=
 
 
 ## show things in XML

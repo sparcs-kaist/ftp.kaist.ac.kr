@@ -12,10 +12,10 @@ set -e
 svc=$(basename "$PWD")
 
 draw-pkg-usage() {
-    ( . /mirror/lib/pkg.sh
+    local pkg= name= color=
+    eval `load-package pkg name color`
     pkgid=${pkg//./_}
     echo "AREA:${pkgid}_${svc}_usage_size#$color:$name:STACK"
-    )
 }
 
 {

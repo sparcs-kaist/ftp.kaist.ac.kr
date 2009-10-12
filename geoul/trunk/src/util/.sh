@@ -6,4 +6,10 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
-[ -z "$GEOULDEBUG" ] || set -x
+set -u # we shouldn't use undefined variables
+
+[ -z "$GEOULDEBUG" ] || set -ex
+
+for-each-packages() {
+    . "${GEOUL}for-each-packages" "$@"
+}

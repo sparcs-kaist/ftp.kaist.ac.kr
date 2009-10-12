@@ -31,7 +31,7 @@ into-size-xml() {
 }
 
 
-. /mirror/lib/pkg.sh
+eval `load-package pkg`
 
 type=$1; shift
 case "$type" in

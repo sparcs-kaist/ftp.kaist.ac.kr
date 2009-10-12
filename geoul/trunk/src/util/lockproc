@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# lockproc -- process lock functions on top of lockfile
+#
+# Created: 2009-10-07
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+
+Lock=$1; shift
+
+# use target if lock is a symlink
+Lock=`readlink -f "$Lock"`
+
+lockproc() {
+    local Cmd=$1
+    case "$Cmd" in
+        grab)
+        # clean dead lock
+        lockproc alive || lockproc clean
+        # use lockfile(1) included in procmail(1)
+        if lockfile -r3 "$Lock" 2>/dev/null; then
+            # record owner info
+            echo "$HOSTNAME:$$" >"$Lock".owner
+        else
+            false
+        fi
+        ;;
+
+        release)
+        # TODO allow releases only from the owning process group
+        lockproc clean
+        ;;
+
+        clean)
+        rm -f "$Lock" "$Lock".*
+        ;;
+
+        owner)
+        if owner=`cat "$Lock".owner 2>/dev/null`; then
+            echo owner=$owner
+            echo host=${owner%:*}
+            echo pgrp=${owner#*:}
+        else
+            false
+        fi
+        ;;
+
+        alive)
+        if [ -e "$Lock" ]; then
+            local owner= host= pgrp=
+            eval `lockproc owner`
+            local rsh=
+            if [ -n "$host" -a "$host" != "$HOSTNAME" ]; then
+                rsh="ssh $host"
+            fi
+            $rsh ps -p $pgrp &>/dev/null
+        else
+            false
+        fi
+        ;;
+
+        kill) # kill the lock owner and clean it
+        local owner= host= pgrp=
+        eval `lockproc owner`
+        if [ -n "$owner" ]; then
+            if [ -n "$host" -a "$host" != "$HOSTNAME" ]; then
+                rsh="ssh $host"
+            fi
+            # send TERM
+            if lockproc alive; then
+                $rsh kill -TERM -$pgrp
+                sleep 2
+            fi
+            # send KILL if still alive
+            while lockproc alive; do
+                $rsh kill -KILL -$pgrp
+                sleep 2
+            done
+            # clean the lock
+            lockproc clean
+        fi
+        ;;
+    esac
+}
+
+lockproc "$@"

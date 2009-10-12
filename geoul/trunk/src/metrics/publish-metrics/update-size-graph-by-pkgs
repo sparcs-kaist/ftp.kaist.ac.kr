@@ -10,12 +10,12 @@ set -e
 . "$GEOUL.sh"
 
 draw-pkg-size() {
-    ( . /mirror/lib/pkg.sh
+    local pkg= name= color=
+    eval `load-package pkg name color`
     pkgid=${pkg//./_}
     if [ -r du.rrd ]; then
         echo "AREA:${pkgid}_du_bytes#$color:$name:STACK"
     fi
-    )
 }
 
 draw-disk-size() {

@@ -8,6 +8,7 @@
 
 lock=$1; shift
 
+# TODO use lockproc
 if lockfile -r3 "$lock" 2>/dev/null; then
     "$@"
     rm -f "$lock"

@@ -7,6 +7,7 @@
 # (C) 2006-2007, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 . "$GEOUL.sh"
 
+# TODO move this to load-config
 StopSyncsInactiveFor=${SyncStopInactiveFor:-$((3600*48))}
 
 sync_inactive_for() {
@@ -20,13 +21,12 @@ sync_inactive_for() {
 }
 
 watch() {
-    (
-    . /mirror/lib/pkg.sh
-    if sync_in_progress; then
+    local syncInProgress=
+    eval `load-package syncInProgress`
+    if $syncInProgress; then
         [ `sync_inactive_for` -lt $StopSyncsInactiveFor ] ||
         ./sync stop "due to no activity"
     fi
-    )
 }
 
 # FIXME for-each-package does not work for functions
