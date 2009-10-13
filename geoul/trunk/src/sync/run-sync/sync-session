@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# sync-session -- a sync session
+# 
+# Created: 2009-10-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+set -e
+
+prepare
+trap 'setsid finish $?' EXIT
+bash -x "$@" >>log 2>&1

@@ -7,10 +7,11 @@
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 . "$GEOUL.sh"
 
-Script=$1; shift
+ScriptArg=$1; shift
+Script=`readlink -f "$ScriptArg"`
 
 ## read package information
-cd "`dirname "$Script"`"
+cd "`dirname "$ScriptArg"`"
 eval `load-package pkg name source frequency syncInProgress`
 
 
@@ -94,21 +95,7 @@ case "$Command" in
     # run script
     export GETARGS="$*" # TODO remove this
     export pkg name source frequency
-    synchronized lock bash -e -c "
-    prepare
-    trap 'setsid finish \$?' EXIT
-    bash -x $Script \"\$@\" >>log 2>&1
-    " "$@"
-    exitcode=$?
-
-    #case $exitcode in
-    #    0) ;;
-    #    *)
-    #    die 4 "locked or another sync in progress"
-    #    ;;
-    #esac
-    exit $exitcode
-
+    exec synchronized lock sync-session "$Script" "$@"
     ;;
 
     *)
