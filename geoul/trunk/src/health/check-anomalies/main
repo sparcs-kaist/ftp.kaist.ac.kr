@@ -55,7 +55,7 @@ check() {
         [ $remainingSecs -gt 0 ] && when="after `iso-interval $remainingSecs`"
         item "$pkg: sync failed $numFailures times; will retry $when"
         echo "== $pkg failed =="
-        quotelog excerpt.failure .failure.log.gz
+        quotelog failure .failure.log.gz
         rm -f failed.needsreport  # remove it not to report twice
         echo
     # too long syncs
@@ -70,7 +70,7 @@ check() {
             # report
             item "$pkg: sync too long; `iso-interval $synctime`"
             echo "== $pkg too long =="
-            quotelog excerpt log
+            quotelog headtail log
             echo
             # schedule next report
             local reports_lb=$(( $synctime / $ReportLongSyncsEvery + 1 ))
@@ -88,7 +88,7 @@ quotelog() {
     local log=$1; shift
     echo "Excerpt of [`log-uri "$log"`]:"
     echo "-->8--"
-    "$excerpt" "$log" "$@"
+    excerpt "$excerpt" "$log" "$@"
     echo "--8<--"
 }
 

@@ -50,16 +50,16 @@ case "$event" in
     sync-*) shift # synchronization
     log=$1
     eventtype=${event#sync-}
-    excerpt=excerpt
+    excerpt=headtail
     case "$eventtype" in
         success) title="$name updated" ;;
-        failure) title="$name failed" excerpt=excerpt.failure ;;
+        failure) title="$name failed" excerpt=failure ;;
         *)       title="$name $eventtype" ;;
     esac
     uri=`log-uri "$log"`
     desc=`mktemp /tmp/record-news.feed.XXXXXX`
     trap "rm -f $desc" EXIT ERR HUP INT QUIT TERM
-    { echo "<pre>"; "$excerpt" "$log" 20; echo "</pre>"; } >$desc
+    { echo "<pre>"; excerpt "$excerpt" "$log" 20; echo "</pre>"; } >$desc
     # record feed items
     feeds=("$newsfeed" "$allnewsfeed")
     [ "$eventtype" != failure ] || feeds+=("$problemsfeed" "$allproblemsfeed")

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# excerpt -- Extract a piece of given long text, e.g. sync log
+# 
+# Created: 2009-10-13
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+set -e
+
+Type=$1; shift
+
+method="excerpt.$Type"
+if type "$method" &>/dev/null; then
+    exec "$method" "$@"
+else
+    "excerpt: $Type: Unknown type to curtail" >&2
+    false
+fi
