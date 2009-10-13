@@ -14,22 +14,69 @@ export LC_ALL=C
 export LANG=C
 export LANGUAGE=C
 
-[ -d "$GEOULDIR" ] || GEOULDIR=$PWD
-export GEOULDIR
-
-if Cmd=$1; shift; [ -n "$Cmd" -a -x "${GEOUL}$Cmd" ]; then
-    # switch running user if defined
-    eval `load-config owner`
-    if [ -z "$owner" -o x"`whoami`" = x"$owner" ]; then
-        exec "$Cmd" "$@"
-    else
-        exec sudo -H -u "$owner" env \
-            GEOULDIR="$GEOULDIR" \
-            GEOULDEBUG="$GEOULDEBUG" \
-            "$GEOULSELF" "$Cmd" "$@"
-    fi
-else
+# check command
+Cmd=$1; shift || true
+if [ -z "$Cmd" -o ! -x "${GEOUL}$Cmd" ]; then
     [ -z "$Cmd" ] || echo "$Cmd: unknown command" >&2
     echo "Try \`geoul help' for usage."
     exit 1
 fi
+
+# prepare command
+case "$Cmd" in
+    help) ;;
+
+    *)
+    # find GEOULDIR
+    is-a-geoul-dir() {
+        local a= d=
+        a=(-d "$1")
+        for d in etc pkgs nodes svcs
+        do a+=(-a -d "$1/$d")
+        done
+        [ "${a[@]}" ]
+    }
+    find-geoul-dir() {
+        until is-a-geoul-dir "$PWD" || [ "$PWD" = / ]
+        do cd ..
+        done
+        if is-a-geoul-dir "$PWD"; then
+            pwd
+        else
+            false
+        fi
+    }
+    if [ -z "$GEOULDIR" ] || is-a-geoul-dir "$GEOULDIR"; then
+        if ! GEOULDIR=`find-geoul-dir`; then
+            echo "geoul: Not inside a Geoul directory" >&2
+            echo "Try \`geoul help' for usage."
+            false
+        fi
+    fi
+    export GEOULDIR
+
+    # switch running user if defined
+    eval `load-config owner`
+    if [ -n "$owner" -a x"`whoami`" != x"$owner" ]; then
+        exec sudo -H -u "$owner" env \
+        GEOULDIR="$GEOULDIR" \
+        GEOULDEBUG="$GEOULDEBUG" \
+        "$GEOULSELF" "$Cmd" "$@"
+    fi
+    ;;
+esac
+# exit code for displaying usage
+export GEOULUSAGE=234
+
+# run command
+"$Cmd" "$@"
+
+# examine exit code
+exitcode=$?
+case $exitcode in
+    0) ;;
+    $GEOULUSAGE)
+    echo "Try \`geoul help $Cmd' for usage."
+    ;;
+esac
+exit $exitcode
