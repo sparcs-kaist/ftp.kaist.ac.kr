@@ -14,6 +14,7 @@ set -e
 # yes, we are one of the Geoul tool chain
 . "$GEOUL.sh"
 
+# TODO move to load-config
 # some configuration knobs
 : ${ProcessUnder:=/var/log/geoul/measure-usage}
 

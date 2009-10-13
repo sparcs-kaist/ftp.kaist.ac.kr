@@ -22,6 +22,7 @@ if $force; then
     loadavgOK() { true; }
     trigger=now
 else
+    # TODO move to load-config
     nomorethan=20 # tasks per cpu
     loadavgOK() {
         loadavg=$(set -- `cat /proc/loadavg`; echo $2)

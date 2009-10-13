@@ -7,6 +7,7 @@
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 . "$GEOUL.sh"
 
+# TODO move to load-config
 days=60
 
 cd /mirror/log/sync
