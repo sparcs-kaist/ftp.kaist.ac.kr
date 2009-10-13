@@ -6,7 +6,7 @@
 set -e
 
 GEOULSELF=`readlink -f "$0"`
-GEOUL=`dirname "$GEOULSELF"/`
+GEOUL="`dirname "$GEOULSELF"`/"
 export GEOULSELF GEOUL
 
 export PATH="$GEOUL:$PATH"
@@ -17,13 +17,16 @@ export LANGUAGE=C
 [ -d "$GEOULDIR" ] || GEOULDIR=$PWD
 export GEOULDIR
 
-if Cmd=$1; shift; [ -n "$Cmd" -a -x "$GEOUL/$Cmd" ]; then
+if Cmd=$1; shift; [ -n "$Cmd" -a -x "${GEOUL}$Cmd" ]; then
     # switch running user if defined
     eval `load-config owner`
     if [ -z "$owner" -o x"`whoami`" = x"$owner" ]; then
         exec "$Cmd" "$@"
     else
-        exec sudo -H -u "$owner" "$Cmd" "$@"
+        exec sudo -H -u "$owner" env \
+            GEOULDIR="$GEOULDIR" \
+            GEOULDEBUG="$GEOULDEBUG" \
+            "$GEOULSELF" "$Cmd" "$@"
     fi
 else
     [ -z "$Cmd" ] || echo "$Cmd: unknown command" >&2
