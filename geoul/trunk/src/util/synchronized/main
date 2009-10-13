@@ -13,11 +13,8 @@ set -e
 Lock=$1; shift
 
 # use lockproc to proctect our synchronized command
-if lockproc "$Lock" grab; then
-    # run the given command
-    "$@"
-    # release the lock
-    lockproc "$Lock" release
-else
-    exit $?
-fi
+lockproc "$Lock" grab
+trap 'c=$?; lockproc "$Lock" release; exit $c' EXIT
+
+# run the given command
+"$@"
