@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+# run-sync -- A driver for synchronization scripts
+# 
+# Created: 2006-01-22
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+. "$GEOUL.sh"
+
+Script=$1; shift
+
+## read package information
+cd "`dirname "$Script"`"
+eval `load-package pkg name source frequency syncInProgress`
+
+
+## printers
+usage() {
+    local exitcode=$?
+    [ $exitcode -eq 0 ] && exitcode=2
+    local cmd=`basename "$0"`
+    if [ -t 1 ]; then
+        cat <<EOF
+Geoul synchronizer for $pkg
+Usage:
+  $cmd now        use this to begin sync immediately
+  $cmd pushed     use when upstream mirror is triggering push-mirroring
+  $cmd regularly  check timestamp and begin sync if older than frequency
+  $cmd stop       stop the synchronizing process
+
+EOF
+        [ $# -le 0 ] || echo "$cmd: $@"
+    fi
+    exit $exitcode
+}
+msg() { echo "$pkg: $@"; }
+die() {
+    local c=$1; shift
+    echo "$pkg: $@"
+    exit $c
+}
+
+
+
+## choose what to do
+Command=$1; shift
+case "$Command" in
+    stop)
+    if $syncInProgress; then
+        lockproc lock kill
+        die 0 "stopped running sync"
+    else
+        ruins=`find lock lock.* log log.* 2>/dev/null || true`
+        if [ -n "$ruins" ]; then
+            # TODO: clean up (as in finish)
+            rm -f log log.*
+            lockproc lock clean
+            die 0 "cleaned up dead sync"
+        else
+            die 4 "no sync in progress"
+        fi
+    fi
+    ;;
+
+    watch)
+    if $syncInProgress; then
+        exec tail -f log
+    else
+        die 4 "no sync in progress" >&2
+    fi
+    ;;
+
+    now|regularly|pushed)
+    if $syncInProgress; then
+        die 4 "another sync in progress"
+    fi
+
+    # check timestamp if regular sync
+    case "$Command" in
+        regularly)
+        eval `load-package timePastSecs intervalSecs numFailures penaltySecs delaySecs`
+        desc=
+        if [ $penaltySecs -gt 0 ]; then
+            desc="=`iso-interval $intervalSecs`+`iso-interval $penaltySecs`(${numFailures} failures)"
+        fi
+        if [ $timePastSecs -lt $delaySecs ]; then
+            die 8 "not yet (age=`iso-interval $timePastSecs` < `iso-interval $delaySecs`$desc)"
+        else
+            echo "$pkg: old enough (age = `iso-interval $timePastSecs` >= `iso-interval $delaySecs`$desc)"
+        fi
+        ;;
+    esac
+
+    # run script
+    export GETARGS="$*" # TODO remove this
+    export pkg name source frequency
+    synchronized lock bash -e -c "
+    prepare
+    trap 'setsid finish \$?' EXIT
+    bash -x $Script \"\$@\" >>log 2>&1
+    " "$@"
+    exitcode=$?
+
+    #case $exitcode in
+    #    0) ;;
+    #    *)
+    #    die 4 "locked or another sync in progress"
+    #    ;;
+    #esac
+    exit $exitcode
+
+    ;;
+
+    *)
+    usage
+    ;;
+esac

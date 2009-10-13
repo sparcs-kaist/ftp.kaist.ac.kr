@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# finish -- after running synchronization script of a package
+# 
+# Created: 2009-10-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+. "$GEOUL.sh"
+
+ExitCode=$1
+
+# finish log with result
+if [ $ExitCode -eq 0 ]; then
+    # record success
+    result=success
+    touch timestamp
+    rm -f failed
+else
+    # record failure
+    result=failure
+    eval `load-package numFailures`
+    # TODO: use lower bound?
+    echo $(($numFailures + 1)) >failed
+fi
+{
+    echo
+    echo "+ exitcode=$ExitCode"
+    echo "$pkg: sync $result at `humandate`"
+} >>log
+
+# save log
+log=`readlink -f log`
+gzip -f "$log"
+ln -sf "$log".gz .$result.log.gz
+rm -f log log.*
+
+#  mark success/failure
+case "$result" in
+    failure)
+    # raise need-to-report flag
+    touch failed.needsreport
+    # TODO: check sources, switch sources
+    ;;
+    success)
+    ;;
+esac
+
+#  record to RSS
+publish-feeds sync-$result "$log".gz
+
+#  TODO record-sync-cost using `collect-sync-cost $log.gz`
+
+exit $ExitCode

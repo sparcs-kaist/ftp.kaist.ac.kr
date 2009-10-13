@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# prepare -- before running synchronization script of a package
+# 
+# Created: 2009-10-12
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
+. "$GEOUL.sh"
+
+# load values
+eval `load-config sitename`
+eval `load-package numFailures`
+
+# sanitize sync environment
+rm -f failed.needsreport
+
+# create a new log
+log="$GEOULDIR"/log/sync/`date +%Y/%m/%d/%T.%N`.$pkg.log
+mkdir -p "`dirname "$log"`"
+: >"$log"
+ln -sf "$log" log
+
+# now, the real synchronization begins
+echo "$pkg: sync begins at `humandate`" >>log
+cat >>log <<EOF
++ source=$source
++ site=$sitename
++ node=$HOSTNAME
++ triggered=$Command
++ frequency=$frequency
++ timepast=`iso-interval $timePastSecs`
++ failures=$numFailures
+EOF
