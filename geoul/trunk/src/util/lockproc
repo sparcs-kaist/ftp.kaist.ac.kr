@@ -6,29 +6,46 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2009, Geoul Project. (http://project.sparcs.org/geoul)
 
-Lock=$1; shift
+LockArg=$1; shift
 
 # use target if lock is a symlink
-Lock=`readlink -f "$Lock"`
+Lock=`readlink -f "$LockArg"`
+
+lock-is-modifiable() {
+    if [ -w "$Lock" -o -w "`dirname "$Lock"`" ]; then
+        true
+    else
+        echo "$LockArg: Permission denied" >&2
+        false
+    fi
+}
 
 lockproc() {
     local Cmd=$1
     case "$Cmd" in
         grab)
-        # clean dead lock
-        lockproc alive || lockproc clean
-        # use lockfile(1) included in procmail(1)
-        if lockfile -r3 "$Lock" 2>/dev/null; then
-            # record owner info
-            echo "$HOSTNAME:$$" >"$Lock".owner
+        if lock-is-modifiable; then
+            # clean dead lock
+            lockproc alive || lockproc clean
+            # use lockfile(1) included in procmail(1)
+            if lockfile -r3 "$Lock" 2>/dev/null; then
+                # record owner info
+                echo "$HOSTNAME:$$" >"$Lock".owner
+            else
+                false
+            fi
         else
             false
         fi
         ;;
 
         release)
-        # TODO allow releases only from the owning process group
-        lockproc clean
+        if lock-is-modifiable; then
+            # TODO allow releases only from the owning process group
+            lockproc clean
+        else
+            false
+        fi
         ;;
 
         clean)
