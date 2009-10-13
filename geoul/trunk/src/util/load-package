@@ -128,9 +128,9 @@ value-of() {
 
 for name; do
     if value=`value-of "$name"`; then
-        printf "%s='%s'\n" "$name" "${value//"'"/"'"\\"''"}"
+        printf "%s='%s';\n" "$name" "${value//"'"/"'"\\"''"}"
     else
-        printf "%s= # XXX undefined\n" "$name"
+        printf "%s= ;\n" "$name"
     fi
 done
 
