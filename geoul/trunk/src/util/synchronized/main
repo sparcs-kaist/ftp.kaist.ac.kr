@@ -5,11 +5,19 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
 
-lock=$1; shift
+# become a process group leader
+[ x"`ps -o pgid= -p $$`" == x"$$" ] || exec setsid "$0" "$@"
 
-# TODO use lockproc
-if lockfile -r3 "$lock" 2>/dev/null; then
+Lock=$1; shift
+
+# use lockproc to proctect our synchronized command
+if lockproc "$Lock" grab; then
+    # run the given command
     "$@"
-    rm -f "$lock"
+    # release the lock
+    lockproc "$Lock" release
+else
+    exit $?
 fi
