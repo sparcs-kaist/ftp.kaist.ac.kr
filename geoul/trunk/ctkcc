@@ -39,7 +39,9 @@ compile-rules() {
             if [ ${#items[@]} -eq 1 -a x"${items[0]}" = x"$outdir/main" ]; then
                 # optimization: treat complex commands which have only main executable as simple commands
                 printf '%s: %s\n' "$target" "$input/main"
-                printf '\t%s\n' '$(INSTALL) "$<" "$@"'
+                printf '\t%s\n' \
+                    'mkdir -p "$(@D)"' \
+                    '$(INSTALL) "$<" "$@"'
             else
                 # rule for directory
                 echo "$outdir:"
