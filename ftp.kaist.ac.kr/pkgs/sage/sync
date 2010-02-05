@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-get $source -l -e 'ssh -o StrictHostkeyChecking=no'
+get $source
+#get $source -l -e 'ssh -o StrictHostkeyChecking=no'
