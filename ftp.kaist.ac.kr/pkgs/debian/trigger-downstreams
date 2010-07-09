@@ -11,7 +11,7 @@ running_as_mirror_admin "$@"
 options=()
 if [ $# -eq 0 ]; then
     set -- `sed 's/#.*$//' <downstreams`
-    options=("${options[@]}" -o "BatchMode yes")
+    options=("${options[@]}" -o "BatchMode yes" -f)
 else
     options=("${options[@]}" -v)
 fi
