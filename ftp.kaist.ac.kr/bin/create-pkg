@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# create-pkg -- Create a new package configuration
+# Usage: create-pkg PKGID
+#
+# Created: 2010-09-06
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2010, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
+
+usage() { sed -n '2,/^#$/ s/^# //p' <"$0"; exit 1; }
+
+. /mirror/lib/geoul.sh
+
+Id=$1; shift || usage
+
+# TODO validate $Id
+
+cd /mirror/pkgs
+mkdir $Id
+cd $Id
+
+# input data
+echo "Enter information for the new package to be created.."
+read -r -p "Name (e.g. Debian): " name
+read -r -p "Directory Name (e.g. debian): " dirname
+read -r -p "Source URL (e.g. rsync://ftp.debian.org/debian/): " source
+read -r -p "Sync Frequency (e.g. P1D): " frequency
+read -r -p "Color (optional; e.g. DF0451): " color
+read -r -p "Homepage URL (optional; e.g. http://www.debian.org/): " link
+
+# validate data
+error() { echo "$@" >&2; false; }
+[ -n "$name" ] || error "No name given"
+[ -n "$source" ] || error "No source URL provided"
+[ -n "$frequency" ] || error "No sync frequency provided"
+# TODO validate more: e.g. format
+
+# save data
+echo "$name" >name
+echo "$source" >source
+echo "$frequency" >frequency
+[ -z "$color" ] || echo "$color" >color
+[ -z "$link" ] || echo "home	$link" >links
+
+# setup additional stuffs
+ln -s /mirror/ftp/$dirname data
+cat >sync <<EOF
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get \$source
+EOF
+chmod +x sync
+create-du.rrd create
+
+# show remaining tasks
+echo
+[ -d data ] || echo "TODO: Make sure `readlink -f data` exists."
+echo "TODO: Check the default configuration under $PWD."
+# TODO tell more things to do to user
