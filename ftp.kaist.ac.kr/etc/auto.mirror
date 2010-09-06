@@ -4,6 +4,7 @@
 #ftp/.tmp		localhost:/srv/.tmp
 
 ftp/debian		ftp:/srv/debian
+ftp/debian-backports		ftp:/srv/debian-backports
 ftp/ubuntu		ftp:/srv/ubuntu
 ftp/fedora		ftp:/srv/fedora
 ftp/mozilla		ftp:/srv/mozilla
@@ -16,7 +17,6 @@ ftp/cygwin		ftp:/srv/cygwin
 ftp/hangul		ftp:/srv/hangul
 ftp/debian		ftp:/srv/debian
 
-ftp/debian-amd64		ftp2:/srv/debian-amd64
 ftp/debian-archive		ftp2:/srv/debian-archive
 ftp/debian-cd		ftp2:/srv/debian-cd
 ftp/ubuntu-cd		ftp2:/srv/ubuntu-cd
