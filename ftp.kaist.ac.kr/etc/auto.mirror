@@ -5,6 +5,7 @@
 
 ftp/debian		ftp:/srv/debian
 ftp/debian-backports		ftp:/srv/debian-backports
+ftp/debian-volatile		ftp:/srv/debian-volatile
 ftp/ubuntu		ftp:/srv/ubuntu
 ftp/fedora		ftp:/srv/fedora
 ftp/mozilla		ftp:/srv/mozilla
