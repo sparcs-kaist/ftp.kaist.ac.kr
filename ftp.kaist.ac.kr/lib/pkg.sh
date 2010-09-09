@@ -104,8 +104,11 @@ lock_owner() {
     local owner=`cat lock.owner 2>/dev/null`
     if [ -n "$owner" ]; then
         echo owner=$owner
-        echo host=${owner%:*}
-        echo pgrp=${owner#*:}
+        pgid=${owner#*:}
+        echo pgid=$pgid
+        host=${owner%$pgid}
+        host=${host%:}
+        echo host=${host:-$HOSTNAME}
     fi
 }
 lock_expired() { needs_lock
@@ -116,11 +119,11 @@ sync_in_progress() { needs_lock
     # lock exists
     if [ -e "$lock" ]; then
         # the owner process is still alive
-        local owner host pgrp
+        local owner host pgid
         eval `lock_owner`
         local rsh=
         [ -z "$host" -o "$host" = "$HOSTNAME" ] || rsh="ssh $host"
-        $rsh ps -p $pgrp &>/dev/null
+        $rsh ps -p $pgid &>/dev/null
     else
         false
     fi
@@ -143,17 +146,17 @@ release_lock() { needs_lock
 }
 kill_lock_owner() {
     # kill the lock owner and release it
-    local owner host pgrp
+    local owner host pgid rsh
     eval `lock_owner`
     if [ -n "$owner" ]; then
         # send TERM
         if sync_in_progress; then
-            ssh $host kill -TERM -$pgrp
+            $rsh sh -c 'kill -TERM -`ps -o pgid= '$pgid'`'
             sleep 2
         fi
         # send KILL if still alive
         while sync_in_progress; do
-            ssh $host kill -KILL -$pgrp
+            $rsh sh -c 'kill -KILL -`ps -o pgid= '$pgid'`'
             sleep 2
         done
     fi

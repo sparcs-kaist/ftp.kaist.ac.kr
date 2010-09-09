@@ -129,7 +129,7 @@ humaninterval() {
         [ $M = 0 ] || dt="$dt${M}M"
         [ $S = 0 ] || dt="$dt${S}S"
     fi
-    echo "${sgn}P${dd}${dt:+T$dt}"
+    echo "${dsgn}P${dd}${dt:+T$dt}"
 }
 
 

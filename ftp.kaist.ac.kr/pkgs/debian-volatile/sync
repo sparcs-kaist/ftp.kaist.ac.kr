@@ -1,32 +1,6 @@
 #!/usr/bin/env bash
+SyncReentrant=true SyncCustom=true
 . /mirror/lib/sync.sh
 
-set -e
-
-#HOSTNAME=`hostname -f`
-HOSTNAME=ftp.kr.debian.org
-umask 002
-
-# load private info
-set +x
-. debian-ftpsync.conf
-export RSYNC_PASSWORD
-source=${source/:\/\//:\/\/$RSYNC_USER@}
-source=${source%/}
-set -x
-
-# first, get new debs (not touching removed ones or indices)
-rsync --recursive --times --links --hard-links \
-      --verbose --stats \
-      $source/pool/ data/pool/
-
-# then, synchronize indices and everything else
-rsync --recursive --times --links --hard-links \
-      --delete --delete-after --delay-updates \
-      --exclude "Archive-Update-in-Progress-${HOSTNAME}" \
-      --exclude "project/trace/${HOSTNAME}" \
-      --verbose --stats \
-      $source/ data/
-
-# now, place a timestamp
-date -u >data/project/trace/${HOSTNAME}
+# use our driver for delegating actual sync to the Debian ftpsync script
+. ../debian/geoul-ftpsync $source

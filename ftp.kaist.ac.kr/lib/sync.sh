@@ -116,81 +116,42 @@ fi
 
 
 ## lock this package
+${SyncReentrant:-false} ||
 acquire_lock || die 4 "locked or another sync in progress"
 
+. /mirror/lib/sync-steps.sh
 
-## prepare logging and unlocking
-# clean up last failure report flag
-rm -f failed.needsreport
-# create a new log
-log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.$pkg.log
-mkdir -p `dirname $log`
-: >$log
-ln -sf $log log
-if [ -t 1 ]; then
-    # monitor log if connected to a terminal
-    tail -f $log &
-    tailpid=$!
-fi
-# backup stdout/err fd's and redirect everything to log
-exec 3>&1- 4>&2-  >>$log 2>&1
-
-finish() {
-    trap '' EXIT ERR INT HUP TERM
-    set +e
-    local result=
-    if [ $exitcode -eq 0 ]; then
-        # record success
-        result=success
-        touch timestamp
-        clear_failures
-    else
-        # record failure
-        result=failure
-        increase_failures
+before-sync() {
+    trap 'exitcode=$?; set +x; after-sync' EXIT ERR
+    trap 'exit 2' INT HUP TERM
+    prepare-sync
+    if [ -t 1 ]; then
+        # monitor log if connected to a terminal
+        tail -f $log &
+        tailpid=$!
     fi
-    msg "sync $result at `humandate`"
+    # backup stdout/err fd's and redirect everything to log
+    exec 3>&1- 4>&2-  >>$log 2>&1
+    # show all commands being run
+    set +e -x
+}
+
+after-sync() {
+    # restore stdout/err
+    exec >&3- 2>&4-
+    trap '' EXIT ERR INT HUP TERM
+    finish-sync
     # stop monitoring log
     if [ -n "$tailpid" ]; then
         sleep 1
         kill $tailpid 2>/dev/null
         wait $tailpid
     fi
-    # restore stdout/err
-    exec >&3- 2>&4-
-    # save log
-    #  compress log
-    gzip -f $log
-    ln -sf $log.gz .$result.log.gz
-    rm -f log log.*
-    #  mark success/failure
-    case "$result" in
-        failure)
-        # raise need-to-report flag
-        touch failed.needsreport
-        # TODO: check sources, switch sources
-        ;;
-        success)
-        ;;
-    esac
-    #  record to RSS
-    record-news.feed sync-$result $log.gz
-    #  TODO record-sync-cost using `collect-sync-cost $log.gz`
+    ${SyncReentrant:-false} ||
     release_lock
     exit $exitcode
 }
-trap 'exitcode=$?; set +x; finish' EXIT ERR
-trap 'exit 2' INT HUP TERM
 
-## now, the real synchronization begins
-msg "sync begins at `humandate`"
-cat <<EOF
-+ source=$source
-+ site=$SITENAME
-+ node=$HOSTNAME
-+ triggered=$triggered
-+ frequency=$frequency
-+ timepast=`humaninterval $timepast`
-+ failures=$failures
-EOF
-set +e -x
+
+${SyncCustom:-false} ||
+before-sync
