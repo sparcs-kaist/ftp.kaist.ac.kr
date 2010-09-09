@@ -123,7 +123,7 @@ sync_in_progress() { needs_lock
         eval `lock_owner`
         local rsh=
         [ -z "$host" -o "$host" = "$HOSTNAME" ] || rsh="ssh $host"
-        $rsh ps -p $pgid &>/dev/null
+        $rsh ps -p $pgid -g $pgid &>/dev/null
     else
         false
     fi
@@ -149,14 +149,19 @@ kill_lock_owner() {
     local owner host pgid rsh
     eval `lock_owner`
     if [ -n "$owner" ]; then
+        kill_process_group() {
+            sig=$1; shift
+            pgid=$1; shift
+            $rsh sh -c 'kill -'$sig' `ps -o pgid= -p '$pgid' -g '$pgid' | sort -u | sed "s/^/-/"`'
+        }
         # send TERM
         if sync_in_progress; then
-            $rsh sh -c 'kill -TERM -`ps -o pgid= '$pgid'`'
+            kill_process_group TERM $pgid
             sleep 2
         fi
         # send KILL if still alive
         while sync_in_progress; do
-            $rsh sh -c 'kill -KILL -`ps -o pgid= '$pgid'`'
+            kill_process_group KILL $pgid
             sleep 2
         done
     fi

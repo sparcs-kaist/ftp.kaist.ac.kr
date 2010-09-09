@@ -83,7 +83,7 @@ fi
 
 
 ## jobs to be/not to be done while sync_in_progress
-if sync_in_progress; then
+if $SyncReentrant || sync_in_progress; then
     case "$triggered" in
         watch)
         exec tail -f log
@@ -91,7 +91,8 @@ if sync_in_progress; then
 
         *) die 4 "another sync in progress" ;;
     esac
-else
+fi
+if $SyncReentrant || ! sync_in_progress; then
     case "$triggered" in
         now|pushed|regularly) ;;
 
