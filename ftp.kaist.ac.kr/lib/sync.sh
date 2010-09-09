@@ -83,22 +83,24 @@ fi
 
 
 ## jobs to be/not to be done while sync_in_progress
-if $SyncReentrant || sync_in_progress; then
+if sync_in_progress; then
     case "$triggered" in
         watch)
         exec tail -f log
         ;;
 
-        *) die 4 "another sync in progress" ;;
+        *)
+        ${SyncReentrant:-false} || 
+        die 4 "another sync in progress"
+        ;;
     esac
 fi
-if $SyncReentrant || ! sync_in_progress; then
-    case "$triggered" in
-        now|pushed|regularly) ;;
 
-        *) err 4 "no sync in progress" ;;
-    esac
-fi
+case "$triggered" in
+    now|pushed|regularly) ;;
+
+    *) err 4 "no sync in progress" ;;
+esac
 
 
 ## check timestamp if regular sync

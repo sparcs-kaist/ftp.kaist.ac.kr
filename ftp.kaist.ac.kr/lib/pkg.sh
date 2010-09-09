@@ -93,11 +93,7 @@ penalty_for() {
 # lock
 needs_lock() { [ -z "$lock" ] || return 0
     # figure out where's the lock, and set $lock
-    if [ -L lock ]; then
-        lock=`readlink lock`
-    else
-        lock=lock
-    fi
+    lock=`readlink -f lock`
 }
 
 lock_owner() {
@@ -142,7 +138,7 @@ acquire_lock() { needs_lock
     fi
 }
 release_lock() { needs_lock
-    rm -f lock.owner lock.reported "$lock"
+    rm -f "`readlink -f lock.owner`" lock.reported "$lock"
 }
 kill_lock_owner() {
     # kill the lock owner and release it
