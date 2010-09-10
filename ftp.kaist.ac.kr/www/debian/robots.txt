@@ -1,6 +1,6 @@
 User-agent: *
 Disallow: /debian/
+Disallow: /debian-volatile/
+Disallow: /debian-backports/
 Disallow: /debian-cd/
 Disallow: /debian-archive/
-Disallow: /debian-amd64/
-Disallow: /debian-non-US/
