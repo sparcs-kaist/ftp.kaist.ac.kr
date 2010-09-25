@@ -39,7 +39,7 @@ confpath="$BASEDIR/etc/$conf"
 # prepare hooks
 export triggered timepast failures
 . "$Base"/geoul-ftpsync.prepare
-export HOOK6="$Base/geoul-ftpsync.finish '$PWD' '$log' '$suffix'"
+export HOOK6="$Base/geoul-ftpsync.finish $PWD $log $suffix"
 
 # let Debian's ftpsync handle the actual sync
 "$BASEDIR"/bin/ftpsync

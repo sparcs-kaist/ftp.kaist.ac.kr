@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 set -eu
 
-pkgdir=$1; shift
-log=$1; shift
-suffix=$1; shift
+Pkgdir=$1; shift
+Log=$1; shift
+if [ $# -gt 0 ]; then
+    Suffix=$1; shift
+else
+    Suffix=
+fi
 
-cd $pkgdir
+cd $Pkgdir
 . /mirror/lib/pkg.sh
 . /mirror/lib/sync-steps.sh
 
 {
     cd "$BASEDIR"/log
-    ftpsynclog=ftpsync$suffix.log
+    ftpsynclog=ftpsync$Suffix.log
 
     # show log
     {
         cat $ftpsynclog.0
         cat rsync-$ftpsynclog.0
-        cat rsync-ftpsync$suffix.error.0 >&2
-    } >>$log
+        cat rsync-ftpsync$Suffix.error.0 >&2
+    } >>$Log
 
     # look for errors
     #  in ftpsync log
@@ -29,12 +33,12 @@ cd $pkgdir
     `
     #  or in rsync error log
     [ -n "$exitcode" ] || exitcode=`
-    sed <rsync-ftpsync$suffix.error.0 \
+    sed <rsync-ftpsync$Suffix.error.0 \
         -n '/rsync error:/ s/.*(code \([0-9]*\)).*/\1/p' |
         head -n 1
     `
     : ${exitcode:=0}
-    echo "+ exitcode=$exitcode" >>$log
+    echo "+ exitcode=$exitcode" >>$Log
 
     cd - >/dev/null
 }
