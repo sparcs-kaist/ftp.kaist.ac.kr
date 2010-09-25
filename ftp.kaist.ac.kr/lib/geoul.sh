@@ -70,7 +70,7 @@ isodate() {
     local hr=${zone%??}
     local zone=$hr:${zone#$hr}
     [ "$zone" = "+00:00" ] && zone=Z
-    date "$@" +%FT%T$zone
+    date "$@" +%FT%T$zone 2>/dev/null
 }
 
 # human friendly date

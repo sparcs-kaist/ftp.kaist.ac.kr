@@ -15,7 +15,7 @@ prepare-sync() {
     log=/mirror/log/sync/`date +%Y/%m/%d/%T.%N`.$pkg.log
     mkdir -p `dirname $log`
     : >$log
-    ln -sf $log log
+    ln -sf $log log 2>/dev/null
     ## now, the real synchronization begins
     {
     echo "$pkg: sync begins at `humandate`"
@@ -48,7 +48,7 @@ finish-sync() {
     # save log
     #  compress log
     gzip -f $log
-    ln -sf $log.gz .$result.log.gz
+    ln -sf $log.gz .$result.log.gz 2>/dev/null
     rm -f log log.*
     #  mark success/failure
     case "$result" in
