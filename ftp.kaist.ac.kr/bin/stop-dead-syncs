@@ -23,8 +23,11 @@ watch() {
     (
     . /mirror/lib/pkg.sh
     if sync_in_progress; then
-        [ `sync_inactive_for` -lt $StopSyncsInactiveFor ] ||
-        ./sync stop "due to no activity"
+        if [ `sync_inactive_for` -ge $StopSyncsInactiveFor ]; then
+            ./sync stop "due to no activity"
+            log /mirror/log/stop-dead-syncs.log \
+                "$pkg sync stopped due to no activity"
+        fi
     fi
     )
 }

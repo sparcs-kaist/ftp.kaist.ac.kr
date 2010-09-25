@@ -145,3 +145,7 @@ pkg_uri() {
     echo "$BaseURL/pkgs/$pkg"
 }
 
+log() {
+    local f=$1; shift
+    echo "`date +"%b %d %H:%M:%S"` $HOSTNAME ${0##*/}[$$]: $@" >>"$f"
+}
