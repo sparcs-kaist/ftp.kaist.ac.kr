@@ -102,6 +102,11 @@ INSTALL=install -m a+r
 /etc/subversion/config: subversion.config
 	$(INSTALL) $< $@
 
+# auto.mirror
+/etc/auto.mirror: auto.mirror
+	$(INSTALL) $< $@
+	$(MAKE) -C /var/yp
+	invoke-rc.d nis reload
 
 # default rule is to just install the config file from here
 .SECONDEXPANSION:
