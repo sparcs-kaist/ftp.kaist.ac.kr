@@ -30,6 +30,7 @@ ftp/NetBSD		ftp2:/srv/netbsd
 ftp/OpenBSD		ftp2:/srv/openbsd
 ftp/sunfreeware		ftp2:/srv/sunfreeware
 
+ftp/tdf		ftp2:/srv/tdf
 ftp/openoffice		ftp2:/srv/openoffice
 ftp/eclipse		ftp2:/srv/eclipse
 ftp/putty		ftp2:/srv/putty
