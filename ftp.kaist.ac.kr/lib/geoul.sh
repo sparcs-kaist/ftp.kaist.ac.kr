@@ -55,7 +55,7 @@ system_not_degraded() {
 
 # for readability
 now() {
-    date "$@" +%s
+    date "$@" +%s 2>/dev/null
 }
 mtime() {
     local f=$1
@@ -66,7 +66,7 @@ mtime() {
 
 # ISO8601:2000 date format
 isodate() {
-    local zone=`date "$@" +%z`
+    local zone=`date "$@" +%z 2>/dev/null`
     local hr=${zone%??}
     local zone=$hr:${zone#$hr}
     [ "$zone" = "+00:00" ] && zone=Z
@@ -75,7 +75,7 @@ isodate() {
 
 # human friendly date
 humandate() {
-    date "$@" +'%Y-%m-%d %H:%M:%S %z'
+    date "$@" +'%Y-%m-%d %H:%M:%S %z' 2>/dev/null
 }
 
 # convert XML Schema duration format to number of seconds
