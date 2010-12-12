@@ -95,7 +95,7 @@ system.
 <p>
 Our service is heavily loaded by users from Korea and neighbor countries.
 Here is a graph that shows our network traffic for the last month:
-<img src="/geoul/usage/by-pkgs.png"
+<img src="/geoul/usage/by-pkgs.P1M.png"
     alt="Network Usage of ftp.kaist.ac.kr"
     style="display:block; margin:20px auto;"/>
 </p>
