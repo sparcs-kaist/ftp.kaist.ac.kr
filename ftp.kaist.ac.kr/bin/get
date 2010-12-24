@@ -8,6 +8,9 @@
 set -e
 
 url=$1; shift
+: ${GETDEST:=data}
+dest=`readlink -f "$GETDEST"`
+[ -d "$dest" ] || { echo >&2 "$dest: not a directory"; false; }
 
 # detect protocol to determine driver
 case "$url" in
@@ -18,7 +21,7 @@ esac
 driver=/mirror/bin/get."$proto"
 
 if [ -x "$driver" ]; then
-    exec "$driver" "$url" "$PWD/data/" "$@" $GETARGS
+    exec "$driver" "$url" "$dest/" "$@" $GETARGS
 else
     echo "get: no driver available for $url" >&2
     exit 64

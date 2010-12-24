@@ -29,6 +29,7 @@ ftp/FreeBSD-kr		ftp2:/srv/freebsd-kr
 ftp/NetBSD		ftp2:/srv/netbsd
 ftp/OpenBSD		ftp2:/srv/openbsd
 ftp/sunfreeware		ftp2:/srv/sunfreeware
+ftp/macports		ftp2:/srv/macports
 
 ftp/tdf		ftp2:/srv/tdf
 ftp/openoffice		ftp2:/srv/openoffice

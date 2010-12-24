@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+GETDEST=data/release      get $source
+GETDEST=data/mpdistfiles  get ${source%release/}mpdistfiles/
