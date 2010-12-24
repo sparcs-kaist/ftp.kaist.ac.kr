@@ -143,13 +143,15 @@ release_lock() { needs_lock
 }
 kill_lock_owner() {
     # kill the lock owner and release it
-    local owner host pgid rsh
+    local owner host pgid
     eval `lock_owner`
     if [ -n "$owner" ]; then
+        local rsh="sh -c"
+        [ -z "$host" -o "$host" = "$HOSTNAME" ] || rsh="ssh $host"
         kill_process_group() {
-            sig=$1; shift
-            pgid=$1; shift
-            $rsh sh -c 'kill -'$sig' `ps -o pgid= -p '$pgid' -g '$pgid' | sort -u | sed "s/^/-/"`'
+            local sig=$1; shift
+            local pgid=$1; shift
+            $rsh 'ps -o pgid= -p '$pgid' -g '$pgid' | sort -u | sed "s/^ */-/" | xargs kill -s '$sig''
         }
         # send TERM
         if sync_in_progress; then
