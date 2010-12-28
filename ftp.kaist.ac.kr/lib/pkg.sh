@@ -64,8 +64,7 @@ compute_times() {
     [ -n "$frequency" ] && interval=`secondsof $frequency` || interval=
     [ -n "$validfor" ] && validsecs=`secondsof $validfor` || validsecs=
     failures=`number_of_failures`
-    penalty=`penalty_for $failures`
-    delay=$(( $interval + $penalty ))
+    delay=$(( $interval ))
     remaining=$(( $delay - $timepast ))
 }
 
@@ -81,14 +80,6 @@ increase_failures() {
     local failures=`number_of_failures`
     # TODO: use lower bound?
     echo $(($failures + 1)) >failed
-}
-penalty_for() {
-    # penalty according to failures
-    # 600s * failures^2 = ( 0min, 10min, 4*10min, 9*10min, 16*10min, ... )
-    local failures=${1:-`number_of_failures`}
-    echo $(( 100 * $failures * ($failures+1) * (2*$failures+1) ))
-    # this must return sum of all delays until current amount of failures
-    # i.e. sum(600 * x^2) = 600 * 1/6*x*(x+1)*(2*x+1)
 }
 
 # lock
