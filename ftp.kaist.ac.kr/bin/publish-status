@@ -25,4 +25,7 @@ chmod a+r $tmp
 mv -f $tmp geoul.status.xml
 ln -sf /tmp/geoul.status.xml /mirror/run/status.xml
 
+xsltproc /mirror/lib/status.xml2json.xsl geoul.status.xml >geoul.status.json
+ln -sf /tmp/geoul.status.json /mirror/run/status.json
+
 # vim:ft=sh

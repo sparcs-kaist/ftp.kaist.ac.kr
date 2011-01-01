@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# generate HTML list items of links to data paths of packages
+# Usage: list-data-links ROOTPATH
+# Author: Jaeho Shin <netj@sparcs.org>
+# Created: 2011-01-01
+set -eu
+
+Root=$1; shift
+
+. /mirror/lib/geoul.sh
+
+generate-link() {
+    local data=`readlink -f data`
+    case $data in
+        "$Root"/*)
+            local relpath=${data#$Root/}
+            echo "${pkg%/} $relpath"
+        ;;
+    esac
+}
+
+foreachpkg generate-link |
+sort --ignore-case --key=2 |
+sed 's:\([^ ]*\) \(.*\):<li><a id="\1" href="\2/">\2</a></li>:'
+
+# This used to be something like:
+#   find * -maxdepth 0 -type d |
+#   sort -f |
+#   sed -e 's:.*:<li><a href="&/">&</a></li>:'
