@@ -38,7 +38,7 @@ for arch in $versionDir/*/; do
         jigdoDir=$PWD/data/$currentVersion/$a/jigdo-$s
         imageDir=$PWD/data/$currentVersion/$a/iso-$s
         [ -d $imageDir ] || mkdir -p $imageDir
-        cp -pf $jigdoDir/MD5SUMS $imageDir/MD5SUMS
+        cp -pf $jigdoDir/MD5SUMS $imageDir/MD5SUMS || :
         echo "jigdoDir=$jigdoDir"       >  $jigdoConf.$a.$s
         echo "templateDir=$jigdoDir"    >> $jigdoConf.$a.$s
         echo "imageDir=$imageDir"       >> $jigdoConf.$a.$s
