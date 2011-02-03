@@ -6,9 +6,10 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
-MAILTO=${MAILTO:-ftp}
+: ${MAILTO:=ftp}
 ReportFailedSyncsAfter=P1D
 ReportLongSyncsEvery=PT12H
+ReportFailuresMoreThan=10 #times
 
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
@@ -17,45 +18,30 @@ ReportFailedSyncsAfter=`secondsof $ReportFailedSyncsAfter`
 ReportLongSyncsEvery=`secondsof $ReportLongSyncsEvery`
 
 tmp=`mktemp -d /tmp/check-anomalies.XXXXXX`
+trap "rm -rf $tmp" EXIT
 report=$tmp/report
 items=$tmp/items
 item() { echo "$@" >>$items; }
-
-send_report() {
-    local exitcode=$?
-    trap "exit $exitcode" EXIT ERR HUP INT TERM
-    # report anything exists
-    if [ -s $report -o -s $items ]; then
-        {
-            if [ -s $items ]; then
-                echo "= Summary ="
-                cat $items 2>/dev/null |
-                while read; do printf "* %s\n" "$REPLY"; done
-                echo "Check the [$StatusURL status page] for current data"
-                echo
-            fi
-            if [ -s $report ]; then
-                echo "= Log ="
-                cat $report
-            fi
-        } | mail -s "$SITENAME STATUS ALERT" "$MAILTO"
-    fi
-    rm -rf $tmp
-    exit $exitcode
-}
-trap send_report EXIT ERR HUP INT TERM
 
 check() {
     (
     . /mirror/lib/pkg.sh
     local timepast interval failures delay
     compute_times # defines: timepast interval failures delay remaining
+    # too many failures
+    if [ $failures -ge $ReportFailuresMoreThan ]; then
+        item "$pkg: too many sync failures; $failures times"
+        title "$pkg failed too many times"
+        echo "Sync failed $failures times so far!"
+        quotelog excerpt.failure .failure.log.gz
+        echo
     # failed syncs
-    if [ -f failed.needsreport -a $timepast -ge $ReportFailedSyncsAfter ]; then
+    elif [ -f failed.needsreport -a $timepast -ge $ReportFailedSyncsAfter ]; then
         local when="soon"
         [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
         item "$pkg: sync failed $failures times; will retry $when"
-        echo "== $pkg failed =="
+        title "$pkg failed"
+        echo "Sync failed $failures times so far, and next retry will start $when"
         quotelog excerpt.failure .failure.log.gz
         rm -f failed.needsreport  # remove it not to report twice
         echo
@@ -69,8 +55,10 @@ check() {
         # if sync is taking too much time and we have been quiet for a while,
         if [ $synctime -gt $nextreport ]; then
             # report
-            item "$pkg: sync too long; `humaninterval $synctime`"
-            echo "== $pkg too long =="
+            duration=`humaninterval $synctime`
+            item "$pkg: sync too long; $duration"
+            title "$pkg too long"
+            echo "Sync has been in progress for $duration."
             quotelog excerpt log
             echo
             # schedule next report
@@ -82,15 +70,41 @@ check() {
     # TODO: simply too old packages
     # TODO: more anomalies?
     )
+} >>$report 2>&1
+
+TitleLine="----------------------------------------"
+title() {
+    echo "$1"
+    echo "${TitleLine:0:${#1}}"
 }
 
 quotelog() {
     local excerpt=$1; shift
     local log=$1; shift
-    echo "Excerpt of [`log_uri "$log"`]:"
-    echo "-->8--"
-    "$excerpt" "$log" "$@"
-    echo "--8<--"
+    echo "Excerpt of [the log](`log_uri "$log"`) follows:"
+    echo
+    "$excerpt" "$log" "$@" | sed 's/^/    /'
+    echo
 }
 
-foreachpkg check >$report 2>&1
+# check
+foreachpkg check
+
+# and report
+if [ -s $report -o -s $items ]; then
+    {
+        if [ -s $items ]; then
+            title "Summary"
+            cat $items 2>/dev/null |
+            while read item; do printf " * %s\n" "$item"; done
+            echo "Check [status page][] for the latest status."
+            echo
+            echo "[status page]: $StatusURL"
+            echo
+        fi
+        if [ -s $report ]; then
+            cat $report
+        fi
+        # links
+    } | mail -s "$SITENAME STATUS ALERT" "$MAILTO"
+fi
