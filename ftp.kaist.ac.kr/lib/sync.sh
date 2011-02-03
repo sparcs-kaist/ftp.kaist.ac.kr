@@ -104,12 +104,16 @@ esac
 
 
 ## check timestamp if regular sync
-compute_times # defines: timepast interval failures delay remaining
+compute_times # defines: timepast interval failures penalty delay remaining
 if [ "$triggered" = regularly ]; then
+    desc=
+    if [ $penalty -gt 0 ]; then
+        desc="=`humaninterval $interval`+`humaninterval $penalty`(${failures} failures)"
+    fi
     if [ $timepast -lt $delay ]; then
-        die 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`)"
+        die 8 "not yet (age=`humaninterval $timepast` < `humaninterval $delay`$desc)"
     else
-        msg "old enough (age = `humaninterval $timepast` >= `humaninterval $delay`)"
+        msg "old enough (age = `humaninterval $timepast` >= `humaninterval $delay`$desc)"
     fi
 fi
 
