@@ -26,7 +26,10 @@
 	    <xsl:apply-templates select="@*"/>
 	    <title><xsl:value-of select="$title"/></title>
 	    <link><xsl:value-of select="$link"/></link>
-	    <description><xsl:value-of select="$description"/></description>
+            <description><xsl:element name="include" namespace="http://www.w3.org/2001/XInclude">
+                    <xsl:attribute name="href"><xsl:value-of select="$description"/></xsl:attribute>
+                    <xsl:attribute name="parse">text</xsl:attribute>
+            </xsl:element></description>
 	    <xsl:if test="$img-url"><image rdf:resource="{$img-url}"/></xsl:if>
 	    <xsl:apply-templates select="node()"/>
 	</xsl:copy>

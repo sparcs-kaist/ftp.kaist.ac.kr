@@ -57,7 +57,7 @@ error() {
 
 xml() {
     # run xmllint in libxml2
-    xmllint --format --encode utf-8 -
+    xmllint --xinclude --format --encode utf-8 -
 }
 
 xslt() {
@@ -87,10 +87,11 @@ compose() {
         # use editor on terminal
         echo "Enter $what here" >$tmp
         "$EDITOR" $tmp
-        eval $what'=`cat $tmp`'
+        eval $what'=$tmp'
     else
         # or just use stdin
-        eval $what'=`cat`'
+        cat >$tmp
+        eval $what'=$tmp'
     fi
 }
 
