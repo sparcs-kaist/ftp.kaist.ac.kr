@@ -9,7 +9,7 @@
 : ${MAILTO:=ftp}
 ReportFailedSyncsAfter=P1D
 ReportLongSyncsEvery=PT12H
-ReportFailuresMoreThan=10 #times
+ReportFailuresMoreThan=7 #times, which begins to delay retries more than a day
 
 . /mirror/lib/geoul.sh
 running_as_mirror_admin "$@"
