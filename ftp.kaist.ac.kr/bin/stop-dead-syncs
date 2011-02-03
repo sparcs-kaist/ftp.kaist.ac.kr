@@ -17,7 +17,7 @@ sync_inactive_for() {
         echo "$activity" >log.monitor
         echo 0
     fi
-}
+} 2>/dev/null
 
 watch() {
     (
