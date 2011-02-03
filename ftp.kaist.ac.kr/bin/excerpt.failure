@@ -10,10 +10,16 @@ set -e
 Self=`readlink -f "$0"`
 Patterns="$Self.patterns"
 
+tmp=`mktemp /tmp/excerpt.failure.XXXXXX`
+trap "rm -f $tmp" EXIT
+
 f=$1 l=${2:-10}
+# TODO prevent [ x$f = x- ] or buffer it
 if [ `zless "$f" 2>/dev/null | wc -l || echo 0` -gt $(($l * 2)) ]; then
     zless "$f" | head -$l
-    if ! zless "$f" | grep -iEf "$Patterns"; then 
+    if zless "$f" | grep -iEf "$Patterns" >$tmp; then 
+        excerpt $tmp $(($l / 2))
+    else
         echo "[...]"
         zless "$f" | tail -$l
     fi

@@ -8,6 +8,7 @@
 set -e
 
 f=$1 l=${2:-10}
+# TODO prevent [ x$f = x- ] or buffer it
 if [ `zless "$f" 2>/dev/null | wc -l || echo 0` -gt $(($l * 2)) ]; then
     zless "$f" | head -$l
     echo "[...]"
