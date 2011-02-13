@@ -30,9 +30,11 @@ check() {
     compute_times # defines: timepast interval failures penalty delay remaining
     # too many failures
     if [ $failures -ge $ReportFailuresMoreThan ]; then
+        local when="soon"
+        [ $remaining -gt 0 ] && when="after `humaninterval $remaining`"
         item "$pkg: too many sync failures; $failures times"
         title "$pkg failed too many times"
-        echo "Sync failed $failures times so far!"
+        echo "Sync failed $failures times so far! Next retry will start $when"
         quotelog excerpt.failure .failure.log.gz
         echo
     # failed syncs
