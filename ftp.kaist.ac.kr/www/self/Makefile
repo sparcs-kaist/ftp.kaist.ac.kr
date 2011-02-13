@@ -9,6 +9,7 @@ all: $(FILES:%=$(FTPROOT)/%)
 
 index.html: index.html.in $(FTPROOT)
 	cp -f $< $@
+	rm -f .index.html.swp
 	screen -Dm vim $@ +1 +'/\(begin\|end\) of contents' +'norm jVnkdk' \
 	    +'r!./list-data-links $(FTPROOT)' \
 	    +'norm VNj=ZZ'

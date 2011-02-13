@@ -177,6 +177,17 @@ function updateStatus() {
                         className += " updating";
                         desc += "<br>Update in progress since " + eventRef(s.updating) + "";
                     }
+                    desc += "<br>";
+                    // feeds
+                    desc += "<br>";
+                    desc += "<img alt='News Feed of' src='.self/feed-icon-12x12.png'> ";
+                    desc += "<a href='/geoul/pkgs/" + this.id + "/news.feed'>all updates</a>, ";
+                    desc += "<a href='/geoul/pkgs/" + this.id + "/problems.feed'>only problematic ones</a><br>";
+                    // usage graphs
+                    desc += "<br>";
+                    desc += "<img src='/geoul/pkgs/" + this.id + "/usage.png' alt='network usage'><br>";
+                    desc += "<img src='/geoul/pkgs/" + this.id + "/du.png' alt='disk usage'><br>";
+
                     var li = this.parentNode;
                     li.className = className;
                     $(".status", li).html(desc);
@@ -217,7 +228,7 @@ $(window).load(function(){
         white-space: nowrap;
         width: auto;
         margin-left: 3em;
-        padding: 0.5ex;
+        padding: 1em;
     }
     #contents li:hover > a {
         font-weight: bold;
