@@ -36,6 +36,7 @@ failed=
 started=
 sync_in_progress && started=`isodate -r lock`
 [ -f timestamp ] && lastupdated=`isodate -r timestamp`
+[ -f .failure.log.gz ] && lastfailed=`isodate -r .failure.log.gz`
 
 # references
 currentref=`log_uri log`
@@ -110,8 +111,7 @@ echo "<status>"
         echo "<updated${successref:+ href='$successref'}${lastupdated:+ timestamp='$lastupdated'}/>"
     fi
     if [ "${failed:-0}" -gt 0 ]; then
-        # TODO failure timestamp
-        echo "<failed${failureref:+ href='$failureref'} count='${failed:-0}'/>"
+        echo "<failed${failureref:+ href='$failureref'}${lastfailed:+ timestamp='$lastfailed'} count='${failed:-0}'/>"
     fi
     if [ -n "$started" ]; then
         echo "<updating${currentref:+ href='$currentref'}${started:+ timestamp='$started'}/>"
