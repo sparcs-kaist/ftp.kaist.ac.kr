@@ -27,6 +27,7 @@
             margin-right: 20px;
         }
     --></style>
+    <script type="text/javascript" src=".self/jquery-1.4.4.min.js"></script>
 </head>
 
 <body>
@@ -50,8 +51,19 @@
         |
         <a href="http://twitter.com/kaist_ftp" id="twitter-link">follow us on Twitter</a>
     </div>
-    <script type="text/javascript" defer="defer" src="http://twitter.com/javascripts/blogger.js">;</script>
-    <script type="text/javascript" defer="defer" src="http://twitter.com/statuses/user_timeline/kaist_ftp.json?callback=twitterCallback2&amp;count=5">;</script>
+    <script type="text/javascript">
+        {
+            var s = [ "http://twitter.com/javascripts/blogger.js"
+                    , "http://twitter.com/statuses/user_timeline/kaist_ftp.json?callback=twitterCallback2&count=5"
+                    ]
+            for (var i in s) {
+                $("<script>").attr({
+                        type: "text/javascript",
+                        src: s[i]
+                        }).appendTo(document.body);
+            }
+        }
+    </script>
 </div>
 
 <h2>Introduction</h2>
@@ -134,7 +146,6 @@ interested in <a href="/geoul/pkgs/news.feed"><img
 </div>
 
 <!-- enhance contents with their status -->
-<script type="text/javascript" src=".self/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src=".self/datetime.js"></script>
 <script type="text/javascript">
 function eventRef(e) {
@@ -144,6 +155,7 @@ function eventRef(e) {
     html += "</a>";
     return html;
 }
+var activeItem = null;
 function updateStatus() {
     $.getJSON("/geoul/status.json", function(s){
             var pkgs = s.package;
@@ -151,13 +163,13 @@ function updateStatus() {
                     var pkg = pkgs[this.id];
                     if (pkg == null) return;
                     var className = "";
-                    var desc = "";
+                    var desc = "<h2>" + pkg.name + "</h2>";
                     if (pkg.sync != null && pkg.sync.source != null) {
-                        desc = "Mirroring from <b>" + pkg.sync.source + "</b>";
+                        desc += "Mirroring from <b>" + pkg.sync.source + "</b>";
                         if (pkg.sync.frequency)
                             desc += "<br>Updates every <b>" + prettyPeriod(pkg.sync.frequency).replace(/^(a|an) /, "") + "</b>";
                     } else {
-                        desc = "Original Content";
+                        desc += "Original Content";
                         className += "original";
                     }
                     desc += "<br>";
@@ -194,16 +206,29 @@ function updateStatus() {
                     if (jQuery.fn.prettyDate)
                         $(".status time").prettyDate();
                 });
+            $(activeItem).addClass("active");
         });
 }
 
-$(window).load(function(){
-        $("#contents a").each(function(){
-                $(this.parentNode).append("<div class='status'></div>");
-            });
-        updateStatus();
-        setInterval(updateStatus, 60*1000);
-    });
+function initStatus() {
+    $("#contents a").each(function(){
+            $(this.parentNode).append("<div class='status'></div>");
+        });
+    $("#contents li").click(function() {
+            if (this == activeItem) {
+                $(this).removeClass("active");
+                activeItem = null;
+            } else {
+                $(this).addClass("active");
+                $(activeItem).removeClass("active");
+                activeItem = this;
+            }
+        });
+    updateStatus();
+    setInterval(updateStatus, 60*1000);
+}
+
+initStatus();
 </script>
 <style type="text/css">
     #contents li.original,
@@ -221,20 +246,26 @@ $(window).load(function(){
         color: rgb(18,51,192);
         border: 1px solid rgb(18,51,192);
         background-color: rgb(136,193,253);
-        -moz-box-shadow: 3px 3px 3px #333;
-        -webkit-box-shadow: 3px 3px 3px #333;
-        box-shadow: 3px 3px 3px #333;
+        -moz-box-shadow: 0px 1px 20px #888;
+        -webkit-box-shadow: 0px 1px 20px #888;
+        box-shadow: 0px 1px 20px #888;
         font-size: 0.8em;
         white-space: nowrap;
         width: auto;
         margin-left: 3em;
-        padding: 1em;
+        padding: 0em 1em 1em;
     }
+    #contents li.active > a,
     #contents li:hover > a {
         font-weight: bold;
     }
     #contents li:hover .status {
         display: block;
+        z-index: 2;
+    }
+    #contents li.active .status {
+        display: block;
+        margin-left: 11em;
         z-index: 1;
     }
 </style>
