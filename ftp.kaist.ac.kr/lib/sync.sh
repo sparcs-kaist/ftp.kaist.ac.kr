@@ -26,7 +26,6 @@ EOF
     fi
     exit $exitcode
 }
-trap usage ERR
 msg() { echo "$pkg: $@"; }
 die() {
     local c=$1; shift
