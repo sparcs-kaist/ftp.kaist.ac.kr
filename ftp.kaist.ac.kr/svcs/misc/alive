@@ -1,3 +1,4 @@
 #!/bin/sh -e
 pid=`cat /var/run/inetd.pid 2>/dev/null`
+[ -n "$pid" ]
 ps -p $pid >/dev/null
