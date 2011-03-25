@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # get.rsync -- Rsync driver
+# Usage: get.rsync URL DESTDIR [RSYNCOPTIONS]...
 # 
 # Created: 2006-04-12
 # 
@@ -26,6 +27,10 @@ exec rsync -rtlH "${permopts[@]}" --delete-after \
 # and check its EXIT VALUES if somethings wrong
 code=$?
 case $code in
+    0) # for successful rsyncs, clean up temporary dirs
+    destdir=$2
+    find "$destdir" -type d -name .~tmp~ -exec rm -rf {} \; -prune || true
+    ;;
     # treat some partial complete situations OK
     24) true ;;
     # see rsync(1) for more EXIT VALUES
