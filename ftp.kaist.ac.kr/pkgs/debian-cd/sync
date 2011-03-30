@@ -53,6 +53,7 @@ rm -rf $tmpDir
 rsync -rlHv --stats --delete --delete-after --timeout 7200 --size-only \
      --exclude "Archive-Update-in-Progress-$HOSTNAME" \
      --exclude "project/trace/$HOSTNAME" \
+     --include='*businesscard*.iso' --include='*netinst*.iso' --include='i386/**.iso' --exclude='*.iso' \
      $source data/
 
 # now, place a timestamp
