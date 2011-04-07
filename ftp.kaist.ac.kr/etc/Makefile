@@ -104,7 +104,7 @@ INSTALL=install -m a+r
 
 # auto.mirror
 /etc/auto.mirror: auto.mirror
-	$(INSTALL) $< $@
+	$(INSTALL) -m a=r $< $@
 	$(MAKE) -C /var/yp
 	invoke-rc.d nis reload
 

@@ -1,7 +1,9 @@
 # automounter map for ftp;  See autofs(5)
 # vim:ts=32
 
-# If you are mind to edit /etc/auto.mirror, edit /mirror/etc/auto.mirror and do make leader with admin rights
+# !!!WARNING!!! DO NOT EDIT /etc/auto.mirror DIRECTLY !!!
+# !!!WARNING!!! Always edit /mirror/etc/auto.mirror first,
+# !!!WARNING!!! Then, run: sudo make leader -C /mirror/etc
 
 #ftp/.tmp		localhost:/srv/.tmp
 
