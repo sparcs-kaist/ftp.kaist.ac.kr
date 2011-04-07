@@ -5,10 +5,22 @@
 # 
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+set -e
 
-lock=$1; shift
+# XXX ad-hoc code for lockproc
+PATH=/mirror/bin:$PATH
 
-if lockfile -r3 "$lock" 2>/dev/null; then
-    "$@"
-    rm -f "$lock"
+# become a process group leader
+[ `ps -o pgid= -p $$` = $$ ] || exec setsid "$0" "$@"
+
+Lock=$1; shift
+
+# use lockproc to proctect our synchronized command
+if ! lockproc "$Lock" grab $$; then
+    echo "$Lock: another process is running" >&2
+    false
 fi
+trap 'c=$?; lockproc "$Lock" release; exit $c' EXIT
+
+# run the given command
+"$@"

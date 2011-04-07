@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# usage -- Show usage of given tool
+# 
+# Usage: usage TOOLPATH [MESSAGE]
+# 
+#
+# Author: Jaeho Shin <jae.shin@samsung.com>
+# Created: 2009-11-10
+set -e
+
+ToolPath=$1; shift || usage "$0" "No TOOLPATH given"
+
+# show message if available
+[ $# -eq 0 ] || echo "$@" >&2
+
+# show embedded usage
+# TODO only for scripts
+sed -n '2,/^#$/ s/^# //p' <"$ToolPath"
+
+[ $# -eq 0 ]
