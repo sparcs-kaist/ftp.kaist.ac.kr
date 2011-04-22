@@ -104,6 +104,9 @@ system.
 <a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/lighttpd-logo.png"/></a>
 <a href="http://rsync.samba.org/"><img alt="rsync" src=".self/rsync-logo.png"/></a>
 </p>
+
+
+<h2>Statistics</h2>
 <p>
 Our service is heavily loaded by users from Korea and neighbor countries.
 Here is a graph that shows our network traffic for the last month:
@@ -111,6 +114,13 @@ Here is a graph that shows our network traffic for the last month:
     alt="Network Usage of ftp.kaist.ac.kr"
     style="display:block; margin:20px auto;"/>
 </p>
+<p>
+This graph shows changes in the size of our archive for the last month:
+<img src="/geoul/size/by-pkgs.P1M.png"
+    alt="Size of ftp.kaist.ac.kr"
+    style="display:block; margin:20px auto;"/>
+</p>
+
 
 <h2>Disclaimer</h2>
 <div id="disclaimer">
