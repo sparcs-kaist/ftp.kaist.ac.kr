@@ -5,10 +5,45 @@
 # Written by Jaeho Shin <netj@sparcs.org>.
 # (C) 2006-2008, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
 
+## Required packages
+PACKAGES+=\
+bash                                                                          \
+coreutils                                                                     \
+sed                                                                           \
+grep                                                                          \
+findutils                                                                     \
+debianutils                                                                   \
+gzip                                                                          \
+procmail                                                                      \
+perl                                                                          \
+libxml2-utils                                                                 \
+xsltproc                                                                      \
+rsync                                                                         \
+lftp                                                                          \
+jigdo-file                                                                    \
+cron                                                                          \
+ntpdate                                                                       \
+logrotate                                                                     \
+logcheck                                                                      \
+openssh-client openssh-server                                                 \
+pidentd                                                                       \
+vsftpd                                                                        \
+lighttpd                                                                      \
+rrdtool                                                                       \
+webalizer                                                                     \
+awstats                                                                       \
+nis                                                                           \
+nfs-kernel-server                                                             \
+acl                                                                           \
+screen                                                                        \
+#
+
 ## configs for normal nodes
 CONFIGS+=\
 /etc/cron.d/geoul                                                             \
+/etc/sudoers.d/geoul                                                          \
 /etc/semiauto.master                                                          \
+/etc/init.d/semiautofs                                                        \
 /etc/sysctl.conf                                                              \
 /etc/aliases                                                                  \
 /etc/admin-contact                                                            \
@@ -36,18 +71,41 @@ CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-avail
 ## configs for the leader
 LEADERCONFIGS+=\
 /etc/cron.d/geoul-leader                                                      \
-/etc/auto.mirror                                                              \
+/etc/auto.local                                                               \
+/etc/hosts                                                                    \
+/etc/netgroup                                                                 \
+/etc/exports                                                                  \
+nis-server                                                                    \
+#
+LEADERPACKAGES+=\
 #
 
+.PHONY: node node-packages-installed \
+    leader leader-packages-installed \
+    perms \
+    #
 
 ## node types
-node: $(CONFIGS)
-leader: node $(LEADERCONFIGS)
+node: node-packages-installed $(CONFIGS)
+leader: node perms leader-packages-installed $(LEADERCONFIGS)
+	$(MAKE) -C ../www/self
 
-INSTALL=install -m a+r
+node-packages-installed:
+	apt-get -qq -y install $(PACKAGES)
+leader-packages-installed:
+	apt-get -qq -y install $(LEADERPACKAGES)
 
+perms:
+	cd /mirror && \
+	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./www/\* ! -name self \) -prune -o \
+	    -type d -exec setfacl -m g:geoul:rwx {} \; -exec setfacl -d -m g:geoul:rwx {} \; -o \
+	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:geoul:rw {} \;
+	chown mirror:mirror /var/log/geoul/*
+	chmod g+w /var/log/geoul/*
+	chown www-data:mirror /var/log/geoul/httpd
 
 ## special rules for individual config
+INSTALL=install -m a+r
 
 # sysctl
 /etc/sysctl.conf: sysctl.conf
@@ -74,6 +132,10 @@ INSTALL=install -m a+r
 /etc/aliases: aliases
 	$(INSTALL) $< $@
 	newaliases
+
+# sudoers
+/etc/sudoers.d/geoul: sudoers
+	$(INSTALL) -m a=r,o= $< $@
 
 # lighttpd
 /etc/lighttpd/lighttpd.conf: lighttpd.conf
@@ -102,11 +164,32 @@ INSTALL=install -m a+r
 /etc/subversion/config: subversion.config
 	$(INSTALL) $< $@
 
-# auto.mirror
-/etc/auto.mirror: auto.mirror
+# auto.local
+/etc/auto.local: auto.local
 	$(INSTALL) -m a=r $< $@
+	vim /var/yp/Makefile +"%s/^#ALL +=.* auto.master.* auto.local/ALL +=	auto.local &/" +wq
 	$(MAKE) -C /var/yp
 	invoke-rc.d nis reload
+
+# netgroup, hosts, ...
+nis-server:
+	vim /etc/default/nis +"%s/NISSERVER=false/NISSERVER=true/" +wq
+	invoke-rc.d nis reload
+
+.SECONDEXPANSION:
+/etc/netgroup /etc/hosts: $$(@F)
+	$(INSTALL) $< $@
+	$(MAKE) -C /var/yp
+	invoke-rc.d nis reload
+
+/etc/exports: exports
+	$(INSTALL) $< $@
+	invoke-rc.d nfs-kernel-server reload
+
+# semiautofs
+/etc/init.d/semiautofs: ../contrib/semiautofs/semiautofs
+	$(INSTALL) -m a=rx $< $@
+	update-rc.d semiautofs defaults
 
 # default rule is to just install the config file from here
 .SECONDEXPANSION:

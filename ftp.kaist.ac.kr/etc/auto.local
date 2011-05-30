@@ -51,4 +51,3 @@ ftp/internet-drafts		ftp2:/srv/ietf
 ftp/pdb		ftp2:/srv/pdb
 ftp/sage		ftp2:/srv/sage
 
-cvsup		ftp:/srv/cvsup
