@@ -18,6 +18,7 @@ draw-pkg-usage() {
 cd /mirror/log/usage
 {
     foreachpkg load-pkg-usage
+    # TODO draw packages with smaller stdev first
     foreachpkg draw-pkg-usage
     echo "LINE:0#000000::STACK"
     draw-timestamp
