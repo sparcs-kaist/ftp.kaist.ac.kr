@@ -51,3 +51,6 @@ ftp/internet-drafts		ftp2:/srv/ietf
 ftp/pdb		ftp2:/srv/pdb
 ftp/sage		ftp2:/srv/sage
 
+
+nodes/ftp/storage		ftp:/srv
+nodes/ftp2/storage		ftp2:/srv
