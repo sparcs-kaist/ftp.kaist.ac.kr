@@ -16,5 +16,5 @@ index.html: index.html.in $(FTPROOT)
 
 .SECONDEXPANSION:
 $(FTPROOT)/%: $$(@F)
-	install -m a=r $< $@
+	sudo -u mirror install -m a=r $< $@
 

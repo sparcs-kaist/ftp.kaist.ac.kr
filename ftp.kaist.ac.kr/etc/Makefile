@@ -32,8 +32,6 @@ lighttpd                                                                      \
 rrdtool                                                                       \
 webalizer                                                                     \
 awstats                                                                       \
-nis                                                                           \
-nfs-kernel-server                                                             \
 acl                                                                           \
 screen                                                                        \
 #
@@ -42,19 +40,17 @@ screen                                                                        \
 CONFIGS+=\
 /etc/cron.d/geoul                                                             \
 /etc/sudoers.d/geoul                                                          \
-/etc/semiauto.master                                                          \
-/etc/init.d/semiautofs                                                        \
 /etc/sysctl.conf                                                              \
 /etc/aliases                                                                  \
 /etc/admin-contact                                                            \
 /etc/vsftpd.conf                                                              \
 /var/log/geoul/ftpd/                                                          \
-/etc/lighttpd/lighttpd.conf                                                   \
 /var/log/geoul/httpd/                                                         \
-/etc/rsyncd.conf                                                              \
 /var/log/geoul/rsyncd/                                                        \
-/var/log/geoul/cvsupd/                                                        \
 /var/log/geoul/measure-usage/                                                 \
+perms                                                                         \
+/etc/lighttpd/lighttpd.conf                                                   \
+/etc/rsyncd.conf                                                              \
 /etc/logrotate.d/geoul                                                        \
 /etc/webalizer/webalizer.conf                                                 \
 /etc/motd.tail                                                                \
@@ -71,11 +67,6 @@ CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-avail
 ## configs for the leader
 LEADERCONFIGS+=\
 /etc/cron.d/geoul-leader                                                      \
-/etc/auto.local                                                               \
-/etc/hosts                                                                    \
-/etc/netgroup                                                                 \
-/etc/exports                                                                  \
-nis-server                                                                    \
 #
 LEADERPACKAGES+=\
 #
@@ -87,7 +78,7 @@ LEADERPACKAGES+=\
 
 ## node types
 node: node-packages-installed $(CONFIGS)
-leader: node perms leader-packages-installed $(LEADERCONFIGS)
+leader: node leader-packages-installed $(LEADERCONFIGS)
 	$(MAKE) -C ../www/self
 
 node-packages-installed:
@@ -97,9 +88,9 @@ leader-packages-installed:
 
 perms:
 	cd /mirror && \
-	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./www/\* ! -name self \) -prune -o \
-	    -type d -exec setfacl -m g:geoul:rwx {} \; -exec setfacl -d -m g:geoul:rwx {} \; -o \
-	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:geoul:rw {} \;
+	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./nodes/\*/storage -o -path ./www/\* ! -name self \) -prune -o \
+	    -type d -exec setfacl -m g:mirror:rwx {} \; -exec setfacl -d -m g:mirror:rwx {} \; -o \
+	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:mirror:rw {} \;
 	chown mirror:mirror /var/log/geoul/*
 	chmod g+w /var/log/geoul/*
 	chown www-data:mirror /var/log/geoul/httpd
@@ -154,6 +145,7 @@ INSTALL=install -m a+r
 # rsyncd
 /etc/rsyncd.conf: rsyncd.conf
 	$(INSTALL) $< $@
+	sudo vim /etc/default/rsync +%s/RSYNC_ENABLE=false/RSYNC_ENABLE=true/ +wq
 	invoke-rc.d rsync restart
 
 # motd
@@ -164,32 +156,6 @@ INSTALL=install -m a+r
 /etc/subversion/config: subversion.config
 	$(INSTALL) $< $@
 
-# auto.local
-/etc/auto.local: auto.local
-	$(INSTALL) -m a=r $< $@
-	vim /var/yp/Makefile +"%s/^#ALL +=.* auto.master.* auto.local/ALL +=	auto.local &/" +wq
-	$(MAKE) -C /var/yp
-	invoke-rc.d nis reload
-
-# netgroup, hosts, ...
-nis-server:
-	vim /etc/default/nis +"%s/NISSERVER=false/NISSERVER=true/" +wq
-	invoke-rc.d nis reload
-
-.SECONDEXPANSION:
-/etc/netgroup /etc/hosts: $$(@F)
-	$(INSTALL) $< $@
-	$(MAKE) -C /var/yp
-	invoke-rc.d nis reload
-
-/etc/exports: exports
-	$(INSTALL) $< $@
-	invoke-rc.d nfs-kernel-server reload
-
-# semiautofs
-/etc/init.d/semiautofs: ../contrib/semiautofs/semiautofs
-	$(INSTALL) -m a=rx $< $@
-	update-rc.d semiautofs defaults
 
 # default rule is to just install the config file from here
 .SECONDEXPANSION:

@@ -1,11 +1,7 @@
 # /etc/aliases
-root: :include:/etc/admin-contact
+ftp: :include:/etc/admin-contact
+mirror: ftp
 geoul: geoul@sparcs.org
-
-ftp: root
-mirror: root
-trac: geoul
-svn: geoul
 
 mailer-daemon: postmaster
 postmaster: root
@@ -20,3 +16,4 @@ news: root
 logcheck: root
 nobody: root
 backup: root
+root: geoul
