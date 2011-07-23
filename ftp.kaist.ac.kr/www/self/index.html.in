@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
     <title>ftp.kaist.ac.kr</title>
-    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="Latest News"/>
-    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="Latest Updates on Mirrored Package"/>
-    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="Current Problems of Our Mirrors"/>
+    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="최근 소식" />
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태" />
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태"/>
     <style type="text/css"><!--
         #contents {
             position: absolute;
@@ -43,13 +43,13 @@
 
 <div id="message">
 
-<h2>Latest News</h2>
+<h2>최근 소식</h2>
 <div id="news">
     <ul id="twitter_update_list" class="embedded-feed"><!-- Tweets --></ul>
     <div style="text-align:right;">
-        <a href="http://geoulmon.appspot.com/sites/ftp.kaist.ac.kr" id="geoulmon-link">monitor status of our mirrors</a>
+        <a href="http://geoulmon.appspot.com/sites/ftp.kaist.ac.kr" id="geoulmon-link">현재 미러 상태</a>
         |
-        <a href="http://twitter.com/kaist_ftp" id="twitter-link">follow us on Twitter</a>
+        <a href="http://twitter.com/kaist_ftp" id="twitter-link">트위터 @kaist_ftp</a>
     </div>
     <script type="text/javascript">
         {
@@ -66,7 +66,92 @@
     </script>
 </div>
 
-<h2>Introduction</h2>
+<h2>소개</h2>
+<p>
+KAIST 미러링 서비스 ftp.kaist.ac.kr에 오신 것을 환영합니다!
+<br/>
+(
+AKA
+ftp.kr.debian.org,
+kr.archive.ubuntu.com,
+{ftp,cvsup}2.kr.freebsd.org,
+ftp2.kr.vim.org
+)
+</p>
+<p>
+Debian, *BSD, Mozilla, Apache 등 오픈 소스 소프트웨어 미러링 및
+여러 파일과 소프트웨어의 미러링 서비스를 제공합니다.
+FTP, HTTP, rsync로 접근할 수 있습니다.
+</p>
+<p>
+대한민국 대전 KAIST 교양분관에 있는 SPARCS 서버실에서 운영 중입니다.
+전체 저장소는 18TiB(RAID-6)이며, Dell PowerEdge R510(Xeon E5506,
+6GiB RAM) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
+서비스 운영은 SPARCS에서 담당합니다.
+</p>
+<p id="sponsors" class="logos">
+<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/kaist-logo.png"/></a>
+<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/dell-logo.png"/></a>
+<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/sparcs-logo.png"/></a>
+</p>
+<p>
+시스템의 운영 체제는 Debian GNU/Linux이며, lighttpd rsync, vsftpd 등의
+자유 소프트웨어를 사용하고 있습니다.
+</p>
+<p id="powered-by" class="logos">
+<a href="http://www.debian.org/"><img alt="Debian" src=".self/debian-logo.png"/></a>
+<a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/lighttpd-logo.png"/></a>
+<a href="http://rsync.samba.org/"><img alt="rsync" src=".self/rsync-logo.png"/></a>
+</p>
+
+
+<h2>통계</h2>
+<p>
+서비스 주 사용 국가는 대한민국 및 인접한 동아시아 국가입니다.
+아래는 지난 달 트래픽 그래프입니다:
+<img src="/geoul/usage/by-pkgs.P1M.png"
+    alt="ftp.kaist.ac.kr 네트워크 사용량"
+    style="display:block; margin:20px auto;"/>
+</p>
+<p>
+아래는 지난 달 패키지 저장소 사용량입니다:
+<img src="/geoul/size/by-pkgs.P1M.png"
+    alt="ftp.kaist.ac.kr 저장소 사용량"
+    style="display:block; margin:20px auto;"/>
+</p>
+
+
+<h2>면책 조항</h2>
+<div id="disclaimer">
+KAIST FTP 운영자는 서비스에 대한 가능한 모든 법적 책임을 지지 않습니다.
+모든 서비스는 사용자 본인 책임 하에 사용됩니다.
+<ul>
+    <li>KAIST FTP 운영자는 이 서비스로 인하여 발생될 가능성이 있는
+    문제에 대하여 책임을 지지 않습니다.
+    </li>
+    <li>서비스 사용 기록은 자동으로 수집되며, 서비스의 품질 개선 및
+    통계 분석 목적으로 사용될 수 있습니다.
+    </li>
+    <li>서비스 개선을 위하여 이용에 제한이 가해질 수도 있습니다.
+    </li>
+</ul>
+</div>
+
+<h2>링크</h2>
+<p id="pointers">
+문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp at ftp.kaist.ac.kr">ftp
+at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
+<a href="http://twitter.com/kaist_ftp">트위터 @kaist_ftp</a>에서 확인할 수 있습니다.
+파일 저장소 상태는 <a href="http://geoulmon.appspot.com/sites/ftp.kaist.ac.kr">상태
+모니터링 페이지</a>에서 볼 수 있습니다. <a href="/geoul/pkgs/news.feed"><img
+    src=".self/feed-icon-12x12.png" alt=""/> 미러의 모든 업데이트</a> 및
+<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
+    alt=""/> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다. 더 많은 정보를
+보려면 <a href="http://project.sparcs.org/geoul/">거울 프로젝트 사이트</a>를
+방문하십시오.
+</p>
+
+<h2>English</h2>
 <p>
 Welcome to KAIST File Archive, ftp.kaist.ac.kr!
 <br/>
@@ -81,76 +166,18 @@ ftp2.kr.vim.org
 <p>
 We provide mirrors of open source softwares, e.g. Debian, *BSDs,
 Mozilla, Apache, etc. and publically available files and software.
-Various access methods are available: FTP, HTTP, Rsync or CVSup.
+Various access methods are available: FTP, HTTP, rsync.
 </p>
 <p>
 This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-Two machines with total 6-core x64 CPUs and 12GB of main memory are
-used to keep our 6.5TB RAID storage online.  KAIST and KT sponsored
-hardware and network connectivity.  SPARCS operates the whole service.
-</p>
-<p id="sponsors" class="logos">
-<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/kaist-logo.png"/></a>
-<a href="http://www.kt.co.kr/"><img alt="KT" src=".self/kt-logo.png"/></a>
-<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/sparcs-logo.png"/></a>
+We are operating 18TiB RAID-6 storage on Dell PowerEdge R510(Xeon
+E5506, 6GiB RAM) server. KAIST sponsored hardware and network
+connectivity.  SPARCS operates the whole service.
 </p>
 <p>
 We run our services using robust, free or open source software, including but
 not limited to lighttpd, rsync, and vsftpd on the Debian GNU/Linux operating
 system.
-</p>
-<p id="powered-by" class="logos">
-<a href="http://www.debian.org/"><img alt="Debian" src=".self/debian-logo.png"/></a>
-<a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/lighttpd-logo.png"/></a>
-<a href="http://rsync.samba.org/"><img alt="rsync" src=".self/rsync-logo.png"/></a>
-</p>
-
-
-<h2>Statistics</h2>
-<p>
-Our service is heavily loaded by users from Korea and neighbor countries.
-Here is a graph that shows our network traffic for the last month:
-<img src="/geoul/usage/by-pkgs.P1M.png"
-    alt="Network Usage of ftp.kaist.ac.kr"
-    style="display:block; margin:20px auto;"/>
-</p>
-<p>
-This graph shows changes in the size of our archive for the last month:
-<img src="/geoul/size/by-pkgs.P1M.png"
-    alt="Size of ftp.kaist.ac.kr"
-    style="display:block; margin:20px auto;"/>
-</p>
-
-
-<h2>Disclaimer</h2>
-<div id="disclaimer">
-Use entirely at your own risk -- no warranty is expressed or implied.
-<ul>
-    <li>None of the service providers in any way whatsoever can be
-    responsible for any problems that might be caused by this service.
-    </li>
-    <li>Every access to this service is recorded and can be used and
-    published for the purpose of improving the quality of the service.
-    </li>
-    <li>We may limit any accesses without forewarning that may prevent
-    operators from maintaining reasonable quality of the service.
-    </li>
-</ul>
-</div>
-
-<h2>Pointers</h2>
-<p id="pointers">
-Contact <a href="mailto:ftp@ftp.kaist.ac.kr">ftp@ftp.kaist.ac.kr</a> for any
-problem or suggestion.  You can receive our latest announcements by following
-<a href="http://twitter.com/kaist_ftp">kaist_ftp on Twitter</a> and check the
-status of our archive from the <a
-    href="http://geoulmon.appspot.com/sites/ftp.kaist.ac.kr">status monitoring
-    page</a>.  We also provide some details as RSS feeds for those who are
-interested in <a href="/geoul/pkgs/news.feed"><img
-    src=".self/feed-icon-12x12.png" alt=""/> all updates on our mirrors</a> or
-<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
-    alt=""/> problematic updates on them</a>.  Find more information at our <a
-    href="http://project.sparcs.org/geoul/">Geoul Project site</a> (in Korean).
 </p>
 
 </div>

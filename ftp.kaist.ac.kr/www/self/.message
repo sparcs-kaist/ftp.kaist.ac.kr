@@ -5,11 +5,11 @@
 
   We provide mirrors of open source softwares, e.g. Debian, *BSDs,
   Mozilla, Apache, etc. and publically available files and software.
-  Various access methods are available: FTP, HTTP, Rsync or CVSup.
+  Various access methods are available: FTP, HTTP, rsync.
   This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-  Two machines with total 6-core x64 CPUs and 12GB of main memory are
-  used to keep our 6.5TB RAID storage online.  KAIST and KT sponsored
-  hardware and network connectivity.  SPARCS operates the whole service.
+  We are operating 18TiB RAID-6 storage on Dell PowerEdge R510
+  (Xeon E5506, 6GiB RAM) server. KAIST sponsored hardware and
+  network connectivity. SPARCS operates the whole service.
 
   Use entirely at your own risk -- no warranty is expressed or implied.
   * None of the service providers in any way whatsoever can be
