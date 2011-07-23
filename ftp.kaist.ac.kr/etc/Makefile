@@ -34,6 +34,7 @@ webalizer                                                                     \
 awstats                                                                       \
 acl                                                                           \
 screen                                                                        \
+bc                                                                            \
 #
 
 ## configs for normal nodes
