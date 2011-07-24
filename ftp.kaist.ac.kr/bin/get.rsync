@@ -17,7 +17,7 @@ done
 
 # simply run rsync
 (set -x
-exec rsync -rtlH "${permopts[@]}" --delete-after \
+exec rsync -rtlH "${permopts[@]}" --delete-after --max-delete=10000 \
     --partial --delay-updates \
     --exclude='.*.??????' --exclude=.~tmp~ \
     --verbose --stats \
