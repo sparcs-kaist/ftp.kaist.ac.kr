@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /ubuntu/
-Disallow: /ubuntu-cd/
-Disallow: /ubuntu-releases/
+Disallow: /
