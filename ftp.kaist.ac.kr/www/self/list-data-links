@@ -11,17 +11,26 @@ Root=$1; shift
 
 generate-link() {
     local data=`readlink -f data`
+    local id=${pkg%/}
     case $data in
         "$Root"/*)
             local relpath=${data#$Root/}
-            echo "${pkg%/} $relpath"
-        ;;
+            echo "$id $relpath|$relpath|`cat name`"
+            ;;
+        *)
+            # web mirrors
+            if [ -e lighttpd.conf ]; then
+                local url="http://`grep server.name lighttpd.conf | head -n 1 | sed 's/.*= *"\|" *$//g'`"
+                local name=`cat name`
+                echo "${pkg%/} $name|$url|$name"
+            fi
+            ;;
     esac
 }
 
 foreachpkg generate-link |
 sort --ignore-case --key=2 |
-sed 's:\([^ ]*\) \(.*\):<li><a id="\1" href="\2/">\2</a></li>:'
+sed -e 's:\([^ ]*\) \([^|]*\)|\([^|]*\)|\(.*\):<li><a id="\1" title="\4" href="\3/">\2</a></li>:'
 
 # This used to be something like:
 #   find * -maxdepth 0 -type d |
