@@ -13,7 +13,7 @@ read -p"Proceed to restart all service"
 echo stopping...
 # stop services
 services=()
-for s in cron vsftpd apache2 rsync cvsupd; do
+for s in cron vsftpd apache2 rsync; do
     invoke-rc.d "$s" stop
     services=("$s" "${services[@]}")
 done
