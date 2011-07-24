@@ -81,6 +81,7 @@ LEADERPACKAGES+=\
 node: node-packages-installed $(CONFIGS)
 leader: node leader-packages-installed $(LEADERCONFIGS)
 	$(MAKE) -C ../www/self
+	/mirror/bin/create-df.rrd create
 
 node-packages-installed:
 	apt-get -qq -y install $(PACKAGES)
