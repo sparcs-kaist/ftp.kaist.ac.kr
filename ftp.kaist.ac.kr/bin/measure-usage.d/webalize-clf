@@ -26,10 +26,8 @@ for l in *.gz; do
     ym=${dt%????????.gz}
     y=${ym%??}
     m=${ym#$y}
-    if ! mv $l $y/$m/; then
-        mkdir -p $y/$m
-        mv $l $y/$m/
-    fi
+    mkdir -p $y/$m
+    mv $l $y/$m/
 done
 )
 
