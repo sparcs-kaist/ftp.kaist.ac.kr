@@ -1,14 +1,14 @@
 
   Welcome to KAIST File Archive, ftp.kaist.ac.kr!
   (AKA ftp.kr.debian.org, kr.archive.ubuntu.com, ftp2.kr.vim.org,
-   {cvsup,ftp}2.kr.freebsd.org)
+   ftp2.kr.freebsd.org)
 
   We provide mirrors of open source softwares, e.g. Debian, *BSDs,
   Mozilla, Apache, etc. and publically available files and software.
-  Various access methods are available: FTP, HTTP, rsync.
+  Various access methods are available: FTP, HTTP, Rsync.
   This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-  We are operating 18TiB RAID-6 storage on Dell PowerEdge R510
-  (Xeon E5506, 6GiB RAM) server. KAIST sponsored hardware and
+  We are operating 18TB RAID-6 storage on Dell PowerEdge R510
+  (Xeon E5506, 6GB RAM, 2 x 1Gbps) server. KAIST sponsored hardware and
   network connectivity. SPARCS operates the whole service.
 
   Use entirely at your own risk -- no warranty is expressed or implied.
