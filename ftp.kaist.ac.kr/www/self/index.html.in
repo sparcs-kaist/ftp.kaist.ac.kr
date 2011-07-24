@@ -83,8 +83,8 @@ FTP, HTTP, Rsync로 접근할 수 있습니다.
 </p>
 <p>
 대한민국 대전 KAIST 교양분관에 있는 SPARCS 서버실에서 운영 중입니다.
-전체 저장소는 18TB RAID-6이며, Dell PowerEdge R510 (Xeon E5506,
-6GB RAM, 2 x 1Gbps) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
+전체 저장소는 18TiB RAID-6이며, Dell PowerEdge R510 (Xeon E5506,
+6GiB RAM, 2 x 1Gbps) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
 서비스 운영은 SPARCS에서 담당합니다.
 </p>
 <p id="sponsors" class="logos">
@@ -169,8 +169,8 @@ Various access methods are available: FTP, HTTP, Rsync.
 </p>
 <p>
 This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-We are operating 18TB RAID-6 storage on Dell PowerEdge R510 (Xeon
-E5506, 6GB RAM, 2 x 1Gbps) server. KAIST sponsored hardware and network
+We are operating 18TiB RAID-6 storage on Dell PowerEdge R510 (Xeon
+E5506, 6GiB RAM, 2 x 1Gbps) server. KAIST sponsored hardware and network
 connectivity.  SPARCS operates the whole service.
 </p>
 <p>
