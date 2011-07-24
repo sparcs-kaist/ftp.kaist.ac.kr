@@ -10,6 +10,7 @@
 set -e
 
 log=/mirror/log/unified/clf
+mkdir -p `dirname "$log"`
 
 new=$1; shift
 
@@ -20,6 +21,7 @@ savelog -qd $log
 # archive it under the year/month/ directory
 (cd /mirror/log/unified
 for l in *.gz; do
+    [ -e "$l" ] || continue
     dt=${l#clf.}
     ym=${dt%????????.gz}
     y=${ym%??}
