@@ -55,7 +55,8 @@ perms                                                                         \
 /etc/logrotate.d/geoul                                                        \
 /etc/webalizer/webalizer.conf                                                 \
 /etc/motd.tail                                                                \
-/etc/subversion/config
+/etc/subversion/config                                                        \
+/etc/logcheck/ignore.d.server/local                                           \
 #
 
 # package specific httpd configs
@@ -68,20 +69,21 @@ CONFIGS+=$(HTTPCONFIGS:/mirror/pkgs/%/$(HTTPCONFIGNAME)=/etc/lighttpd/conf-avail
 ## configs for the leader
 LEADERCONFIGS+=\
 /etc/cron.d/geoul-leader                                                      \
+perms-leader                                                                  \
 #
 LEADERPACKAGES+=\
 #
 
 .PHONY: node node-packages-installed \
     leader leader-packages-installed \
-    perms \
+    perms perms-leader \
     #
 
 ## node types
 node: node-packages-installed $(CONFIGS)
 leader: node leader-packages-installed $(LEADERCONFIGS)
 	$(MAKE) -C ../www/self
-	/mirror/bin/create-df.rrd create
+	[ -e /mirror/log/size/df.rrd ] || /mirror/bin/create-df.rrd create
 
 node-packages-installed:
 	apt-get -qq -y install $(PACKAGES)
@@ -89,13 +91,14 @@ leader-packages-installed:
 	apt-get -qq -y install $(LEADERPACKAGES)
 
 perms:
-	cd /mirror && \
-	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./nodes/\*/storage -o -path ./www/\* ! -name self \) -prune -o \
-	    -type d -exec setfacl -m g:mirror:rwx {} \; -exec setfacl -d -m g:mirror:rwx {} \; -o \
-	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:mirror:rw {} \;
 	chown mirror:mirror /var/log/geoul/*
 	chmod g+w /var/log/geoul/*
 	chown www-data:mirror /var/log/geoul/httpd
+perms-leader:
+	cd /mirror && \
+	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./nodes/\*/storage \) -prune -o \
+	    -type d -exec setfacl -m g:mirror:rwx {} \; -exec setfacl -d -m g:mirror:rw {} \; -o \
+	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:mirror:rw {} \;
 
 ## special rules for individual config
 INSTALL=install -m a+r
@@ -158,6 +161,10 @@ INSTALL=install -m a+r
 /etc/subversion/config: subversion.config
 	$(INSTALL) $< $@
 
+# logcheck
+/etc/logcheck/ignore.d.server/local: logcheck.ignore
+	$(INSTALL) $< $@
+	sudo vim /etc/logcheck/logcheck.conf +'%s/^#INTRO=1/INTRO=0/ | %s/^REPORTLEVEL=.*/REPORTLEVEL="server"/' +wq
 
 # default rule is to just install the config file from here
 .SECONDEXPANSION:
