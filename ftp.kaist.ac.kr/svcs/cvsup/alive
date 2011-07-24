@@ -1,2 +1,0 @@
-#!/bin/sh
-pgrep -f /usr/sbin/cvsupd >/dev/null
