@@ -33,13 +33,11 @@
 <body>
 <h1>ftp.kaist.ac.kr</h1>
 
-<div id="contents">
-<ul>
+<ul id="contents">
     <!-- begin of contents -->
     <li>...</li>
     <!-- end of contents -->
 </ul>
-</div>
 
 <div id="message">
 
@@ -215,6 +213,14 @@ function updateStatus() {
                     if (pkg == null) return;
                     var className = "";
                     var desc = "<h2>" + pkg.name + "</h2>";
+                    if (pkg.link != null) {
+                        desc += "";
+                        for (var i in pkg.link) {
+                            desc += " <a href='" + pkg.link[i].href + "'>" + pkg.link[i].rel + "</a>";
+                        }
+                        desc += "<br>";
+                    }
+                    desc += "<br>";
                     if (pkg.sync != null && pkg.sync.source != null) {
                         desc += "Mirroring from <b>" + pkg.sync.source + "</b>";
                         if (pkg.sync.frequency)
@@ -282,13 +288,13 @@ function initStatus() {
 initStatus();
 </script>
 <style type="text/css">
-    #contents li          { list-style-image: url(.self/icon_unknown.png); }
-    #contents li.original,
-    #contents li.updated  { list-style-image: url(.self/icon_check.png); }
-    #contents li.failed   { list-style-image: url(.self/icon_warning.png); }
-    #contents li.updating { list-style-image: url(.self/icon_progress.gif); }
-    #contents li.failed   > a { color: red; }
-    #contents li.updating > a { background-color: yellow; }
+    #contents > li          { list-style-image: url(.self/icon_unknown.png); }
+    #contents > li.original,
+    #contents > li.updated  { list-style-image: url(.self/icon_check.png); }
+    #contents > li.failed   { list-style-image: url(.self/icon_warning.png); }
+    #contents > li.updating { list-style-image: url(.self/icon_progress.gif); }
+    #contents > li.failed   > a { color: red; }
+    #contents > li.updating > a { background-color: yellow; }
     #contents .status time {
         font-weight: bold;
     }
@@ -304,18 +310,19 @@ initStatus();
         font-size: 0.8em;
         white-space: nowrap;
         width: auto;
-        margin-left: 3em;
+        margin-left: 9em;
+        margin-top: -3em;
         padding: 0em 1em 1em;
     }
-    #contents li.active > a,
-    #contents li:hover > a {
+    #contents > li.active > a,
+    #contents > li:hover > a {
         font-weight: bold;
     }
-    #contents li:hover .status {
+    #contents > li:hover .status {
         display: block;
         z-index: 2;
     }
-    #contents li.active .status {
+    #contents > li.active .status {
         display: block;
         margin-left: 11em;
         z-index: 1;
