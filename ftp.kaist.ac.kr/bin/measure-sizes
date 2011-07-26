@@ -111,6 +111,7 @@ for my $pkg (keys %Prefixes) {
 # record data using rrdupdate
 for my $pkg (keys %InLSLR) {
     my $rrd = "$pkg/du.rrd";
+    run("cd $pkg && /mirror/bin/create-du.rrd create") unless -f $rrd;
     next unless -f $rrd;
     run("rrdupdate $rrd -t du:dirs:files N:$DU->{$pkg}:$DIRS->{$pkg}:$FILES->{$pkg}");
 }
