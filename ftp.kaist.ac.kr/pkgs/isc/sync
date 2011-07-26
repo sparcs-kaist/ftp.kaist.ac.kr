@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-get $source --exclude=bind4/src/DEPRECATED/4.9.5/contrib/old --exclude=RCS --exclude=MIRRORS,v --exclude=pubs/tn/isc-tn-2008-1.tn
+get $source --exclude=bind4/src/DEPRECATED/4.9.5/contrib/old --exclude=RCS --exclude=MIRRORS,v --exclude=pubs/tn/isc-tn-2008-1.tn --exclude=bind9/9.7.3-P1/BIND9.7.3-P1.debug.zip.sigs.shar --exclude=bind9/9.7.3-P1/BIND9.7.3-P1.zip.sigs.shar --exclude=bind9/9.7.3-P1/bind-9.7.3-P1.tar.gz.sigs.shar
