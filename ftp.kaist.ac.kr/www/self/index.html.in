@@ -71,7 +71,9 @@ KAIST 파일 서비스, ftp.kaist.ac.kr에 오신 것을 환영합니다!
 ftp.kr.debian.org,
 kr.archive.ubuntu.com,
 ftp2.kr.freebsd.org,
-ftp2.kr.vim.org
+ftp2.kr.vim.org,
+kr.packages.medibuntu.org,
+rsync1.kr.gentoo.org
 )
 </p>
 <p>
@@ -157,7 +159,9 @@ AKA
 ftp.kr.debian.org,
 kr.archive.ubuntu.com,
 ftp2.kr.freebsd.org,
-ftp2.kr.vim.org
+ftp2.kr.vim.org,
+kr.packages.medibuntu.org,
+rsync1.kr.gentoo.org
 )
 </p>
 <p>
