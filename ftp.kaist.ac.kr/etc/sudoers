@@ -1,5 +1,5 @@
 # mirror admins
-%geoul ALL=(mirror) NOPASSWD: /mirror/bin/*, /mirror/pkgs/*/sync
+%mirror ALL=(mirror) NOPASSWD: /mirror/bin/*, /mirror/pkgs/*/sync
 
 # for running cvsup (i386)
 mirror  ALL=NOPASSWD: /usr/sbin/chroot /cvsup *
