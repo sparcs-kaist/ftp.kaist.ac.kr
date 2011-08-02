@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-get $source --exclude='#cvs.cvsup-*'
+get $source \
+    --exclude='#cvs.cvsup-*' \
+    --exclude='/development/FreeBSD-CVS/**/Attic' \
+    #
