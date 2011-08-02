@@ -15,9 +15,14 @@ for a in "$@"; do
     esac
 done
 
+maxdeleteopts=(--max-delete=10000)
+if ${GET_NO_MAXDELETE:-false}; then
+    maxdeleteopts=()
+fi
+
 # simply run rsync
 (set -x
-exec rsync -rtlH "${permopts[@]}" --delete-after --max-delete=10000 \
+exec rsync -rtlH "${permopts[@]}" --delete-after "${maxdeleteopts[@]}" \
     --partial --delay-updates \
     --exclude='.*.??????' --exclude=.~tmp~ \
     --verbose --stats \

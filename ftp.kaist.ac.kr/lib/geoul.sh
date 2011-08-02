@@ -34,7 +34,10 @@ realpath_to_self() {
 
 # switch running user to mirror admin
 running_as_mirror_admin() {
-    [ x"`whoami`" = x"$MirrorAdmin" ] || exec sudo -H -u "$MirrorAdmin" "`realpath_to_self`" "$@"
+    #local v= envargs=()
+    #for v in ${!GET*}; do envargs+=("$v=${!v}"); done
+    # ... sudo env "${envargs[@]}" ...
+    [ x"`whoami`" = x"$MirrorAdmin" ] || exec sudo -EH -u "$MirrorAdmin" "`realpath_to_self`" "$@"
 }
 
 running_as_process_group_leader() {
