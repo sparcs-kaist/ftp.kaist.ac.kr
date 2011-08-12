@@ -99,6 +99,7 @@ perms-leader:
 	find . \( -path ./ftp -o -path ./log -o -path ./pkgs/\*/data -o -path ./nodes/\*/storage \) -prune -o \
 	    -type d -exec setfacl -m g:mirror:rwx {} \; -exec setfacl -d -m g:mirror:rw {} \; -o \
 	    -type f ! -name .\*.log.gz ! -name log ! -name lock ! -name lock.\* -exec setfacl -m g:mirror:rw {} \;
+	chmod u=rwx,go=rx /mirror
 	# ~mirror/.ssh for push triggers
 	cd /mirror/.ssh && \
 	chmod -R a-w,u+w . && \
