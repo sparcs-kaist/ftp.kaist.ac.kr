@@ -39,12 +39,12 @@ error() { echo "$@" >&2; false; }
 # save data
 echo "$name" >name
 echo "$source" >source
-echo "$frequency" >frequency
+echo "$frequency" >frequency.disabled
 [ -z "$color" ] || echo "$color" >color
 [ -z "$link" ] || echo "home	$link" >links
 
 # setup additional stuffs
-ln -s /mirror/ftp/$dirname data
+ln -sfn /mirror/ftp/$dirname data
 cat >sync <<EOF
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
@@ -58,3 +58,5 @@ echo
 [ -d data ] || echo "TODO: Make sure `readlink -f data` exists."
 echo "TODO: Check the default configuration under $PWD."
 # TODO tell more things to do to user
+echo "TODO: When everything looks fine, run the following to enable regular sync:"
+echo "  cd $PWD && mv frequency.disabled frequency"
