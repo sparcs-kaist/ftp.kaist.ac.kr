@@ -12,7 +12,7 @@
         }
         #message {
             position: absolute;
-            left: 12em;
+            left: 14em;
             right: 1em;
         }
         a img {
@@ -62,6 +62,23 @@
     </script>
 </div>
 
+<h2>링크</h2>
+<p id="pointers">
+문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp at ftp.kaist.ac.kr">ftp
+at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
+<a href="http://twitter.com/kaist_ftp"><img alt=""
+    src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터
+    @kaist_ftp</a>에서 확인할 수 있습니다.
+<a href="/geoul/pkgs/news.feed"><img
+    src=".self/feed-icon-12x12.png" alt=""> 미러의 모든 업데이트</a> 및
+<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
+    alt=""> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다. 더 많은 정보를
+보려면 <a href="http://project.sparcs.org/geoul/"><img
+    src=".self/trac-icon.png" alt=""> 거울 프로젝트 사이트</a>를
+방문하십시오.
+</p>
+
+
 <h2>소개</h2>
 <p>
 KAIST 파일 서비스, ftp.kaist.ac.kr에 오신 것을 환영합니다!
@@ -89,7 +106,6 @@ FTP, HTTP, Rsync로 접근할 수 있습니다.
 </p>
 <p id="sponsors" class="logos">
 <a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/kaist-logo.png"></a>
-<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/dell-logo.png"></a>
 <a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/sparcs-logo.png"></a>
 </p>
 <p>
@@ -100,8 +116,8 @@ FTP, HTTP, Rsync로 접근할 수 있습니다.
 <a href="http://www.debian.org/"><img alt="Debian" src=".self/debian-logo.png"></a>
 <a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/lighttpd-logo.png"></a>
 <a href="http://rsync.samba.org/"><img alt="rsync" src=".self/rsync-logo.png"></a>
+<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/dell-logo.png"></a>
 </p>
-
 
 <h2>통계</h2>
 <p>
@@ -135,20 +151,7 @@ KAIST 파일 서비스 운영자는 서비스에 대한 가능한 모든 법적 
 </ul>
 </div>
 
-<h2>링크</h2>
-<p id="pointers">
-문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp at ftp.kaist.ac.kr">ftp
-at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
-<a href="http://twitter.com/kaist_ftp"><img alt=""
-    src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터
-    @kaist_ftp</a>에서 확인할 수 있습니다.
-<a href="/geoul/pkgs/news.feed"><img
-    src=".self/feed-icon-12x12.png" alt=""> 미러의 모든 업데이트</a> 및
-<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
-    alt=""> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다. 더 많은 정보를
-보려면 <a href="http://project.sparcs.org/geoul/">거울 프로젝트 사이트</a>를
-방문하십시오.
-</p>
+<hr style="margin: 5em;"/>
 
 <h2>English</h2>
 <p>
