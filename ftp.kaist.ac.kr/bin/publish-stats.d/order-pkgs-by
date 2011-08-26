@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# publish-stats.d/order-pkgs-by -- Order packages by usage or size
+# 
+# Created: 2011-08-27
+# 
+# Written by Jaeho Shin <netj@sparcs.org>.
+# (C) 2011, Geoul Project. (http://geoul.sparcs.org)
+set -e
+
+Criterion=$1; shift # usage or size
+
+case $Criterion in
+    usage)
+        xport() {
+            echo "XPORT:${pkgid}_usage_size:$pkg"
+        }
+        ;;
+    size)
+        xport() {
+            if [ -r du.rrd ]; then
+                echo "XPORT:${pkgid}_du_bytes:$pkg"
+            fi
+        }
+        ;;
+    *)
+        echo "$Criterion: Unsupported criterion" >&2
+        false
+        ;;
+esac
+
+. /mirror/lib/geoul.sh
+
+xportpkg() {
+    ( . /mirror/lib/pkg.sh
+    pkgid=${pkg//./_}
+    xport
+    )
+}
+
+cd /mirror/log/
+rrdtool xport $(
+    foreachpkg load-pkg-$Criterion
+    foreachpkg xportpkg
+) --end now-1d --start end-1m |
+xsltproc "$Base"/rrdxport2sums.xsl - |
+sort -k2 -g -r

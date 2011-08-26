@@ -31,7 +31,13 @@ draw-disk-size() {
 cd /mirror/log/size
 {
     foreachpkg load-pkg-size
-    foreachpkg draw-pkg-size
+    # draw packages with larger area first (TODO smaller stdev first?)
+    for pkg in `order-pkgs-by size | cut -f1`; do
+        (
+        cd "/mirror/pkgs/$pkg"
+        draw-pkg-size
+        )
+    done
     draw-disk-size
     draw-timestamp
 } |
