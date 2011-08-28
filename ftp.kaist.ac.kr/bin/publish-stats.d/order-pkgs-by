@@ -42,5 +42,6 @@ rrdtool xport $(
     foreachpkg load-pkg-$Criterion
     foreachpkg xportpkg
 ) --end now-1d --start end-1m |
+sed -e 's/>NaN</>0</g' |
 xsltproc "$Base"/rrdxport2sums.xsl - |
 sort -k2 -g -r
