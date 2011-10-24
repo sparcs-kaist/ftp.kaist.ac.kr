@@ -3,4 +3,5 @@
 get $source \
     --exclude='#cvs.cvsup-*' \
     --exclude='/development/FreeBSD-CVS/**/Attic' \
+    --max-delete=100000 \
     #
