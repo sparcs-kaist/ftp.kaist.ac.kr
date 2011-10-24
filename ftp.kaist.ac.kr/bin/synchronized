@@ -17,7 +17,7 @@ Lock=$1; shift
 
 # use lockproc to proctect our synchronized command
 if ! lockproc "$Lock" grab $$; then
-    echo "$Lock: another process is running" >&2
+    [ ! -t 2 ] || echo "$Lock: another process is running" >&2
     false
 fi
 trap 'c=$?; lockproc "$Lock" release; exit $c' EXIT
