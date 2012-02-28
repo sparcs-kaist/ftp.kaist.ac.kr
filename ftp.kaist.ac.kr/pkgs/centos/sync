@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-get $source
+opts=(--max-delete=150000)
+get $source --perms "${opts[@]}"
