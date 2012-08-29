@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+get $source \
+    --exclude=/*.php \
+    --exclude=/*.sh \
+    --exclude=/index.php.old
