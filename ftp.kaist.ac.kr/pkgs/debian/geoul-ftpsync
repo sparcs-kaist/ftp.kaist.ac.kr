@@ -36,10 +36,38 @@ confpath="$BASEDIR/etc/$conf"
 [ -e ftpsync.conf ]
 [ -d "$TO" ]
 
-# prepare hooks
+## prepare sync as in /mirror/lib/sync.sh
 export triggered timepast failures
-. "$Base"/geoul-ftpsync.prepare
-export HOOK6="$Base/geoul-ftpsync.finish $PWD $log $suffix"
+. /mirror/lib/pkg.sh
+. /mirror/lib/sync-steps.sh
+prepare-sync
 
-# let Debian's ftpsync handle the actual sync
-"$BASEDIR"/bin/ftpsync
+
+## let Debian's ftpsync handle the actual sync
+"$BASEDIR"/bin/ftpsync &
+pid=$!
+
+## and watch its logs
+tail -F --quiet --pid=$pid >>$log 2>/dev/null \
+    "$BASEDIR"/log/ftpsync$suffix.log \
+    "$BASEDIR"/log/rsync-ftpsync$suffix.{log,error} \
+    #
+
+
+## finish sync as in /mirror/lib/sync.sh
+# look for errors
+#  from ftpsync
+exitcode=`
+sed <$log \
+    -n '/ERROR:/ s/.*errorcode \([0-9]*\).*/\1/p' |
+    tail -n 1
+`
+#  or from rsync
+[ -n "$exitcode" ] || exitcode=`
+sed <$log \
+    -n '/rsync error:/ s/.*(code \([0-9]*\)).*/\1/p' |
+    head -n 1
+`
+: ${exitcode:=0}
+echo "+ exitcode=$exitcode" >>$log
+finish-sync

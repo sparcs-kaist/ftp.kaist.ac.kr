@@ -1,0 +1,5 @@
+WARNING!
+Debian's ftpsync (or archvsync) does not run exclusively (no locking),
+so creating a frequency file here will make it run many times when it gets
+stale, and this will break the multi-staged sync by keeping ftpsync on stage1.
+See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=687969#37

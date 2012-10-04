@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-. /mirror/lib/pkg.sh
-. /mirror/lib/sync-steps.sh
-prepare-sync
