@@ -50,7 +50,7 @@
     <script type="text/javascript">
         {
             var s = [ "http://twitter.com/javascripts/blogger.js"
-                    , "http://twitter.com/statuses/user_timeline/kaist_ftp.json?callback=twitterCallback2&count=5"
+                    , "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"
                     ]
             for (var i in s) {
                 $("<script>").attr({
