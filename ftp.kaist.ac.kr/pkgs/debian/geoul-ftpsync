@@ -51,6 +51,7 @@ pid=$!
 tail -F --quiet --pid=$pid >>$log 2>/dev/null \
     "$BASEDIR"/log/ftpsync$suffix.log \
     "$BASEDIR"/log/rsync-ftpsync$suffix.{log,error} \
+    "$BASEDIR"/log/runmirrors$suffix.log \
     #
 
 
