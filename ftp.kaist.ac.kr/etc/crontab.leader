@@ -11,8 +11,8 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 31 */5	* * *	mirror	exec nice -n  5 synchronized run/measuring-sizes           measure-sizes >/dev/null
 
 # publish
-* *	* * *	mirror	exec nice -n  1 synchronized run/updating-status           publish-status
-@reboot 	mirror	                                                           publish-status
+* *	* * *	mirror	     nice -n  1 synchronized run/updating-status           publish-status || true
+@reboot 	mirror	                                                           publish-status || true
 41 */5	* * *	mirror	exec nice -n 10 synchronized run/updating-stats            publish-stats update --lazy
 
 # clean
