@@ -33,7 +33,7 @@ touch $wd/clf.ready
 # analyze available clfs
 for wd in $ProcessUnder/*; do
     [ -e $wd/clf.ready ] || continue
-    synchronized $wd/analysis-in-progress \
+    synchronized $wd.analysis-in-progress \
     analyze $wd &
 done
 
