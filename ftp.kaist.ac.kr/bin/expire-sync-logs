@@ -18,3 +18,5 @@ find . -mtime +$days -type f -exec rm -f {} \;
 
 # remove empty dirs
 find . -type d -exec rmdir -p {} \; 2>/dev/null
+
+true
