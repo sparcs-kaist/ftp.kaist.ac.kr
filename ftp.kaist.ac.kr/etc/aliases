@@ -1,8 +1,14 @@
 # /etc/aliases
-ftp: :include:/etc/admin-contact
-mirror: ftp
-geoul: geoul@sparcs.org
+# root가 운영자들에게 가는 메일 주소
+root: :include:/etc/admin-contact
+# geoul은 운영자를 포함하여 SPARCS에서 구독중인 사람들에게 가는 주소
+geoul: root, geoul@sparcs.org
 
+# 대외 연락용 주소인 ftp 및 mirror는 geoul로 공유하며,
+ftp: geoul
+mirror: geoul
+# 나머지 시스템 메일은 운영자들에게만 가게 한다.
+# (예외: sudo 메시지는 wheel-active로도 보낸다: /etc/sudoers 참조)
 mailer-daemon: postmaster
 postmaster: root
 hostmaster: root
@@ -11,10 +17,9 @@ www: root
 www-data: root
 webmaster: root
 noc: root
-security: root
+security: root, wheel-active@sparcs.org
 usenet: root
 news: root
 logcheck: root
 nobody: root
 backup: root
-root: geoul

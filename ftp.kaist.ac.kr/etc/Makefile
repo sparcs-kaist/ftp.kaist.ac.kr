@@ -22,7 +22,8 @@ rsync                                                                         \
 lftp                                                                          \
 jigdo-file                                                                    \
 cron                                                                          \
-ntpdate                                                                       \
+ntp ntpdate                                                                   \
+sudo                                                                          \
 logrotate                                                                     \
 logcheck                                                                      \
 openssh-client openssh-server                                                 \
@@ -31,7 +32,6 @@ vsftpd                                                                        \
 lighttpd                                                                      \
 rrdtool                                                                       \
 webalizer                                                                     \
-awstats                                                                       \
 acl                                                                           \
 screen                                                                        \
 bc                                                                            \
