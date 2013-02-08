@@ -8,6 +8,7 @@ postmaster: root
 hostmaster: root
 abuse: root
 www: root
+www-data: root
 webmaster: root
 noc: root
 security: root
