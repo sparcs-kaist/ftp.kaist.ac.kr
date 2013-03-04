@@ -64,7 +64,7 @@
 
 <h2>링크</h2>
 <p id="pointers">
-문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp at ftp.kaist.ac.kr">ftp
+문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">ftp
 at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
 <a href="http://twitter.com/kaist_ftp"><img alt=""
     src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터
@@ -198,7 +198,7 @@ Use entirely at your own risk -- no warranty is expressed or implied.
     operators from maintaining reasonable quality of the service.</li>
 </ul>
 <p>
-Contact us <a href="mailto:ftp at ftp.kaist.ac.kr">via email</a> for any
+Contact us <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">via email</a> for any
 problem or suggestion.
 </p>
 
