@@ -1,0 +1,81 @@
+a img {
+	border: none;
+}
+.logos {
+	text-align: center;
+	vertical-align: middle;
+}
+.logos a img {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#contents {
+	position: absolute;
+}
+
+/* List Icon */
+#contents > li {
+	list-style-image: url("../img/icon_unknown.png");
+}
+#contents > li.original,
+#contents > li.updated {
+	list-style-image: url("../img/icon_check.png");
+}
+#contents > li.failed {
+	list-style-image: url("../img/icon_warning.png");
+}
+#contents > li.updating {
+	list-style-image: url("../img/icon_progress.gif");
+}
+
+/* List Text Color */
+#contents > li.failed > a {
+	color: red;
+}
+#contents > li.updating > a {
+	background-color: yellow;
+}
+
+/* List Hover Text */
+#contents > li.active > a,
+#contents > li:hover > a {
+	font-weight: bold;
+}
+
+#contents > li.active .status {
+	display:block; z-index: 2;
+}
+#contents > li:hover .status {
+	display: block; z-index: 1;
+	margin-left: 11em;
+}
+
+/* Status */
+#contents .status {
+	display: none;
+	position: absolute;
+	color: #1233C0;
+	border: 1px solid #1233C0;
+	background-color: #88C1FD;
+	-webkit-box-shadow: 0px 10px 20px #888;
+	-moz-box-shadow: 0px 10px 20px #888;
+	box-shadow: 0px 10px 20px #888;
+	font-size: 0.8em;
+	white-space: nowrap;
+	width: auto;
+	margin-left: 9em;
+	margin-top: -3em;
+	padding: 0em 1em 1em;
+}
+
+#contents .status .links a {
+	margin-right: .5em;
+}
+#contents .status time {
+	font-weight: bold;
+}
+
+#message {
+	position: absolute;
+	left: 14em; right: 1em;
+}

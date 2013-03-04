@@ -3,31 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>ftp.kaist.ac.kr</title>
-    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="최근 소식" >
-    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태" >
-    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태">
-    <style type="text/css"><!--
-        #contents {
-            position: absolute;
-        }
-        #message {
-            position: absolute;
-            left: 14em;
-            right: 1em;
-        }
-        a img {
-            border: none;
-        }
-        .logos {
-            text-align: center;
-            vertical-align: middle;
-        }
-        .logos a img {
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-    --></style>
-    <script type="text/javascript" src=".self/js/jquery-1.9.1.min.js"></script>
+    <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="최근 소식"/>
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태"/>
+    <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태"/>
+    <link rel="stylesheet" type="text/css" href=".self/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href=".self/css/style.css"/>
+    <script type="text/javascript" src=".self/js/blogger.js"></script>
 </head>
 
 <body>
@@ -47,19 +28,7 @@
     <div style="text-align:right;">
         <a href="http://twitter.com/kaist_ftp" id="twitter-link"><img alt="" src="http://twitter.com/favicon.ico" style="height:16px;"> 트위터에서 @kaist_ftp를 팔로우하세요</a>
     </div>
-    <script type="text/javascript">
-        {
-            var s = [ "http://twitter.com/javascripts/blogger.js"
-                    , "https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"
-                    ]
-            for (var i in s) {
-                $("<script>").attr({
-                        type: "text/javascript",
-                        src: s[i]
-                        }).appendTo(document.body);
-            }
-        }
-    </script>
+	<script type="text/javascript" src="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"></script>
 </div>
 
 <h2>링크</h2>
@@ -203,141 +172,8 @@ problem or suggestion.
 </p>
 
 </div>
-
-<!-- enhance contents with their status -->
+<script type="text/javascript" src=".self/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src=".self/js/datetime.js"></script>
-<script type="text/javascript">
-function eventRef(e) {
-    var html = "<a href=\"" + e.href + "\">";
-    if (e.timestamp)
-        html += "<time datetime=\"" + e.timestamp + "\">" + e.timestamp + "</time>";
-    html += "</a>";
-    return html;
-}
-var activeItem = null;
-function updateStatus() {
-    $.getJSON("/geoul/status.json", function(s){
-            var pkgs = s.package;
-            $("#contents a").each(function(){
-                    var pkg = pkgs[this.id];
-                    if (pkg == null) return;
-                    var className = "";
-                    var desc = "<h2>" + pkg.name + "</h2>";
-                    if (pkg.link != null) {
-                        desc += "";
-                        for (var i in pkg.link) {
-                            desc += " <a href='" + pkg.link[i].href + "'>" + pkg.link[i].rel + "</a>";
-                        }
-                        desc += "<br>";
-                    }
-                    desc += "<br>";
-                    if (pkg.sync != null && pkg.sync.source != null) {
-                        desc += "Mirroring from <b>" + pkg.sync.source + "</b>";
-                        if (pkg.sync.frequency)
-                            desc += "<br>Updates every <b>" + prettyPeriod(pkg.sync.frequency).replace(/^(a|an) /, "") + "</b>";
-                    } else {
-                        desc += "Original Content";
-                        className += "original";
-                    }
-                    desc += "<br>";
-                    var s = pkg.status;
-                    if (s.updated) {
-                        className += "updated";
-                        desc += "<br>Last Updated " + eventRef(s.updated) + "";
-                    }
-                    if (s.failed) {
-                        className += " failed";
-                        desc += "<br>Failed "
-                            + "<b>" + (s.failed.count == 1 ? "a" : s.failed.count)
-                            + "</b> recent update" + (s.failed.count == 1 ? "" : "s")
-                            + ", " + eventRef(s.failed);
-                    }
-                    if (s.updating) {
-                        className += " updating";
-                        desc += "<br>Update in progress since " + eventRef(s.updating) + "";
-                    }
-                    desc += "<br>";
-                    // feeds
-                    desc += "<br>";
-                    desc += "<img alt='News Feed of' src='.self/img/feed-icon-12x12.png'> ";
-                    desc += "<a href='/geoul/pkgs/" + this.id + "/news.feed'>all updates</a>, ";
-                    desc += "<a href='/geoul/pkgs/" + this.id + "/problems.feed'>only problematic ones</a><br>";
-                    // usage graphs
-                    desc += "<br>";
-                    desc += "<img src='/geoul/pkgs/" + this.id + "/usage.png' alt='network usage'><br>";
-                    desc += "<img src='/geoul/pkgs/" + this.id + "/du.png' alt='disk usage'><br>";
-
-                    var li = this.parentNode;
-                    li.className = className;
-                    $(".status", li).html(desc);
-                    if (jQuery.fn.prettyDate)
-                        $(".status time").prettyDate();
-                });
-            $(activeItem).addClass("active");
-        });
-}
-
-function initStatus() {
-    $("#contents a").each(function(){
-            $(this.parentNode).append("<div class='status'></div>");
-        });
-    $("#contents li").click(function() {
-            if (this == activeItem) {
-                $(this).removeClass("active");
-                activeItem = null;
-            } else {
-                $(this).addClass("active");
-                $(activeItem).removeClass("active");
-                activeItem = this;
-            }
-        });
-    updateStatus();
-    setInterval(updateStatus, 60*1000);
-}
-
-initStatus();
-</script>
-<style type="text/css">
-    #contents > li          { list-style-image: url(.self/img/icon_unknown.png); }
-    #contents > li.original,
-    #contents > li.updated  { list-style-image: url(.self/img/icon_check.png); }
-    #contents > li.failed   { list-style-image: url(.self/img/icon_warning.png); }
-    #contents > li.updating { list-style-image: url(.self/img/icon_progress.gif); }
-    #contents > li.failed   > a { color: red; }
-    #contents > li.updating > a { background-color: yellow; }
-    #contents .status time {
-        font-weight: bold;
-    }
-    #contents .status {
-        display: none;
-        position: absolute;
-        color: rgb(18,51,192);
-        border: 1px solid rgb(18,51,192);
-        background-color: rgb(136,193,253);
-        -moz-box-shadow: 0px 10px 20px #888;
-        -webkit-box-shadow: 0px 10px 20px #888;
-        box-shadow: 0px 10px 20px #888;
-        font-size: 0.8em;
-        white-space: nowrap;
-        width: auto;
-        margin-left: 9em;
-        margin-top: -3em;
-        padding: 0em 1em 1em;
-    }
-    #contents > li.active > a,
-    #contents > li:hover > a {
-        font-weight: bold;
-    }
-    #contents > li:hover .status {
-        display: block;
-        z-index: 2;
-    }
-    #contents > li.active .status {
-        display: block;
-        margin-left: 11em;
-        z-index: 1;
-    }
-</style>
-
+<script type="text/javascript" src=".self/js/js.js"></script>
 </body>
 </html>
