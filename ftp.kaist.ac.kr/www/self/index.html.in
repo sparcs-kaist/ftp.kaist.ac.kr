@@ -27,7 +27,7 @@
             margin-right: 20px;
         }
     --></style>
-    <script type="text/javascript" src=".self/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src=".self/js/jquery-1.9.1.min.js"></script>
 </head>
 
 <body>
@@ -70,11 +70,11 @@ at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
     src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터
     @kaist_ftp</a>에서 확인할 수 있습니다.
 <a href="/geoul/pkgs/news.feed"><img
-    src=".self/feed-icon-12x12.png" alt=""> 미러의 모든 업데이트</a> 및
-<a href="/geoul/pkgs/problems.feed"><img src=".self/feed-icon-12x12.png"
+    src=".self/img/feed-icon-12x12.png" alt=""> 미러의 모든 업데이트</a> 및
+<a href="/geoul/pkgs/problems.feed"><img src=".self/img/feed-icon-12x12.png"
     alt=""> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다. 더 많은 정보를
 보려면 <a href="http://project.sparcs.org/geoul/"><img
-    src=".self/trac-icon.png" alt=""> 거울 프로젝트 사이트</a>를
+    src=".self/img/trac-icon.png" alt=""> 거울 프로젝트 사이트</a>를
 방문하십시오.
 </p>
 
@@ -105,18 +105,18 @@ FTP, HTTP, Rsync로 접근할 수 있습니다.
 서비스 운영은 SPARCS에서 담당합니다.
 </p>
 <p id="sponsors" class="logos">
-<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/kaist-logo.png"></a>
-<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/sparcs-logo.png"></a>
+<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/img/kaist-logo.png"></a>
+<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/img/sparcs-logo.png"></a>
 </p>
 <p>
 시스템의 운영 체제는 Debian GNU/Linux이며, lighttpd, rsync, vsftpd 등의
 자유 소프트웨어를 사용하고 있습니다.
 </p>
 <p id="powered-by" class="logos">
-<a href="http://www.debian.org/"><img alt="Debian" src=".self/debian-logo.png"></a>
-<a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/lighttpd-logo.png"></a>
-<a href="http://rsync.samba.org/"><img alt="rsync" src=".self/rsync-logo.png"></a>
-<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/dell-logo.png"></a>
+<a href="http://www.debian.org/"><img alt="Debian" src=".self/img/debian-logo.png"></a>
+<a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/img/lighttpd-logo.png"></a>
+<a href="http://rsync.samba.org/"><img alt="rsync" src=".self/img/rsync-logo.png"></a>
+<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/img/dell-logo.png"></a>
 </p>
 
 <h2>통계</h2>
@@ -205,7 +205,7 @@ problem or suggestion.
 </div>
 
 <!-- enhance contents with their status -->
-<script type="text/javascript" src=".self/datetime.js"></script>
+<script type="text/javascript" src=".self/js/datetime.js"></script>
 <script type="text/javascript">
 function eventRef(e) {
     var html = "<a href=\"" + e.href + "\">";
@@ -259,7 +259,7 @@ function updateStatus() {
                     desc += "<br>";
                     // feeds
                     desc += "<br>";
-                    desc += "<img alt='News Feed of' src='.self/feed-icon-12x12.png'> ";
+                    desc += "<img alt='News Feed of' src='.self/img/feed-icon-12x12.png'> ";
                     desc += "<a href='/geoul/pkgs/" + this.id + "/news.feed'>all updates</a>, ";
                     desc += "<a href='/geoul/pkgs/" + this.id + "/problems.feed'>only problematic ones</a><br>";
                     // usage graphs
@@ -298,11 +298,11 @@ function initStatus() {
 initStatus();
 </script>
 <style type="text/css">
-    #contents > li          { list-style-image: url(.self/icon_unknown.png); }
+    #contents > li          { list-style-image: url(.self/img/icon_unknown.png); }
     #contents > li.original,
-    #contents > li.updated  { list-style-image: url(.self/icon_check.png); }
-    #contents > li.failed   { list-style-image: url(.self/icon_warning.png); }
-    #contents > li.updating { list-style-image: url(.self/icon_progress.gif); }
+    #contents > li.updated  { list-style-image: url(.self/img/icon_check.png); }
+    #contents > li.failed   { list-style-image: url(.self/img/icon_warning.png); }
+    #contents > li.updating { list-style-image: url(.self/img/icon_progress.gif); }
     #contents > li.failed   > a { color: red; }
     #contents > li.updating > a { background-color: yellow; }
     #contents .status time {
