@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+SyncCustom=true
+. /mirror/lib/sync.sh
+
+# use driver for delegating actual sync to the pep381 script 
+. ../pypi/geoul-pep381

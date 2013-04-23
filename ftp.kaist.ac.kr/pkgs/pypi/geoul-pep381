@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -eu
+
+Self=`readlink -f "${BASH_SOURCE[0]}"`
+Base=`dirname "$Self"`
+export BASEDIR="$Base"/pep381client
+export TO=$PWD/data
+
+export triggered timepast failures
+. /mirror/lib/pkg.sh
+. /mirror/lib/sync-steps.sh
+prepare-sync
+
+"$BASEDIR"/scripts/pep381run $TO > "$BASEDIR"/log/pypi-stdout.log 2> "$BASEDIR"/log/pypi-stderr.log &
+
+pid=$!
+exitcode=$?
+
+tail -F --quiet --pid=$pid >>$log 2>/dev/null \
+    "$BASEDIR"/log/pypi-stdout.log \
+    "$BASEDIR"/log/pypi-stderr.log \
+    #
+
+echo "+ exitcode=$exitcode" >> $log
+finish-sync
+
