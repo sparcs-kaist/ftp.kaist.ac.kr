@@ -1,15 +1,19 @@
 function twitterCallback2(twitters) {
   var statusHTML = [];
+  $('#twitter_update_list').html('');
   for (var i=0; i<twitters.length; i++){
     var username = twitters[i].user.screen_name;
     var status = twitters[i].text.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
       return '<a href="'+url+'">'+url+'</a>';
     }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
-      return  reply.charAt(0)+'<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(1)+'</a>';
+      return  reply[0]+'<a href="http://twitter.com/'+reply.slice(1)+'">'+reply.slice(1)+'</a>';
     });
-    statusHTML.push('<li><span>'+status+'</span> <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id_str+'">'+relative_time(twitters[i].created_at)+'</a></li>');
+	$('#twitter_update_list').append(
+      $('<li>').append('<span>'+status+'</span> ').append(
+	    $('<a>').css('font-size', '85%').attr('href', 'http://twitter.com/'+username+'/statuses/'+twitters[i].id_str).text(relative_time(twitters[i].created_at))
+	  )
+	);
   }
-  document.getElementById('twitter_update_list').innerHTML = statusHTML.join('');
 }
 
 function relative_time(time_value) {

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>패키지 결제</title>
+		<style>
+			body{
+				background-color: #666;
+			}
+			#secure-install{
+				font-family: sans-serif;
+				color: black; background-color: white;
+				text-align: center;
+				margin: 5em auto;
+				width: 40em; padding: 1em;
+				border-radius: .5em;
+				border: solid 4px #444;
+			}
+			#secure-install-inner{
+				margin: 0 1em;
+				border-radius: .25em;
+				border: solid 1px #444;
+				padding: .5em;
+			}
+			img#loading{
+				float: left; width:5em; height:5em;
+				margin: 0;
+			}
+			h1{
+				margin: .5em auto;
+				font-size: 1.5em;
+				font-weight: normal;
+			}
+			hr{
+				margin: 1.5em .5em; border: solid 1px #DDD;
+			}
+			p{
+				margin: .5em;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="secure-install">
+			<div id="secure-install-inner">
+				<img id="loading" src="pb.gif" alt="fake progress bar"/>
+				<h1>보안 프로그램을 설치하고 있는 중입니다.</h1>
+				<p>잠시만 기다리세요...</p>
+			</div>
+			<hr/>
+			<p>최초 접속하신 고객께서는 PC환경에 따라 10초에서 최대 3분까지 소요될 수 있습니다.
+			<br/>보안경고창이 나오면 반드시 "예"를 선택하여 주시기 바랍니다.</p>
+		</div>
+		<script>
+		var fake_msg = function(){
+			if(navigator.appName.indexOf('Internet Explorer') >= 0){
+				var version = navigator.userAgent.match(/IE ([0-9.]+);/);
+				if(!version || isNaN(+version[1])){
+					alert("보안 결제를 하기 위해서는 Internet Explorer 5.5 이상을 사용하여야 합니다.");
+				}else{
+					version = +version[1];
+					if(version < 7.5){
+						alert("보안 결제를 하기 위해서는 Internet Explorer 8.0이 필요합니다.");
+					}else{
+						alert("보안 결제를 하기 위해서는 Internet Explorer 6.0이 필요합니다.");
+					}
+				}
+			}else{
+				alert("보안 결제를 하기 위해서는 Internet Explorer 5.5 이상을 사용하여야 합니다.");
+			}
+		};
+		setTimeout(fake_msg, 1000);
+		</script>
+	</body>
+</html>

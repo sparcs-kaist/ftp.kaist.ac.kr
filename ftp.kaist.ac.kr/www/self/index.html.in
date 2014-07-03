@@ -6,9 +6,7 @@
     <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="최근 소식"/>
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태"/>
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태"/>
-    <link rel="stylesheet" type="text/css" href=".self/css/reset.css"/>
     <link rel="stylesheet" type="text/css" href=".self/css/style.css"/>
-    <script type="text/javascript" src=".self/js/blogger.js"></script>
 </head>
 
 <body>
@@ -24,29 +22,20 @@
 
 <h2>최근 소식</h2>
 <div id="news">
-    <ul id="twitter_update_list" class="embedded-feed"><!-- Tweets --></ul>
+	<ul id="twitter_update_list" class="embedded-feed"><!-- Tweets --></ul>
     <div style="text-align:right;">
-        <a href="http://twitter.com/kaist_ftp" id="twitter-link"><img alt="" src="http://twitter.com/favicon.ico" style="height:16px;"> 트위터에서 @kaist_ftp를 팔로우하세요</a>
+        <a href="http://twitter.com/kaist_ftp" id="twitter-link"><img alt="Twitter" src="http://twitter.com/favicon.ico" style="height:16px;"> 트위터에서 @kaist_ftp를 팔로우하세요</a>
     </div>
-	<script type="text/javascript" src="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"></script>
 </div>
 
 <h2>링크</h2>
 <p id="pointers">
-문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">ftp
-at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
-<a href="http://twitter.com/kaist_ftp"><img alt=""
-    src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터
-    @kaist_ftp</a>에서 확인할 수 있습니다.
-<a href="/geoul/pkgs/news.feed"><img
-    src=".self/img/feed-icon-12x12.png" alt=""> 미러의 모든 업데이트</a> 및
-<a href="/geoul/pkgs/problems.feed"><img src=".self/img/feed-icon-12x12.png"
-    alt=""> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다. 더 많은 정보를
-보려면 <a href="http://project.sparcs.org/geoul/"><img
-    src=".self/img/trac-icon.png" alt=""> 거울 프로젝트 사이트</a>를
-방문하십시오.
+문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">ftp at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
+<a href="http://twitter.com/kaist_ftp"><img alt="Twitter" src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터 @kaist_ftp</a>에서 확인할 수 있습니다.
+<br><a href="/geoul/pkgs/news.feed"><img src=".self/img/feed-icon-12x12.png" alt="RSS Feed"> 미러의 모든 업데이트</a> 및
+<a href="/geoul/pkgs/problems.feed"><img src=".self/img/feed-icon-12x12.png" alt="RSS Feed"> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다.
+더 많은 정보를 보려면 <a href="http://project.sparcs.org/geoul/"><img src=".self/img/trac-icon.png" alt="Trac"> 거울 프로젝트 사이트</a>를 방문하십시오.
 </p>
-
 
 <h2>소개</h2>
 <p>
@@ -65,12 +54,12 @@ rsync1.kr.gentoo.org
 <p>
 Debian, *BSD, Mozilla, Apache 등 오픈 소스 소프트웨어 미러링 및
 여러 파일과 소프트웨어의 미러링 서비스를 제공합니다.
-FTP, HTTP, Rsync로 접근할 수 있습니다.
+FTP, HTTP, rsync로 접근할 수 있습니다.
 </p>
 <p>
 대한민국 대전 KAIST 교양분관에 있는 SPARCS 서버실에서 운영 중입니다.
 전체 저장소는 18TiB RAID-6이며, Dell PowerEdge R510 (Xeon E5506,
-6GiB RAM, 2 x 1Gbps) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
+24GiB RAM, 2 x 1Gbps) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
 서비스 운영은 SPARCS에서 담당합니다.
 </p>
 <p id="sponsors" class="logos">
@@ -92,38 +81,28 @@ FTP, HTTP, Rsync로 접근할 수 있습니다.
 <p>
 서비스 주 사용 국가는 대한민국 및 인접한 동아시아 국가입니다.
 아래는 지난 한 달간의 패키지 별 네트워크 사용량입니다:
-<img src="/geoul/usage/by-pkgs.P1M.png"
-    alt="ftp.kaist.ac.kr 네트워크 사용량 그림"
-    style="display:block; margin:20px auto;">
+<img src="/geoul/usage/by-pkgs.P1M.png" alt="ftp.kaist.ac.kr 네트워크 사용량 그림" style="display:block; margin:20px auto;">
 <br>
-<a href="http://ftp.kaist.ac.kr/geoul/usage/reports/webalizer/">세부 사용량
-    통계 보고서</a>에서 더 자세한 내용을 확인할 수 있습니다.
+<a href="http://ftp.kaist.ac.kr/geoul/usage/reports/webalizer/">세부 사용량 통계 보고서</a>에서 더 자세한 내용을 확인할 수 있습니다.
 </p>
 <p>
 아래는 지난 한 달간의 패키지 별 저장소 사용량입니다:
-<img src="/geoul/size/by-pkgs.P1M.png"
-    alt="ftp.kaist.ac.kr 저장소 사용량 그림"
-    style="display:block; margin:20px auto;">
+<img src="/geoul/size/by-pkgs.P1M.png" alt="ftp.kaist.ac.kr 저장소 사용량 그림" style="display:block; margin:20px auto;">
 </p>
 
 
 <h2>면책 조항</h2>
 <div id="disclaimer">
-KAIST 파일 서비스 운영자는 서비스에 대한 가능한 모든 법적 책임을 지지 않습니다.
-모든 서비스는 사용자 본인 책임 하에 사용됩니다.
+<p>KAIST 파일 서비스 운영자는 서비스에 대한 가능한 모든 법적 책임을 지지 않습니다.
+<br>모든 서비스는 사용자 본인 책임 하에 사용됩니다.</p>
 <ul>
-    <li>KAIST 파일 서비스 운영자는 이 서비스로 인하여 발생될 가능성이 있는
-    문제에 대하여 책임을 지지 않습니다.
-    </li>
-    <li>서비스 사용 기록은 자동으로 수집되며, 서비스의 품질 개선 및
-    통계 분석 목적으로 사용될 수 있습니다.
-    </li>
+    <li>KAIST 파일 서비스 운영자는 이 서비스로 인하여 발생될 가능성이 있는 문제에 대하여 책임을 지지 않습니다.
+    <li>서비스 사용 기록은 자동으로 수집되며, 서비스의 품질 개선 및 통계 분석 목적으로 사용될 수 있습니다.
     <li>서비스 개선을 위하여 이용에 제한이 가해질 수도 있습니다.
-    </li>
 </ul>
 </div>
 
-<hr style="margin: 5em;"/>
+<hr/>
 
 <h2>English</h2>
 <p>
@@ -167,13 +146,14 @@ Use entirely at your own risk -- no warranty is expressed or implied.
     operators from maintaining reasonable quality of the service.</li>
 </ul>
 <p>
-Contact us <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">via email</a> for any
-problem or suggestion.
+Contact us <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">via email</a> for any problem or suggestion.
 </p>
 
 </div>
 <script type="text/javascript" src=".self/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src=".self/js/blogger.js"></script>
 <script type="text/javascript" src=".self/js/datetime.js"></script>
 <script type="text/javascript" src=".self/js/js.js"></script>
+<script type="text/javascript" src="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"></script>
 </body>
 </html>

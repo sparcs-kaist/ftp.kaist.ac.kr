@@ -12,6 +12,7 @@ function updateStatus(){
 	$.getJSON("/geoul/status.json", function(s){
 		var pkgs = s.package;
 		$('#contents a').each(function(){
+			var chi = this.id.toLowerCase() == 'chicken';// Fools!
 			var pkg = pkgs[this.id];
 			if(pkg == null) return;
 			
@@ -27,7 +28,7 @@ function updateStatus(){
 			if(pkg.link != null){
 				$e = $('<p class="links">');
 				for(var i in pkg.link) $e.append(
-					$("<a>").attr('href', pkg.link[i].href).text(pkg.link[i].rel)
+					$("<a>").attr('href', pkg.link[i].href).text(chi?'CHICKEN':pkg.link[i].rel)
 				);
 				statDisp.append($e);
 			}
@@ -42,7 +43,7 @@ function updateStatus(){
 				
 				statDisp.append($e);
 			}else{
-				statDisp.append($('<p>').text("Original Content"));
+				statDisp.append($('<p>').text(chi?"Chicken Chicken":"Original Content"));
 				$li.addClass('original');
 			}
 			
@@ -64,10 +65,10 @@ function updateStatus(){
 			}
 			
 			// Feeds
-			statDisp.append($('<p>').append($('<img src=".self/img/feed-icon-12x12.png" alt="News Feed of">')).append(
-				$('<a>').attr('href', '/geoul/pkgs/'+this.id+'/news.feed').text('all updates')
+			statDisp.append($('<p>').append($('<img src=".self/img/feed-icon-12x12.png" alt="News Feed of">')).append('&nbsp;').append(
+				$('<a>').attr('href', '/geoul/pkgs/'+this.id+'/news.feed').text(chi?'chicken':'all updates')
 			).append(", ").append(
-				$('<a>').attr('href', '/geoul/pkgs/'+this.id+'/problems.feed').text('only problematic ones')
+				$('<a>').attr('href', '/geoul/pkgs/'+this.id+'/problems.feed').text(chi?'chicken chicken':'only problematic ones')
 			));
 			
 			$li.data('img-loaded', false);

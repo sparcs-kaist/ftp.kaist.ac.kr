@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
-
+SyncReentrant=true SyncCustom=true
 . /mirror/lib/sync.sh
-
-set ftp:charset utf8
-get $source

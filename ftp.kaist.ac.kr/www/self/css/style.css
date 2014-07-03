@@ -1,6 +1,30 @@
 a img {
 	border: none;
 }
+ul {
+	margin-left: 0.1em;
+}
+p {
+	margin: .5em;
+}
+h1 {
+	font-size: 2.5em;
+	margin: .3em .6em;
+}
+h2 {
+	font-size: 2em;
+	margin: .3em;
+}
+p, li {
+	line-height: 1.2em;
+}
+li {
+	list-style-type: disc;
+}
+hr {
+	margin: 4em;
+}
+
 .logos {
 	text-align: center;
 	vertical-align: middle;
@@ -11,10 +35,12 @@ a img {
 }
 #contents {
 	position: absolute;
+	min-width: 9em;
 }
 
 /* List Icon */
 #contents > li {
+	line-height: 1.05em;
 	list-style-image: url("../img/icon_unknown.png");
 }
 #contents > li.original,
@@ -43,10 +69,11 @@ a img {
 }
 
 #contents > li.active .status {
-	display:block; z-index: 2;
+	display:block; z-index: 1;
+	border-width: 3px;
 }
 #contents > li:hover .status {
-	display: block; z-index: 1;
+	display: block; z-index: 2;
 	margin-left: 11em;
 }
 
@@ -65,7 +92,7 @@ a img {
 	width: auto;
 	margin-left: 9em;
 	margin-top: -3em;
-	padding: 0em 1em 1em;
+	padding: .5em 1em 1em;
 }
 
 #contents .status .links a {
@@ -77,5 +104,5 @@ a img {
 
 #message {
 	position: absolute;
-	left: 14em; right: 1em;
+	left: 13em; right: 1em;
 }

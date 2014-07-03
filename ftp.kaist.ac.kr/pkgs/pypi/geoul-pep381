@@ -5,6 +5,8 @@ Self=`readlink -f "${BASH_SOURCE[0]}"`
 Base=`dirname "$Self"`
 export BASEDIR="$Base"/pep381client
 export TO=$PWD/data
+export LANG="ko-KR.UTF-8"
+export LC_ALL=""
 
 export triggered timepast failures
 . /mirror/lib/pkg.sh
