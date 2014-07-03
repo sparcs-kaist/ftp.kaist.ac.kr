@@ -42,6 +42,8 @@
 /www/self/index.html
 /www/self/robots.txt
 
+# XXX add fork as a submodule
+/pkgs/debian/archvsync
 /pkgs/debian*/ftpsync.conf
 /pkgs/debian-cd/debian-cd-mirror.conf
 /pkgs/fedora/report_mirror.conf
