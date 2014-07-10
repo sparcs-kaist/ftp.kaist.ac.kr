@@ -1,1 +1,3 @@
 home	http://www.centos.org
+mirrors list	http://www.centos.org/download/mirrors/
+mirror status	http://mirror-status.centos.org/
