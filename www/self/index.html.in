@@ -7,6 +7,10 @@
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태"/>
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태"/>
     <link rel="stylesheet" type="text/css" href=".self/css/style.css"/>
+    <style type="text/css">
+        /* Ugly hack for Twitter timeline embedding */
+        #news iframe { width: 100% !important; };
+    </style>
 </head>
 
 <body>
@@ -22,10 +26,8 @@
 
 <h2>최근 소식</h2>
 <div id="news">
-	<ul id="twitter_update_list" class="embedded-feed"><!-- Tweets --></ul>
-    <div style="text-align:right;">
-        <a href="http://twitter.com/kaist_ftp" id="twitter-link"><img alt="Twitter" src="http://twitter.com/favicon.ico" style="height:16px;"> 트위터에서 @kaist_ftp를 팔로우하세요</a>
-    </div>
+<a class="twitter-timeline" width="520" height="300" href="https://twitter.com/kaist_ftp" data-widget-id="476958609415221248">Tweets by @kaist_ftp</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
 
 <h2>링크</h2>
