@@ -3,6 +3,9 @@
 143.248.234.110	ftp.kaist.ac.kr	ftp
 143.248.234.116	ftp2.kaist.ac.kr	ftp2
 
+# KOREN
+103.22.220.133 ftp.kaist.ac.kr ftp
+
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
 fe00::0 ip6-localnet
