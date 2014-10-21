@@ -20,12 +20,17 @@ if ${GET_NO_MAXDELETE:-false}; then
     maxdeleteopts=()
 fi
 
+addressopts=()
+if [ -n ${ALTERNATIVE_ADDRESS} ]; then
+    addressopts=(--address=${ALTERNATIVE_ADDRESS})
+fi
+
 # simply run rsync
 (set -x
 exec rsync -rtlH "${permopts[@]}" --delete-after "${maxdeleteopts[@]}" \
     --partial --delay-updates \
     --exclude='.*.??????' --exclude=.~tmp~ \
-    --verbose --stats \
+    --verbose --stats "${addressopts[@]}"\
     "$@"
 )
 
