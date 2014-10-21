@@ -21,7 +21,7 @@ if ${GET_NO_MAXDELETE:-false}; then
 fi
 
 addressopts=()
-if [ -n ${ALTERNATIVE_ADDRESS} ]; then
+if [ -n "${ALTERNATIVE_ADDRESS}" ]; then
     addressopts=(--address=${ALTERNATIVE_ADDRESS})
 fi
 
