@@ -1,0 +1,9 @@
+#!/bin/sh
+# Set routing table for KOREN network
+set -e
+
+ip rule add from all to 103.22.220.128/28 lookup koren
+ip rule add from 103.22.220.128/28 lookup koren
+ip r d default via 103.22.220.129 dev eth1
+ip r a table koren default via 103.22.220.129 dev eth1
+ip r a table koren 103.22.220.128/28 dev eth1 scope link src 103.22.220.133
