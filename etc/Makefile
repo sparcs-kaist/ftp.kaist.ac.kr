@@ -172,10 +172,6 @@ INSTALL=install -m a+r
 	$(INSTALL) $< $@
 	sudo vim /etc/logcheck/logcheck.conf +'%s/^#INTRO=1/INTRO=0/ | %s/^REPORTLEVEL=.*/REPORTLEVEL="server"/' +wq
 
-# Routing rule for KOREN
-/etc/network/if-up.d/routing-koren: routing-koren
-	$(INSTALL) -m a=r,u=x  $< $@
-
 # default rule is to just install the config file from here
 .SECONDEXPANSION:
 /etc/%: $$(@F)
