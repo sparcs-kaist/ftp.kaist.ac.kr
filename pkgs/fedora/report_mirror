@@ -1,16 +1,16 @@
 #!/usr/bin/python
 
 import os, sys
-from os.path import join
-import pickle
-import re
+import json
 import ConfigParser
 import pprint
-import time
 import xmlrpclib
 import base64
 import bz2
 import socket
+
+# globals
+exclude_list = []
 
 class HostConfig(object):
     """Holder for config info from the configuration file"""
@@ -37,6 +37,28 @@ def urlsafe_b64encode(s):
       return _translate(encoded, {'+': altchars[0], '/': altchars[1]})
    return encoded
 
+def get_exclude_dir_patterns_from_file(options):
+    global exclude_list
+    if options.exclude_from:
+        f = open(options.exclude_from, 'r')
+        for line in f:
+            line = line.strip()
+            if line.startswith(u'#'): continue
+            exclude_list.append(line)
+        f.close()
+
+import copy
+def exclude_dirs(root, dirs):
+    global exclude_list
+    copydirs = copy.copy(dirs)
+    # iterate over the copy so we can modify the original
+    for d in copydirs:
+        testdir = os.path.join(root, d, '') #keep trailing /, we know it's a directory
+        for pattern in exclude_list:
+            if pattern in testdir:
+		dirs.remove(d)
+		break
+
 def gen_dirtree(path):
     # structure here is:
     # dirtree is a dict
@@ -54,6 +76,7 @@ def gen_dirtree(path):
 
     dirtree = {}
     for dirpath, dirnames, filenames in os.walk(path):
+        exclude_dirs(dirpath, dirnames)
         statfiles = {}
         if path.endswith('/'):
             short_path = dirpath[len(path):]
@@ -137,7 +160,7 @@ def get_stats(conf, section):
             try:
                 f = open(fn, 'r')
                 contents = contents + f.readlines()
-                statsdata[name] = pickle.dumps(contents, -1)
+                statsdata[name] = json.dumps(contents, -1)
                 f.close()
             except:
                 pass
@@ -185,7 +208,7 @@ def config(cfg, item, crawl=True):
 
     return True
 
-
+options=None
 
 def main():
     from optparse import OptionParser
@@ -194,11 +217,11 @@ def main():
                       dest="config",
                       default='/etc/mirrormanager-client/report_mirror.conf',
                       help='Configuration filename (required)')
-    parser.add_option("-s", "--stats",
-                      action="store_true",
-                      dest="stats",
-                      default=False,
-                      help='Send stats')
+#    parser.add_option("-s", "--stats",
+#                      action="store_true",
+#                      dest="stats",
+#                      default=False,
+#                      help='Send stats')
     parser.add_option("-i", "--input",
                       dest="input",
                       default=None,
@@ -217,13 +240,17 @@ def main():
                       dest="debug",
                       default=False,
                       help='Enable debugging output')
-
+    parser.add_option("--exclude-from",
+                      dest="exclude_from",
+                      default=None,
+                      help='get exclude patterns from FILE')
 
     (options, args) = parser.parse_args()
     item = HostConfig()
+    get_exclude_dir_patterns_from_file(options)
     if options.input:
         infile = open(options.input, 'rb')
-        item.config = pickle.load(infile)
+        item.config = json.load(infile)
         infile.close()
         if not config(options.config, item, crawl=False):
             sys.exit(1)
@@ -231,7 +258,7 @@ def main():
         if not config(options.config, item, crawl=True):
             sys.exit(1)
 
-    p = pickle.dumps(item.config, -1)
+    p = json.dumps(item.config, -1)
 
     if options.debug:
         pp = pprint.PrettyPrinter(indent=4)
@@ -242,8 +269,8 @@ def main():
         outfile.write(p)
         outfile.close()
 
-    if options.stats:
-        statdata = get_stats(conf, 'stats')
+#    if options.stats:
+#        statdata = get_stats(conf, 'stats')
 
     # upload p and statsdata here
     if not item.config.has_key('global') or not item.config['global'].has_key('enabled') or item.config['global']['enabled'] != '1':
@@ -263,6 +290,9 @@ def main():
                 print server.checkin(data)
             except socket.error, m:
                 print "Error checking in: %s.  Please try again later." % (m[1])
+            except xmlrpclib.ProtocolError:
+                print "Error checking in: Service Temporarily Unavailable.  Please try again later."
+                sys.exit(1)                
             except xmlrpclib.Fault:
                 print "Error checking in.  Connection closed before checkin complete.  Please try again later."
                 sys.exit(1)                

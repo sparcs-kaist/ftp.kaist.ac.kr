@@ -10,6 +10,8 @@ cd /mirror/svcs
 for svc in *; do
     (
     cd $svc
+    [ "$svc" == "rsync" ] && continue
+    continue
     if ! ./alive; then
         echo "watch-services: $svc: not running, restarting" >&2
         ./rc restart

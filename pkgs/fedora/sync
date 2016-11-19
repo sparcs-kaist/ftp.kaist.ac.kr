@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-opts=(--max-delete=150000)
+opts=(--max-delete=1500000)
 get $source --perms "${opts[@]}" --exclude={images,iso}
 get $source --perms "${opts[@]}"
 ./report_mirror -c report_mirror.conf

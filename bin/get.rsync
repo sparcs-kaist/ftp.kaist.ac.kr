@@ -30,7 +30,7 @@ fi
 exec rsync -rtlH "${permopts[@]}" --delete-after "${maxdeleteopts[@]}" \
     --partial --delay-updates \
     --exclude='.*.??????' --exclude=.~tmp~ \
-    --verbose --stats "${addressopts[@]}"\
+    --verbose --stats "${addressopts[@]}" \
     "$@"
 )
 

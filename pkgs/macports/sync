@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 . /mirror/lib/sync.sh
-mkdir -p data/release data/mpdistfiles
+mkdir -p data/release data/distfiles
 GETDEST=data/release      get $source
-GETDEST=data/mpdistfiles  get ${source%release/}mpdistfiles/
+GETDEST=data/distfiles  get ${source%release/}distfiles/
