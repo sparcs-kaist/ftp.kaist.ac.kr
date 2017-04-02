@@ -1,1 +1,4 @@
 ^\w{3} [ :0-9]{11} [._[:alnum:]-]+ snmpd\[[0-9]+\]: looks like a 64bit wrap, but prev!=new$
+^\w{3} [ :0-9]{11} [._[:alnum:]-]+ snmpd\[[0-9]+\]: error on subcontainer 'ia_addr' insert
+^\w{3} [ :0-9]{11} [._[:alnum:]-]+ Server Administrator: Storage Service EventID: 2405  Command timeout on physical disk: Physical Disk 0:0:12 Controller 0, Connector 0
+^\w{3} [ :0-9]{11} [._[:alnum:]-]+ Server Administrator: Storage Service EventID: 2095  Unexpected sense. SCSI sense data: Sense key:  6 Sense code: 29 Sense qualifier:  0:  Physical Disk 0:0:12 Controller 0, Connector 0
