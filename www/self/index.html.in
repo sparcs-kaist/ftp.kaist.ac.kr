@@ -49,7 +49,6 @@ ftp.kr.debian.org,
 kr.archive.ubuntu.com,
 ftp2.kr.freebsd.org,
 ftp2.kr.vim.org,
-kr.packages.medibuntu.org,
 rsync1.kr.gentoo.org
 )
 </p>
@@ -116,7 +115,6 @@ ftp.kr.debian.org,
 kr.archive.ubuntu.com,
 ftp2.kr.freebsd.org,
 ftp2.kr.vim.org,
-kr.packages.medibuntu.org,
 rsync1.kr.gentoo.org
 )
 </p>
