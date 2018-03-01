@@ -7,4 +7,6 @@ get $source \
     --exclude='.*\.sigs\.shar' \
     --exclude=bind9/9.7.3-P1/doc \
     --exclude=bind9/9.8.0-P2/doc \
+    --exclude=kea-premium/private \
+    --exclude=kea-subscription/private \
     #

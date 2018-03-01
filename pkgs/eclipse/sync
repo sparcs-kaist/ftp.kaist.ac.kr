@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+export GET_NO_MAXDELETE=true
 . /mirror/lib/sync.sh
 ALTERNATIVE_ADDRESS=103.22.220.133 get $source --exclude=".swp"
