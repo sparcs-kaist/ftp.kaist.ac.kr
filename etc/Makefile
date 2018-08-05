@@ -131,6 +131,7 @@ INSTALL=install -m a+r
 	$(INSTALL) $< $@
 
 # mail
+.PHONY: /etc/aliases
 /etc/aliases: aliases
 	$(INSTALL) $< $@
 	newaliases
