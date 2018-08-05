@@ -14,6 +14,7 @@ case "$1" in
     # Step is 6h,
     # DSs for disk blocks (K), used, available
     # RRAs holding 3m=~90d, 1y=~52w, 5y=~60m
+    mkdir -p "$(dirname "$rrd")"
     rrdtool create "$rrd" --step 21600 \
      DS:blocks:GAUGE:86400:0:U \
      DS:used:GAUGE:86400:0:U \
