@@ -1,1 +1,4 @@
-/etc/init.d/vsftpd
+#!/usr/bin/env bash
+set -eu
+
+exec service vsftpd "$@"

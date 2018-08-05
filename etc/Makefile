@@ -129,6 +129,7 @@ INSTALL=install -m a+r
 	chmod g+w $@
 /etc/logrotate.d/geoul: logrotate.conf
 	$(INSTALL) $< $@
+	chown root:root /mirror/svcs/*/logrotate.conf
 
 # mail
 .PHONY: /etc/aliases
