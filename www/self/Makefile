@@ -2,7 +2,7 @@
 # Author: Jaeho Shin <netj@sparcs.org>
 # Created: 2008-06-22
 
-FTPROOT=/mirror/ftp
+FTPROOT=$(shell readlink -f /mirror/ftp)
 FILES=.message index.html id_rsa.pub robots.txt
 
 all: $(FILES:%=$(FTPROOT)/%)
