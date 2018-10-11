@@ -15,7 +15,7 @@ source=${source/:\/\//:\/\/$RSYNC_USER@}
 set -x
 
 # jigdo sync
-rsync -rtlHv --stats --delete --delete-after --timeout 7200 \
+sudo rsync -rtlHvO --stats --delete --delete-after --timeout 7200 \
      --exclude "Archive-Update-in-Progress-$HOSTNAME" \
      --exclude "project/trace/$HOSTNAME" \
      --exclude "*.iso" \
@@ -50,7 +50,7 @@ done
 rm -rf $tmpDir
 
 # final sync
-rsync -rlHv --stats --delete --delete-after --timeout 7200 --size-only \
+rsync -rlHvO --stats --delete --delete-after --timeout 7200 --size-only \
      --exclude "Archive-Update-in-Progress-$HOSTNAME" \
      --exclude "project/trace/$HOSTNAME" \
      --include='*businesscard*.iso' --include='*netinst*.iso' --include='i386/**.iso' --exclude='*.iso' \
