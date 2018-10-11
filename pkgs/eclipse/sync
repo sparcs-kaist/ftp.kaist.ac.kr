@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 export GET_NO_MAXDELETE=true
+export GET_IGNORE_ERRORS=true
 . /mirror/lib/sync.sh
-ALTERNATIVE_ADDRESS=103.22.220.133 get $source --exclude=".swp"
+ALTERNATIVE_ADDRESS=103.22.220.133 get $source --timeout=0 --exclude=".swp"
