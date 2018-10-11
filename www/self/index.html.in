@@ -65,7 +65,7 @@ FTP, HTTP, rsync로 접근할 수 있습니다.
 </p>
 <p id="sponsors" class="logos">
 <a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/img/kaist-logo.png"></a>
-<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" src=".self/img/sparcs-logo.png"></a>
+<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" width="510px" height="110px" src=".self/img/sparcs-logo.png"></a>
 </p>
 <p>
 시스템의 운영 체제는 Debian GNU/Linux이며, lighttpd, rsync, vsftpd 등의
