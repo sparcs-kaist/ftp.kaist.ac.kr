@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-SyncReentrant=true SyncCustom=true
-. /mirror/lib/sync.sh
-
-# use our driver for delegating actual sync to the Debian ftpsync script
-. ../debian/geoul-ftpsync $source
