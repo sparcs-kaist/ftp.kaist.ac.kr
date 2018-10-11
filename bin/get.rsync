@@ -25,10 +25,16 @@ if [ -n "${ALTERNATIVE_ADDRESS}" ]; then
     addressopts=(--address=${ALTERNATIVE_ADDRESS})
 fi
 
+ignoreerrorsopts=()
+if ${GET_IGNORE_ERRORS:-false}; then
+  ignoreerrorsopts=(--ignore-errors)
+fi
+
 # simply run rsync
 (set -x
 exec rsync -rtlH "${permopts[@]}" --delete-after "${maxdeleteopts[@]}" \
     --partial --delay-updates \
+    ${ignoreerrorsopts[@]} \
     --exclude='.*.??????' --exclude=.~tmp~ \
     --verbose --stats "${addressopts[@]}" \
     "$@"
