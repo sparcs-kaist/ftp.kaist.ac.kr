@@ -1,0 +1,513 @@
+systemd       1            root   27u     unix 0xffff881030dcd800          0t0        17812 /run/systemd/journal/dev-log type=DGRAM
+systemd       1            root   30u     unix 0xffff881030dce400          0t0        17815 /run/systemd/journal/syslog type=DGRAM
+bash        567          mirror    1w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+bash        567          mirror    2w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+bash        568          mirror    1w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+bash        568          mirror    2w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+rsync       613          mirror    1w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+rsync       613          mirror    2w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+rsync       617          mirror    1w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+rsync       617          mirror    2w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+bash        648          mirror    1w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+bash        648          mirror    2w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+rsync       703          mirror    1w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+rsync       703          mirror    2w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+systemd-j   837            root  mem       REG               0,19     41943040          708 /run/log/journal/55692e6fe3be4a27860af4f40292ec1c/system.journal
+systemd-j   837            root    5u     unix 0xffff881030dcd800          0t0        17812 /run/systemd/journal/dev-log type=DGRAM
+systemd-j   837            root   16u      REG               0,19     41943040          708 /run/log/journal/55692e6fe3be4a27860af4f40292ec1c/system.journal
+bash        906          mirror    1w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+bash        906          mirror    2w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+bash        936          mirror    1w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+bash        936          mirror    2w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+bash        943          mirror    1w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+bash        943          mirror    2w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+rsync       961          mirror    1w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+rsync       961          mirror    2w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+rsync       987          mirror    1w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+rsync       987          mirror    2w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+bash        996          mirror    1w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+bash        996          mirror    2w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+rsync       997          mirror    1w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+rsync       997          mirror    2w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+rsync      1036          mirror    1w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+rsync      1036          mirror    2w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+bash       1113          mirror    1w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+bash       1113          mirror    2w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+rsync      1203          mirror    1w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+rsync      1203          mirror    2w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+bash       1303          mirror    1w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+bash       1303          mirror    2w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+rsync      1342          mirror    1w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+rsync      1342          mirror    2w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+bash       1402          mirror    1w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+bash       1402          mirror    2w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+rsync      1449          mirror    1w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+rsync      1449          mirror    2w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+bash       1517          mirror    1w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+bash       1517          mirror    2w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+systemd-l  1561            root  txt       REG                8,1       618520      5247794 /lib/systemd/systemd-logind
+rsync      1567          mirror    1w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+rsync      1567          mirror    2w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+rsyslogd   1581          syslog  cwd       DIR                8,1         4096            2 /
+rsyslogd   1581          syslog  rtd       DIR                8,1         4096            2 /
+rsyslogd   1581          syslog  txt       REG                8,1       599328     13111992 /usr/sbin/rsyslogd
+rsyslogd   1581          syslog  mem       REG                8,1        47648      5243076 /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        93128      5243047 /lib/x86_64-linux-gnu/libnsl-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        35688      5243064 /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        19936     13240601 /usr/lib/rsyslog/imklog.so
+rsyslogd   1581          syslog  mem       REG                8,1        33072     13240603 /usr/lib/rsyslog/imuxsock.so
+rsyslogd   1581          syslog  mem       REG                8,1        47600      5243070 /lib/x86_64-linux-gnu/libnss_files-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        23648     13240586 /usr/lib/rsyslog/lmnet.so
+rsyslogd   1581          syslog  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        18976      5242891 /lib/x86_64-linux-gnu/libuuid.so.1.3.0
+rsyslogd   1581          syslog  mem       REG                8,1        43496      5243142 /lib/x86_64-linux-gnu/libjson-c.so.2.0.0
+rsyslogd   1581          syslog  mem       REG                8,1        14360     13111852 /usr/lib/x86_64-linux-gnu/libestr.so.0.0.0
+rsyslogd   1581          syslog  mem       REG                8,1        31712      5243077 /lib/x86_64-linux-gnu/librt-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1       138696      5243052 /lib/x86_64-linux-gnu/libpthread-2.23.so
+rsyslogd   1581          syslog  mem       REG                8,1       104864      5242947 /lib/x86_64-linux-gnu/libz.so.1.2.8
+rsyslogd   1581          syslog  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+rsyslogd   1581          syslog    0r      CHR                1,3          0t0            6 /dev/null
+rsyslogd   1581          syslog    1w      CHR                1,3          0t0            6 /dev/null
+rsyslogd   1581          syslog    2w      CHR                1,3          0t0            6 /dev/null
+rsyslogd   1581          syslog    3u     unix 0xffff881030dce400          0t0        17815 /run/systemd/journal/syslog type=DGRAM
+rsyslogd   1581          syslog    4u     unix 0xffff88102e455c00          0t0        19193 /var/spool/postfix/dev/log type=DGRAM
+rsyslogd   1581          syslog    5r      REG                0,4            0   4026532001 /proc/kmsg
+in:imuxso  1581 1677     syslog  cwd       DIR                8,1         4096            2 /
+in:imuxso  1581 1677     syslog  rtd       DIR                8,1         4096            2 /
+in:imuxso  1581 1677     syslog  txt       REG                8,1       599328     13111992 /usr/sbin/rsyslogd
+in:imuxso  1581 1677     syslog  mem       REG                8,1        47648      5243076 /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        93128      5243047 /lib/x86_64-linux-gnu/libnsl-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        35688      5243064 /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        19936     13240601 /usr/lib/rsyslog/imklog.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        33072     13240603 /usr/lib/rsyslog/imuxsock.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        47600      5243070 /lib/x86_64-linux-gnu/libnss_files-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        23648     13240586 /usr/lib/rsyslog/lmnet.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        18976      5242891 /lib/x86_64-linux-gnu/libuuid.so.1.3.0
+in:imuxso  1581 1677     syslog  mem       REG                8,1        43496      5243142 /lib/x86_64-linux-gnu/libjson-c.so.2.0.0
+in:imuxso  1581 1677     syslog  mem       REG                8,1        14360     13111852 /usr/lib/x86_64-linux-gnu/libestr.so.0.0.0
+in:imuxso  1581 1677     syslog  mem       REG                8,1        31712      5243077 /lib/x86_64-linux-gnu/librt-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1       138696      5243052 /lib/x86_64-linux-gnu/libpthread-2.23.so
+in:imuxso  1581 1677     syslog  mem       REG                8,1       104864      5242947 /lib/x86_64-linux-gnu/libz.so.1.2.8
+in:imuxso  1581 1677     syslog  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+in:imuxso  1581 1677     syslog    0r      CHR                1,3          0t0            6 /dev/null
+in:imuxso  1581 1677     syslog    1w      CHR                1,3          0t0            6 /dev/null
+in:imuxso  1581 1677     syslog    2w      CHR                1,3          0t0            6 /dev/null
+in:imuxso  1581 1677     syslog    3u     unix 0xffff881030dce400          0t0        17815 /run/systemd/journal/syslog type=DGRAM
+in:imuxso  1581 1677     syslog    4u     unix 0xffff88102e455c00          0t0        19193 /var/spool/postfix/dev/log type=DGRAM
+in:imuxso  1581 1677     syslog    5r      REG                0,4            0   4026532001 /proc/kmsg
+in:imklog  1581 1678     syslog  cwd       DIR                8,1         4096            2 /
+in:imklog  1581 1678     syslog  rtd       DIR                8,1         4096            2 /
+in:imklog  1581 1678     syslog  txt       REG                8,1       599328     13111992 /usr/sbin/rsyslogd
+in:imklog  1581 1678     syslog  mem       REG                8,1        47648      5243076 /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        93128      5243047 /lib/x86_64-linux-gnu/libnsl-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        35688      5243064 /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        19936     13240601 /usr/lib/rsyslog/imklog.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        33072     13240603 /usr/lib/rsyslog/imuxsock.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        47600      5243070 /lib/x86_64-linux-gnu/libnss_files-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        23648     13240586 /usr/lib/rsyslog/lmnet.so
+in:imklog  1581 1678     syslog  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        18976      5242891 /lib/x86_64-linux-gnu/libuuid.so.1.3.0
+in:imklog  1581 1678     syslog  mem       REG                8,1        43496      5243142 /lib/x86_64-linux-gnu/libjson-c.so.2.0.0
+in:imklog  1581 1678     syslog  mem       REG                8,1        14360     13111852 /usr/lib/x86_64-linux-gnu/libestr.so.0.0.0
+in:imklog  1581 1678     syslog  mem       REG                8,1        31712      5243077 /lib/x86_64-linux-gnu/librt-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1       138696      5243052 /lib/x86_64-linux-gnu/libpthread-2.23.so
+in:imklog  1581 1678     syslog  mem       REG                8,1       104864      5242947 /lib/x86_64-linux-gnu/libz.so.1.2.8
+in:imklog  1581 1678     syslog  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+in:imklog  1581 1678     syslog    0r      CHR                1,3          0t0            6 /dev/null
+in:imklog  1581 1678     syslog    1w      CHR                1,3          0t0            6 /dev/null
+in:imklog  1581 1678     syslog    2w      CHR                1,3          0t0            6 /dev/null
+in:imklog  1581 1678     syslog    3u     unix 0xffff881030dce400          0t0        17815 /run/systemd/journal/syslog type=DGRAM
+in:imklog  1581 1678     syslog    4u     unix 0xffff88102e455c00          0t0        19193 /var/spool/postfix/dev/log type=DGRAM
+in:imklog  1581 1678     syslog    5r      REG                0,4            0   4026532001 /proc/kmsg
+rs:main    1581 1679     syslog  cwd       DIR                8,1         4096            2 /
+rs:main    1581 1679     syslog  rtd       DIR                8,1         4096            2 /
+rs:main    1581 1679     syslog  txt       REG                8,1       599328     13111992 /usr/sbin/rsyslogd
+rs:main    1581 1679     syslog  mem       REG                8,1        47648      5243076 /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        93128      5243047 /lib/x86_64-linux-gnu/libnsl-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        35688      5243064 /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        19936     13240601 /usr/lib/rsyslog/imklog.so
+rs:main    1581 1679     syslog  mem       REG                8,1        33072     13240603 /usr/lib/rsyslog/imuxsock.so
+rs:main    1581 1679     syslog  mem       REG                8,1        47600      5243070 /lib/x86_64-linux-gnu/libnss_files-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        23648     13240586 /usr/lib/rsyslog/lmnet.so
+rs:main    1581 1679     syslog  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        18976      5242891 /lib/x86_64-linux-gnu/libuuid.so.1.3.0
+rs:main    1581 1679     syslog  mem       REG                8,1        43496      5243142 /lib/x86_64-linux-gnu/libjson-c.so.2.0.0
+rs:main    1581 1679     syslog  mem       REG                8,1        14360     13111852 /usr/lib/x86_64-linux-gnu/libestr.so.0.0.0
+rs:main    1581 1679     syslog  mem       REG                8,1        31712      5243077 /lib/x86_64-linux-gnu/librt-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1       138696      5243052 /lib/x86_64-linux-gnu/libpthread-2.23.so
+rs:main    1581 1679     syslog  mem       REG                8,1       104864      5242947 /lib/x86_64-linux-gnu/libz.so.1.2.8
+rs:main    1581 1679     syslog  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+rs:main    1581 1679     syslog    0r      CHR                1,3          0t0            6 /dev/null
+rs:main    1581 1679     syslog    1w      CHR                1,3          0t0            6 /dev/null
+rs:main    1581 1679     syslog    2w      CHR                1,3          0t0            6 /dev/null
+rs:main    1581 1679     syslog    3u     unix 0xffff881030dce400          0t0        17815 /run/systemd/journal/syslog type=DGRAM
+rs:main    1581 1679     syslog    4u     unix 0xffff88102e455c00          0t0        19193 /var/spool/postfix/dev/log type=DGRAM
+rs:main    1581 1679     syslog    5r      REG                0,4            0   4026532001 /proc/kmsg
+dovecot    1586            root   19u     unix 0xffff88103ed98400          0t0          357 /var/run/dovecot/login/ssl-params type=STREAM
+dovecot    1586            root   23u     unix 0xffff8810374fc400          0t0          360 /var/run/dovecot/login/pop3 type=STREAM
+dovecot    1586            root   26u     unix 0xffff8810374fd400          0t0          363 /var/run/dovecot/log-errors type=STREAM
+dovecot    1586            root   28u     unix 0xffff8810374f8c00          0t0          365 /var/run/dovecot/login/ipc-proxy type=STREAM
+dovecot    1586            root   31u     unix 0xffff8810374fe400          0t0          368 /var/run/dovecot/login/imap type=STREAM
+dovecot    1586            root   34u     unix 0xffff8810374fe800          0t0          371 /var/run/dovecot/token-login/imap-urlauth type=STREAM
+dovecot    1586            root   46u     unix 0xffff8810331d1800          0t0          383 /var/run/dovecot/login/login type=STREAM
+dovecot    1586            root   47u     unix 0xffff8810331d1c00          0t0          384 /var/run/dovecot/token-login/tokenlogin type=STREAM
+dovecot    1586            root   48u     unix 0xffff8810331d2000          0t0          385 /var/run/dovecot/auth-login type=STREAM
+dovecot    1586            root  124u      REG               0,19            0          677 /run/dovecot/login-master-notify7633d59f7d72bea6 (deleted)
+dovecot    1586            root  141u      REG               0,19            0          678 /run/dovecot/login-master-notifycde95b1ab70f73a1 (deleted)
+dovecot    1586            root  144u      REG               0,19            0          679 /run/dovecot/login-master-notify69daec4e9c8c5da6 (deleted)
+log        1594            root  cwd       DIR               0,19          740          635 /run/dovecot
+log        1594            root  rtd       DIR                8,1         4096            2 /
+log        1594            root  txt       REG                8,1        22824     14288603 /usr/lib/dovecot/log
+log        1594            root  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+log        1594            root  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+log        1594            root  mem       REG                8,1      1016216     14288560 /usr/lib/dovecot/libdovecot.so.0.0.0
+log        1594            root  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+log        1594            root    0w      CHR                1,3          0t0            6 /dev/null
+log        1594            root    1w      CHR                1,3          0t0            6 /dev/null
+log        1594            root    2u     unix 0xffff8810349b7000          0t0        16595 type=STREAM
+log        1594            root    3w      CHR                1,3          0t0            6 /dev/null
+log        1594            root    4u     unix 0xffff8810365c9400          0t0        11023 type=DGRAM
+log        1594            root    5w     FIFO               0,10          0t0        23838 pipe
+log        1594            root    6w     FIFO               0,10          0t0        23830 pipe
+log        1594            root    7r     FIFO               0,10          0t0        23804 pipe
+log        1594            root    8r     FIFO               0,10          0t0        23805 pipe
+log        1594            root    9r     FIFO               0,10          0t0        23806 pipe
+log        1594            root   10r     FIFO               0,10          0t0        23807 pipe
+log        1594            root   11r     FIFO               0,10          0t0        23808 pipe
+log        1594            root   12r     FIFO               0,10          0t0        23809 pipe
+log        1594            root   13r     FIFO               0,10          0t0        23810 pipe
+log        1594            root   14r     FIFO               0,10          0t0        23811 pipe
+log        1594            root   15r     FIFO               0,10          0t0        23812 pipe
+log        1594            root   16r     FIFO               0,10          0t0        23813 pipe
+log        1594            root   17r     FIFO               0,10          0t0        23814 pipe
+log        1594            root   18r     FIFO               0,10          0t0        23815 pipe
+log        1594            root   19r     FIFO               0,10          0t0        23816 pipe
+log        1594            root   20r     FIFO               0,10          0t0        23817 pipe
+log        1594            root   21r     FIFO               0,10          0t0        23818 pipe
+log        1594            root   22r     FIFO               0,10          0t0        23819 pipe
+log        1594            root   23r     FIFO               0,10          0t0        23820 pipe
+log        1594            root   24r     FIFO               0,10          0t0        23821 pipe
+log        1594            root   25r     FIFO               0,10          0t0        23822 pipe
+log        1594            root   26r     FIFO               0,10          0t0        23823 pipe
+log        1594            root   27r     FIFO               0,10          0t0        23824 pipe
+log        1594            root   28r     FIFO               0,10          0t0        23825 pipe
+log        1594            root   29r     FIFO               0,10          0t0        23826 pipe
+log        1594            root   30r     FIFO               0,10          0t0        23827 pipe
+log        1594            root   31r     FIFO               0,10          0t0        23828 pipe
+log        1594            root   32r     FIFO               0,10          0t0        23829 pipe
+log        1594            root   33u     unix 0xffff8810374fd400          0t0          363 /var/run/dovecot/log-errors type=STREAM
+log        1594            root   34r     FIFO               0,10          0t0        11024 pipe
+log        1594            root   35w     FIFO               0,10          0t0        11024 pipe
+log        1594            root   36u  a_inode               0,11            0         8116 [eventpoll]
+sudo       1661            root    1w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+sudo       1661            root    2w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+lighttpd   1707        www-data  mem       REG                8,1        18272       396870 /usr/lib/lighttpd/mod_accesslog.so
+lighttpd   1707        www-data    4w      REG                8,1       663552     12584407 /var/log/geoul/httpd/error.log
+lighttpd   1707        www-data    6w      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+lighttpd   1707        www-data    7w      REG                8,1   1006483773     12586031 /var/log/geoul/httpd/ftp.kr.debian.org.log
+lighttpd   1707        www-data    8w      REG                8,1     29548831     12585215 /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log
+lighttpd   1707        www-data    9w      REG                8,1    737618998     12586034 /var/log/geoul/httpd/www5.mplayerhq.hu.log
+lighttpd   1707        www-data   10w      REG                8,1 105087436330     12586033 /var/log/geoul/httpd/kr.archive.ubuntu.com.log
+rsync      1719            root    1w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+rsync      1719            root    2w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+lighttpd   1880        www-data  mem       REG                8,1        18272       396870 /usr/lib/lighttpd/mod_accesslog.so
+lighttpd   1880        www-data    4w      REG                8,1       663552     12584407 /var/log/geoul/httpd/error.log
+lighttpd   1880        www-data    6w      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+lighttpd   1880        www-data    7w      REG                8,1   1006483773     12586031 /var/log/geoul/httpd/ftp.kr.debian.org.log
+lighttpd   1880        www-data    8w      REG                8,1     29548831     12585215 /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log
+lighttpd   1880        www-data    9w      REG                8,1    737618998     12586034 /var/log/geoul/httpd/www5.mplayerhq.hu.log
+lighttpd   1880        www-data   10w      REG                8,1 105087436330     12586033 /var/log/geoul/httpd/kr.archive.ubuntu.com.log
+lighttpd   1883        www-data  mem       REG                8,1        18272       396870 /usr/lib/lighttpd/mod_accesslog.so
+lighttpd   1883        www-data    4w      REG                8,1       663552     12584407 /var/log/geoul/httpd/error.log
+lighttpd   1883        www-data    6w      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+lighttpd   1883        www-data    7w      REG                8,1   1006483773     12586031 /var/log/geoul/httpd/ftp.kr.debian.org.log
+lighttpd   1883        www-data    8w      REG                8,1     29548831     12585215 /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log
+lighttpd   1883        www-data    9w      REG                8,1    737618998     12586034 /var/log/geoul/httpd/www5.mplayerhq.hu.log
+lighttpd   1883        www-data   10w      REG                8,1 105087436330     12586033 /var/log/geoul/httpd/kr.archive.ubuntu.com.log
+lighttpd   1884        www-data  mem       REG                8,1        18272       396870 /usr/lib/lighttpd/mod_accesslog.so
+lighttpd   1884        www-data    4w      REG                8,1       663552     12584407 /var/log/geoul/httpd/error.log
+lighttpd   1884        www-data    6w      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+lighttpd   1884        www-data    7w      REG                8,1   1006483773     12586031 /var/log/geoul/httpd/ftp.kr.debian.org.log
+lighttpd   1884        www-data    8w      REG                8,1     29548831     12585215 /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log
+lighttpd   1884        www-data    9w      REG                8,1    737618998     12586034 /var/log/geoul/httpd/www5.mplayerhq.hu.log
+lighttpd   1884        www-data   10w      REG                8,1 105087436330     12586033 /var/log/geoul/httpd/kr.archive.ubuntu.com.log
+lighttpd   1885        www-data  mem       REG                8,1        18272       396870 /usr/lib/lighttpd/mod_accesslog.so
+lighttpd   1885        www-data    4w      REG                8,1       663552     12584407 /var/log/geoul/httpd/error.log
+lighttpd   1885        www-data    6w      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+lighttpd   1885        www-data    7w      REG                8,1   1006483773     12586031 /var/log/geoul/httpd/ftp.kr.debian.org.log
+lighttpd   1885        www-data    8w      REG                8,1     29548831     12585215 /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log
+lighttpd   1885        www-data    9w      REG                8,1    737618998     12586034 /var/log/geoul/httpd/www5.mplayerhq.hu.log
+lighttpd   1885        www-data   10w      REG                8,1 105087436330     12586033 /var/log/geoul/httpd/kr.archive.ubuntu.com.log
+lighttpd   1885        www-data   25r      REG               8,17    198661605 148237221944 /srv/ftp/eclipse/technology/epp/downloads/release/2018-09/R/eclipse-java-2018-09-win32-x86_64.zip
+login      1993            root  cwd       DIR                8,1         4096            2 /
+login      1993            root  rtd       DIR                8,1         4096            2 /
+login      1993            root  txt       REG                8,1        48128     11272203 /bin/login
+login      1993            root  mem       REG                8,1        47600      5243070 /lib/x86_64-linux-gnu/libnss_files-2.23.so
+login      1993            root  mem       REG                8,1        47648      5243076 /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+login      1993            root  mem       REG                8,1        35688      5243064 /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+login      1993            root  mem       REG                8,1        31712      5243077 /lib/x86_64-linux-gnu/librt-2.23.so
+login      1993            root  mem       REG                8,1        10432      5243454 /lib/x86_64-linux-gnu/security/pam_umask.so
+login      1993            root  mem       REG                8,1        10392      5242963 /lib/x86_64-linux-gnu/security/pam_loginuid.so
+login      1993            root  mem       REG                8,1        10376      5242961 /lib/x86_64-linux-gnu/security/pam_mail.so
+login      1993            root  mem       REG                8,1        10408      5243450 /lib/x86_64-linux-gnu/security/pam_motd.so
+login      1993            root  mem       REG                8,1        10656      5243062 /lib/x86_64-linux-gnu/libutil-2.23.so
+login      1993            root  mem       REG                8,1        14552      5243458 /lib/x86_64-linux-gnu/security/pam_lastlog.so
+login      1993            root  mem       REG                8,1        22944      5242962 /lib/x86_64-linux-gnu/security/pam_limits.so
+login      1993            root  mem       REG                8,1        14616      5243468 /lib/x86_64-linux-gnu/security/pam_group.so
+login      1993            root  mem       REG                8,1         6168      5243459 /lib/x86_64-linux-gnu/security/pam_permit.so
+login      1993            root  mem       REG                8,1         6000      5243471 /lib/x86_64-linux-gnu/security/pam_deny.so
+login      1993            root  mem       REG                8,1        93128      5243047 /lib/x86_64-linux-gnu/libnsl-2.23.so
+login      1993            root  mem       REG                8,1        39224      5243078 /lib/x86_64-linux-gnu/libcrypt-2.23.so
+login      1993            root  mem       REG                8,1        60336      5242969 /lib/x86_64-linux-gnu/security/pam_unix.so
+login      1993            root  mem       REG                8,1        14520      5243430 /lib/x86_64-linux-gnu/security/pam_env.so
+login      1993            root  mem       REG                8,1       138696      5243052 /lib/x86_64-linux-gnu/libpthread-2.23.so
+login      1993            root  mem       REG                8,1       456632      5242976 /lib/x86_64-linux-gnu/libpcre.so.3.13.2
+login      1993            root  mem       REG                8,1       130224      5242984 /lib/x86_64-linux-gnu/libselinux.so.1
+login      1993            root  mem       REG                8,1        18800      5243472 /lib/x86_64-linux-gnu/security/pam_selinux.so
+login      1993            root  mem       REG                8,1        10328      5243447 /lib/x86_64-linux-gnu/security/pam_nologin.so
+login      1993            root  mem       REG                8,1        10368      5243446 /lib/x86_64-linux-gnu/security/pam_securetty.so
+login      1993            root  mem       REG                8,1        10368      5242965 /lib/x86_64-linux-gnu/security/pam_faildelay.so
+login      1993            root  mem       REG                8,1        14608      5243056 /lib/x86_64-linux-gnu/libdl-2.23.so
+login      1993            root  mem       REG                8,1      1868984      5243054 /lib/x86_64-linux-gnu/libc-2.23.so
+login      1993            root  mem       REG                8,1       117288      5242886 /lib/x86_64-linux-gnu/libaudit.so.1.0.0
+login      1993            root  mem       REG                8,1        14640      5242972 /lib/x86_64-linux-gnu/libpam_misc.so.0.82.0
+login      1993            root  mem       REG                8,1        55904      5242974 /lib/x86_64-linux-gnu/libpam.so.0.83.1
+login      1993            root  mem       REG                8,1       162632      5243050 /lib/x86_64-linux-gnu/ld-2.23.so
+login      1993            root  mem       REG                8,1       274376      5243627 /lib/x86_64-linux-gnu/security/pam_systemd.so
+login      1993            root    0u      CHR                4,1          0t0           20 /dev/tty1
+login      1993            root    1u      CHR                4,1          0t0           20 /dev/tty1
+login      1993            root    2u      CHR                4,1          0t0           20 /dev/tty1
+login      1993            root    3u     unix 0xffff8810301db400          0t0        44217 type=DGRAM
+login      1993            root    6w     FIFO               0,19          0t0          704 /run/systemd/sessions/8.ref
+bash      10028          mirror    1w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+bash      10028          mirror    2w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+bash      10035          mirror    1w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+bash      10035          mirror    2w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+bash      10106          mirror    1w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+bash      10106          mirror    2w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+bash      10186          mirror    1w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+bash      10186          mirror    2w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+bash      10203          mirror    1w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+bash      10203          mirror    2w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+bash      10303          mirror    1w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+bash      10303          mirror    2w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+bash      10409          mirror    1w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+bash      10409          mirror    2w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+bash      10442          mirror    1w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+bash      10442          mirror    2w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+bash      10474          mirror    1w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+bash      10474          mirror    2w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+bash      10497          mirror    1w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+bash      10497          mirror    2w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+bash      10500          mirror    1w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+bash      10500          mirror    2w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+bash      10516          mirror    1w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+bash      10516          mirror    2w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+bash      10601          mirror    1w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+bash      10601          mirror    2w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+bash      10639          mirror    1w      REG                8,1         1334       534426 /mirror/log/sync/2018/11/17/19:21:02.734788819.gnu-alpha.log
+bash      10639          mirror    2w      REG                8,1         1334       534426 /mirror/log/sync/2018/11/17/19:21:02.734788819.gnu-alpha.log
+bash      10663          mirror    1w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+bash      10663          mirror    2w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+bash      10679          mirror    1w      REG                8,1          534       534473 /mirror/log/sync/2018/11/17/19:21:02.753054279.doxygen.log
+bash      10679          mirror    2w      REG                8,1          534       534473 /mirror/log/sync/2018/11/17/19:21:02.753054279.doxygen.log
+bash      10757          mirror    1w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+bash      10757          mirror    2w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+bash      10787          mirror    1w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+bash      10787          mirror    2w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+bash      10814          mirror    1w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+bash      10814          mirror    2w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+bash      10975          mirror    1w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+bash      10975          mirror    2w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+bash      11082          mirror    1w      REG                8,1         2004       534447 /mirror/log/sync/2018/11/17/19:21:02.744781273.x.org.log
+bash      11082          mirror    2w      REG                8,1         2004       534447 /mirror/log/sync/2018/11/17/19:21:02.744781273.x.org.log
+bash      12363          mirror    1w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+bash      12363          mirror    2w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+bash      12512          mirror    1w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+bash      12512          mirror    2w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+rsync     12535          mirror    1w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+rsync     12535          mirror    2w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+rsync     12613          mirror    1w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+rsync     12613          mirror    2w      REG                8,1          508       534332 /mirror/log/sync/2018/11/17/19:21:02.708081325.gentoo-portage.log
+bash      12873          mirror    1w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+bash      12873          mirror    2w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+bash      12880          mirror    1w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+bash      12880          mirror    2w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+lftp      12905          mirror    1w      REG                8,1         1334       534426 /mirror/log/sync/2018/11/17/19:21:02.734788819.gnu-alpha.log
+lftp      12905          mirror    2w      REG                8,1         1334       534426 /mirror/log/sync/2018/11/17/19:21:02.734788819.gnu-alpha.log
+lftp      12905          mirror    8w      REG                8,1         3574      3014944 /mirror/.local/share/lftp/transfer_log
+bash      12911          mirror    1w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+bash      12911          mirror    2w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+lftp      12912          mirror    1w      REG                8,1         2004       534447 /mirror/log/sync/2018/11/17/19:21:02.744781273.x.org.log
+lftp      12912          mirror    2w      REG                8,1         2004       534447 /mirror/log/sync/2018/11/17/19:21:02.744781273.x.org.log
+rsync     12914          mirror    1w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+rsync     12914          mirror    2w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+bash      12916          mirror    1w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+bash      12916          mirror    2w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+bash      12917          mirror    1w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+bash      12917          mirror    2w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+bash      12926          mirror    1w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+bash      12926          mirror    2w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+bash      12933          mirror    1w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+bash      12933          mirror    2w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+bash      12942          mirror    1w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+bash      12942          mirror    2w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+rsync     12943          mirror    1w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+rsync     12943          mirror    2w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+bash      12944          mirror    1w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+bash      12944          mirror    2w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+rsync     12950          mirror    1w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+rsync     12950          mirror    2w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+bash      12955          mirror    1w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+bash      12955          mirror    2w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+bash      12956          mirror    1w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+bash      12956          mirror    2w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+bash      12959          mirror    1w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+bash      12959          mirror    2w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+rsync     12972          mirror    1w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+rsync     12972          mirror    2w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+rsync     12973          mirror    1w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+rsync     12973          mirror    2w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+rsync     12983          mirror    1w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+rsync     12983          mirror    2w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+rsync     12984          mirror    1w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+rsync     12984          mirror    2w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+bash      12990          mirror    1w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+bash      12990          mirror    2w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+rsync     12991          mirror    1w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+rsync     12991          mirror    2w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+rsync     12992          mirror    1w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+rsync     12992          mirror    2w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+rsync     12993          mirror    1w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+rsync     12993          mirror    2w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+rsync     12996          mirror    1w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+rsync     12996          mirror    2w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+rsync     13000          mirror    1w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+rsync     13000          mirror    2w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+lftp      13002          mirror    1w      REG                8,1          534       534473 /mirror/log/sync/2018/11/17/19:21:02.753054279.doxygen.log
+lftp      13002          mirror    2w      REG                8,1          534       534473 /mirror/log/sync/2018/11/17/19:21:02.753054279.doxygen.log
+rsync     13003          mirror    1w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+rsync     13003          mirror    2w      REG                8,1          481       534467 /mirror/log/sync/2018/11/17/19:21:02.751555396.pdb.log
+rsync     13024          mirror    1w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+rsync     13024          mirror    2w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+bash      13037          mirror    1w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+bash      13037          mirror    2w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+rsync     13047          mirror    1w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+rsync     13047          mirror    2w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+bash      13080          mirror    1w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+bash      13080          mirror    2w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+rsync     13104          mirror    1w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+rsync     13104          mirror    2w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+rsync     14788          mirror    1w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+rsync     14788          mirror    2w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+rsync     15459            root    1w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+rsync     15459            root    2w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+rsync     15459            root    4u      REG               8,17      8388608   4306451006 /srv/ftp/debian-cd/9.6.0-live/source/tar/.debian-live-9.6.0-source-cinnamon.log.JcQAEf
+rsync     15694          mirror    1w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+rsync     15694          mirror    2w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+rsync     15695          mirror    1w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+rsync     15695          mirror    2w      REG                8,1       133211       534391 /mirror/log/sync/2018/11/17/19:21:02.727680250.ubuntu.log
+rsync     15700          mirror    1w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+rsync     15700          mirror    2w      REG                8,1          714       534353 /mirror/log/sync/2018/11/17/19:21:02.713775780.linuxmint.log
+rsync     15701          mirror    1w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+rsync     15701          mirror    2w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+rsync     15703          mirror    1w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+rsync     15703          mirror    2w      REG                8,1          649       534433 /mirror/log/sync/2018/11/17/19:21:02.739534062.linuxmint-debian.log
+rsync     15704          mirror    1w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+rsync     15704          mirror    2w      REG                8,1         1876       534483 /mirror/log/sync/2018/11/17/19:21:02.770110067.kde-appdata.log
+rsync     15707          mirror    1w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+rsync     15707          mirror    2w      REG                8,1         1266       534444 /mirror/log/sync/2018/11/17/19:21:02.742734712.ubuntu-cdimage.log
+rsync     15708          mirror    1w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+rsync     15708          mirror    2w      REG                8,1          681       534469 /mirror/log/sync/2018/11/17/19:21:02.752793574.gnu.log
+rsync     15709          mirror    1w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+rsync     15709          mirror    2w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+rsync     15710          mirror    1w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+rsync     15710          mirror    2w      REG                8,1          529       534443 /mirror/log/sync/2018/11/17/19:21:02.742048480.mysql.log
+rsync     15713          mirror    1w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+rsync     15713          mirror    2w      REG                8,1         1487       534441 /mirror/log/sync/2018/11/17/19:21:02.743055556.gentoo.log
+rsync     15716          mirror    1w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+rsync     15716          mirror    2w      REG                8,1         1249       534429 /mirror/log/sync/2018/11/17/19:21:02.738783135.mariadb.log
+rsync     15718          mirror    1w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+rsync     15718          mirror    2w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+rsync     15806          mirror    1w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+rsync     15806          mirror    2w      REG                8,1         2160       534462 /mirror/log/sync/2018/11/17/19:21:02.750111379.macports.log
+rsync     15807          mirror    1w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+rsync     15807          mirror    2w      REG                8,1          537       534309 /mirror/log/sync/2018/11/17/19:21:02.746849031.debian-security.log
+rsync     15968          mirror    1w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+rsync     15968          mirror    2w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+rsync     16388          mirror    1w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+rsync     16388          mirror    2w      REG                8,1        10260       534383 /mirror/log/sync/2018/11/17/19:21:02.723337231.debian-ports.log
+rsync     16389          mirror    1w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+rsync     16389          mirror    2w      REG                8,1        18299       534463 /mirror/log/sync/2018/11/17/19:21:02.748173205.raspbian.log
+rsync     16470          mirror    1w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+rsync     16470          mirror    2w      REG                8,1          604       534375 /mirror/log/sync/2018/11/17/19:21:02.715522992.tdf.log
+rsync     16558          mirror    1w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+rsync     16558          mirror    2w      REG                8,1         9774       534036 /mirror/log/sync/2018/11/17/19:21:02.697243372.kde.log
+rsync     16649          mirror    1w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+rsync     16649          mirror    2w      REG                8,1         1058       534419 /mirror/log/sync/2018/11/17/19:21:02.729174984.tldp.log
+rsync     16743          mirror    1w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+rsync     16743          mirror    2w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+cron      18416            root  mem       REG                8,1        10392      5242963 /lib/x86_64-linux-gnu/security/pam_loginuid.so
+bash      18420          mirror  cwd       DIR                8,1         4096     12584189 /var/log/geoul
+rsync     19667          mirror    1w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+rsync     19667          mirror    2w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+rsync     19761          mirror    1w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+rsync     19761          mirror    2w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+rsync     19762          mirror    1w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+rsync     19762          mirror    2w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+lsof      19763            root  cwd       DIR                8,1         4096     12584189 /var/log/geoul
+grep      19764            root  cwd       DIR                8,1         4096     12584189 /var/log/geoul
+lsof      19765            root  cwd       DIR                8,1         4096     12584189 /var/log/geoul
+rsync     20231           rsync    4w      REG                8,1   4023964035     12585750 /var/log/geoul/rsyncd/all.log
+webalizer 23424          mirror  cwd       DIR                8,1         4096      3408120 /mirror/log/usage/reports/webalizer/http/2018
+webalizer 23424          mirror    3r      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+webalizer 23424          mirror    4uW     REG                8,1    335138816      3408121 /mirror/log/usage/reports/webalizer/dnscache.db
+vsftpd    24090             ftp    3w      REG                8,1    152842240     12584627 /var/log/geoul/ftpd/xfer.log
+sshd      24792            root  mem       REG                8,1        10392      5242963 /lib/x86_64-linux-gnu/security/pam_loginuid.so
+sshd      24792            root  mem       REG                8,1        10328      5243447 /lib/x86_64-linux-gnu/security/pam_nologin.so
+sshd      24820           jambo  mem       REG                8,1        10392      5242963 /lib/x86_64-linux-gnu/security/pam_loginuid.so
+sshd      24820           jambo  mem       REG                8,1        10328      5243447 /lib/x86_64-linux-gnu/security/pam_nologin.so
+bash      24841            root  cwd       DIR                8,1         4096     12584189 /var/log/geoul
+xfs-log/s 25713            root  cwd       DIR                8,1         4096            2 /
+xfs-log/s 25713            root  rtd       DIR                8,1         4096            2 /
+xfs-log/s 25713            root  txt   unknown                                              /proc/25713/exe
+webalizer 28674          mirror  cwd       DIR                8,1         4096      3408120 /mirror/log/usage/reports/webalizer/http/2018
+webalizer 28674          mirror    3r      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+webalizer 28674          mirror    4u      REG                8,1    335138816      3408121 /mirror/log/usage/reports/webalizer/dnscache.db
+webalizer 28675          mirror  cwd       DIR                8,1         4096      3408120 /mirror/log/usage/reports/webalizer/http/2018
+webalizer 28675          mirror    3r      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+webalizer 28675          mirror    4u      REG                8,1    335138816      3408121 /mirror/log/usage/reports/webalizer/dnscache.db
+webalizer 28676          mirror  cwd       DIR                8,1         4096      3408120 /mirror/log/usage/reports/webalizer/http/2018
+webalizer 28676          mirror    3r      REG                8,1  27593079579     12586028 /var/log/geoul/httpd/ftp.kaist.ac.kr.log
+webalizer 28676          mirror    4u      REG                8,1    335138816      3408121 /mirror/log/usage/reports/webalizer/dnscache.db
+rsync     29363           rsync    4w      REG                8,1   4023964035     12585750 /var/log/geoul/rsyncd/all.log
+cron      32147            root  mem       REG                8,1        10392      5242963 /lib/x86_64-linux-gnu/security/pam_loginuid.so
+bash      32171          mirror    1w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+bash      32171          mirror    2w      REG                8,1       580940       534327 /mirror/log/sync/2018/11/17/19:21:01.421242978.ArchLinux.log
+bash      32184          mirror    1w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+bash      32184          mirror    2w      REG                8,1         1220       534397 /mirror/log/sync/2018/11/17/19:21:01.424417066.CPAN.log
+bash      32210          mirror    1w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+bash      32210          mirror    2w      REG                8,1          482       534399 /mirror/log/sync/2018/11/17/19:21:01.432170237.CRAN.log
+bash      32242          mirror    1w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+bash      32242          mirror    2w      REG                8,1        72517       534403 /mirror/log/sync/2018/11/17/19:21:01.459532168.CentOS.log
+bash      32273          mirror    1w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+bash      32273          mirror    2w      REG                8,1          615       534369 /mirror/log/sync/2018/11/17/19:21:01.455649920.NetBSD.log
+bash      32303          mirror    1w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+bash      32303          mirror    2w      REG                8,1          837       534407 /mirror/log/sync/2018/11/17/19:21:01.464320083.OpenBSD.log
+bash      32346          mirror    1w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+bash      32346          mirror    2w      REG                8,1          504       534405 /mirror/log/sync/2018/11/17/19:21:01.458747595.apache.log
+bash      32467          mirror    1w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+bash      32467          mirror    2w      REG                8,1         1143       534409 /mirror/log/sync/2018/11/17/19:21:01.482401682.ctan.log
+bash      32517          mirror    1w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+bash      32517          mirror    2w      REG                8,1         1842       534381 /mirror/log/sync/2018/11/17/19:21:01.502828155.cygwin.log
+bash      32567          mirror    1w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+bash      32567          mirror    2w      REG                8,1          685       534329 /mirror/log/sync/2018/11/17/19:21:01.519028553.debian-archive.log
+bash      32626          mirror    1w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+bash      32626          mirror    2w      REG                8,1         6488       524439 /mirror/log/sync/2018/11/17/19:21:01.537934032.debian-cd.log
+bash      32706          mirror    1w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log
+bash      32706          mirror    2w      REG                8,1        79772       534413 /mirror/log/sync/2018/11/17/19:21:01.513489277.debian-multimedia.log

@@ -55,7 +55,6 @@ perms                                                                         \
 /etc/logrotate.d/geoul                                                        \
 /etc/webalizer/webalizer.conf                                                 \
 /etc/motd.tail                                                                \
-/etc/subversion/config                                                        \
 /etc/logcheck/ignore.d.server/local                                           \
 #
 

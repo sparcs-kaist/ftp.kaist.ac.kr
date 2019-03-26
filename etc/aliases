@@ -2,7 +2,8 @@
 # root가 운영자들에게 가는 메일 주소
 root: :include:/etc/admin-contact
 # geoul은 운영자를 포함하여 SPARCS에서 구독중인 사람들에게 가는 주소
-geoul: root, geoul@sparcs.org
+# geoul: root, geoul@sparcs.org (190116: sparcs.kaist.ac.kr 메일링 리스트 사용 불가로 업데이트함
+geoul: root
 
 # 대외 연락용 주소인 ftp 및 mirror는 geoul로 공유하며,
 ftp: geoul

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+. /mirror/lib/sync.sh
+
+# load private info
+set +x
+. mxlinux-rsync.conf
+export RSYNC_PASSWORD
+set -x
+
+get $source
