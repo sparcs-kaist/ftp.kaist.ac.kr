@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# resurrect-all-syncs -- Start sync for all stopped packages.
+# 
+# Created: 2020-02-20
+# 
+# Written by Khinenw <nenw@sparcs.org>.
+# (C) 2020, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+. /mirror/lib/geoul.sh
+
+resurrect() {
+    (
+    . /mirror/lib/pkg.sh
+
+    ./sync now
+    log /mirror/log/resurrect-all-syncs.log \
+        "$pkg resurrected"
+    )
+}
+
+foreachpkg resurrect
+
