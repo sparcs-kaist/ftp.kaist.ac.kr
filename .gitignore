@@ -1,8 +1,11 @@
 ## Geoul common
+/.cache
+/.local
 /.ssh
 /.lftp
 /.bash_history
 /.viminfo
+/.sudo_as_admin_successful
 /ftp
 /run
 /log
