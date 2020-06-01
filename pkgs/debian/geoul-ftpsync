@@ -47,13 +47,17 @@ prepare-sync
 "$BASEDIR"/bin/ftpsync &
 pid=$!
 
-## and watch its logs
+## and watch its log
+# + set don't exit when tail dies
+set +e
+
 tail -F --quiet --pid=$pid >>$log 2>/dev/null \
     "$BASEDIR"/log/ftpsync$suffix.log \
     "$BASEDIR"/log/rsync-ftpsync$suffix.{log,error} \
     "$BASEDIR"/log/runmirrors$suffix.log \
     #
 
+set -e
 
 ## finish sync as in /mirror/lib/sync.sh
 # look for errors
