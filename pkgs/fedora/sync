@@ -3,4 +3,4 @@
 opts=(--max-delete=1500000 --timeout=0)
 get $source --perms "${opts[@]}" --exclude={images,iso}
 get $source --perms "${opts[@]}"
-./report_mirror -c report_mirror.conf
+# ./report_mirror -c report_mirror.conf
