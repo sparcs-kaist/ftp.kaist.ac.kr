@@ -1,0 +1,32 @@
+# Vim Server
+# ====
+# 
+# URL: ftp2.kr.vim.org
+# Type: Redirect Only
+
+server {
+	server_name ftp2.kr.vim.org;
+	include snippets/listen.conf;
+	
+	location = / {
+		return 302 $scheme://ftp.kaist.ac.kr/vim/;
+	}
+	
+	location / {
+		return 302 $scheme://ftp.kaist.ac.kr$request_uri;
+	}
+}
+
+
+# Vim Server
+# ====
+# 
+# URL: www.kr.vim.org
+# Type: Redirect Only
+
+server {
+	server_name www.kr.vim.org;
+	include snippets/listen.conf;
+	
+	return 301 http://www.vim.org$request_uri;
+}

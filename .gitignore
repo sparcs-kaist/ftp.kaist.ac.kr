@@ -44,6 +44,8 @@
 /etc/mailing-lists
 /www/self/index.html
 /www/self/robots.txt
+/www/self/static
+/www/self/errors
 
 # XXX add fork as a submodule
 /pkgs/debian/archvsync

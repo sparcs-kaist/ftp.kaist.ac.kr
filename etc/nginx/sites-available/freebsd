@@ -1,0 +1,19 @@
+# FreeBSD Server
+# ====
+# 
+# URL: ftp2.kr.freebsd.org
+# Type: Redirect Only
+
+server {
+	server_name ftp2.kr.freebsd.org;
+	
+	include snippets/listen.conf;
+	
+	location = / {
+		return 302 $scheme://ftp.kaist.ac.kr/FreeBSD/;
+	}
+	
+	location / {
+		return 302 $scheme://ftp.kaist.ac.kr$request_uri;
+	}
+}

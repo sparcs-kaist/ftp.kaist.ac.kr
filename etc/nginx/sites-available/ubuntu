@@ -1,0 +1,22 @@
+# Ubuntu Server
+# ====
+# 
+# Warning: This no longer works,
+# 	as they changed main mirror when our mirror had downtime >= 4 monthes
+#
+# URL: kr.archive.ubuntu.com
+# Type: Redirect Only
+
+server {
+	server_name kr.archive.ubuntu.com;
+	
+	include snippets/listen.conf;
+	access_log /var/log/geoul/httpd/kr.archive.ubuntu.com;
+	
+	include snippets/essentials.conf;
+	
+	location / {
+		root /mirror/www/ubuntu;
+		try_files $uri $uri/ =404;
+	}
+}

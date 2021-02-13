@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -eu
 
-exec service lighttpd "$@"
+exec service nginx "$@"

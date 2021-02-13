@@ -1,0 +1,16 @@
+# Geoul Project Server
+# ====
+# 
+# URL: geoul.sparcs.org
+# Type: Redirect Only
+
+server {
+	server_name geoul.sparcs.org;
+	
+	include snippets/listen.conf;
+	
+	rewrite ^/sites($|/) https://status.sparcs.org;
+	rewrite ^/trac($|/.*) https://github.com/sparcs-kaist/ftp.kaist.ac.kr$1;
+	
+	return 301 https://wiki.sparcs.org$uri;
+}

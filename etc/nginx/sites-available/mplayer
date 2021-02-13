@@ -1,0 +1,34 @@
+# MPlayer WWW Server
+# ====
+# 
+# URL: www5.mplayerhq.hu
+# Type: Static Serving
+
+server {
+	server_name www5.mplayerhq.hu www.mplayerhq.hu;
+	
+	include snippets/listen.conf;
+	access_log /var/log/geoul/httpd/www5.mplayerhq.hu;
+	
+	include snippets/essentials.conf;
+	
+	location / {
+		root /srv/www/mplayer;
+		try_files $uri $uri/ =404;
+	}
+	
+	location /homepage {
+		alias /srv/www/mplayer;
+		try_files $uri $uri/ =404;
+	}
+	
+	location /MPlayer {
+		alias /mirror/ftp/MPlayer;
+		try_files $uri $uri/ =404;
+	}
+	
+	location /DOCS {
+		alias /mirror/ftp/MPlayer/DOCS;
+		try_files $uri $uri/ =404;
+	}
+}

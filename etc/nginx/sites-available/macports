@@ -1,0 +1,19 @@
+# MacPorts Server
+# ====
+# 
+# URL: cjj.kr.distfiles.macports.org
+# Type: Static Serving
+
+server {
+	server_name cjj.kr.distfiles.macports.org;
+	
+	include snippets/listen.conf;
+	access_log /var/log/geoul/httpd/cjj.kr.distfiles.macports.org.log;
+	
+	include snippets/essentials.conf;
+	
+	location / {
+		root /mirror/ftp/macports/distfiles/;
+		try_files $uri $uri/ =404;
+	}
+}

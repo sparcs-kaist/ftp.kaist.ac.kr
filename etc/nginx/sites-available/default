@@ -1,0 +1,58 @@
+# Default Server
+# ====
+# 
+# URL: ftp.kaist.ac.kr, 143.248.234.110, 103.22.220.133, Default Server
+# Type: Static Serving
+
+server {
+	server_name _;
+	
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
+
+	include snippets/ssl_params.conf;
+	
+	error_page 403 /.self/errors/403.html;
+	error_page 404 /.self/errors/404.html;
+	error_page 500 502 503 504 /.self/errors/50x.html;
+	
+	root /mirror/ftp/;
+		
+	# Disable default index page
+	# > Unfortunately, it doesn't have any better solution
+	index UwRhpQmOeXbfL3KTJLa38-NonExistent;
+	
+	# Include essential rules
+	include snippets/essentials.conf;
+	
+	# Add package-specific locations
+	include snippets/packages.conf;
+	
+	# Add legacy redirects
+	include snippets/redirects.conf;
+
+	# Default Location
+	location / {
+		try_files $uri $uri/ =404;
+	}
+	
+	# Add mirror's frontend, ...
+	location = / {
+		index index.html;
+		try_files $uri $uri/ =404;
+	}
+	
+	location /.self/ {
+		alias /mirror/www/self/;
+		index index.html;
+		try_files $uri $uri/ =404;
+	}
+	
+	# Add geoul's locations
+	location /geoul/ {
+		include snippets/geoul.conf;
+	}
+}

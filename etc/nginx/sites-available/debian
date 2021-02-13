@@ -1,0 +1,19 @@
+# Debian Server
+# ====
+# 
+# URL: ftp.kr.debian.org
+# Type: Static Serving
+
+server {
+	server_name ftp.kr.debian.org;
+	
+	include snippets/listen.conf;
+	access_log /var/log/geoul/httpd/ftp.kr.debian.org.log;
+	
+	include snippets/essentials.conf;
+	
+	location / {
+		root /mirror/www/debian/;
+		try_files $uri $uri/ =404;
+	}
+}

@@ -6,7 +6,7 @@
     <link rel="alternate" type="application/rss+xml" href="http://twitter.com/statuses/user_timeline/44532082.rss" title="최근 소식"/>
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/news.feed" title="패키지 업데이트 상태"/>
     <link rel="alternate" type="application/rss+xml" href="/geoul/pkgs/problems.feed" title="현재 문제 상태"/>
-    <link rel="stylesheet" type="text/css" href=".self/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/.self/legacy/css/style.css"/>
     <style type="text/css">
         /* Ugly hack for Twitter timeline embedding */
         #news iframe { width: 100% !important; };
@@ -32,11 +32,11 @@
 
 <h2>링크</h2>
 <p id="pointers">
-문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">ftp at ftp.kaist.ac.kr</a>로 연락해 주십시오. 서비스 공지 사항은
+문제가 발생하였거나 제안 사항이 있으면 <a href="mailto:geoul%20at%20sparcs.org">geoul at sparcs.org</a>로 연락해 주십시오. 서비스 공지 사항은
 <a href="http://twitter.com/kaist_ftp"><img alt="Twitter" src="http://twitter.com/favicon.ico" style="height:14px;"> 트위터 @kaist_ftp</a>에서 확인할 수 있습니다.
-<br><a href="/geoul/pkgs/news.feed"><img src=".self/img/feed-icon-12x12.png" alt="RSS Feed"> 미러의 모든 업데이트</a> 및
-<a href="/geoul/pkgs/problems.feed"><img src=".self/img/feed-icon-12x12.png" alt="RSS Feed"> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다.
-더 많은 정보를 보려면 <a href="http://project.sparcs.org/geoul/"><img src=".self/img/trac-icon.png" alt="Trac"> 거울 프로젝트 사이트</a>를 방문하십시오.
+<br><a href="/geoul/pkgs/news.feed"><img src="/.self/legacy/img/feed-icon-12x12.png" alt="RSS Feed"> 미러의 모든 업데이트</a> 및
+<a href="/geoul/pkgs/problems.feed"><img src="/.self/legacy/img/feed-icon-12x12.png" alt="RSS Feed"> 업데이트 중 발생한 문제점</a>에 대한 피드를 제공합니다.
+더 많은 정보를 보려면 <a href="https://github.com/sparcs-kaist/ftp.kaist.ac.kr"><img src="/.self/legacy/img/trac-icon.png" alt="Trac"> 거울 프로젝트 사이트</a>를 방문하십시오.
 </p>
 
 <h2>소개</h2>
@@ -59,23 +59,23 @@ FTP, HTTP, rsync로 접근할 수 있습니다.
 </p>
 <p>
 대한민국 대전 KAIST 교양분관에 있는 SPARCS 서버실에서 운영 중입니다.
-전체 저장소는 18TiB RAID-6이며, Dell PowerEdge R510 (Xeon E5506,
-24GiB RAM, 2 x 1Gbps) 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
+전체 저장소는 72TiB RAID-6이며, Xeon E5-2620,
+64GiB RAM, 2 x 1Gbps 서버를 사용합니다. 네트워크 연결은 KAIST에서 제공하며,
 서비스 운영은 SPARCS에서 담당합니다.
 </p>
 <p id="sponsors" class="logos">
-<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src=".self/img/kaist-logo.png"></a>
-<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" width="510px" height="110px" src=".self/img/sparcs-logo.png"></a>
+<a href="http://www.kaist.ac.kr/"><img alt="KAIST" src="/.self/legacy/img/kaist-logo.png"></a>
+<a href="http://sparcs.kaist.ac.kr/"><img alt="SPARCS" width="510px" height="110px" src="/.self/legacy/img/sparcs-logo.png"></a>
 </p>
 <p>
-시스템의 운영 체제는 Debian GNU/Linux이며, lighttpd, rsync, vsftpd 등의
+시스템의 운영 체제는 Ubuntu GNU/Linux이며, lighttpd, rsync, vsftpd 등의
 자유 소프트웨어를 사용하고 있습니다.
 </p>
 <p id="powered-by" class="logos">
-<a href="http://www.debian.org/"><img alt="Debian" src=".self/img/debian-logo.png"></a>
-<a href="http://www.lighttpd.net/"><img alt="lighttpd" src=".self/img/lighttpd-logo.png"></a>
-<a href="http://rsync.samba.org/"><img alt="rsync" src=".self/img/rsync-logo.png"></a>
-<a href="http://www.dell.co.kr/"><img alt="Dell" src=".self/img/dell-logo.png"></a>
+<a href="http://www.debian.org/"><img alt="Debian" src="/.self/legacy/img/debian-logo.png"></a>
+<a href="http://www.lighttpd.net/"><img alt="lighttpd" src="/.self/legacy/img/lighttpd-logo.png"></a>
+<a href="http://rsync.samba.org/"><img alt="rsync" src="/.self/legacy/img/rsync-logo.png"></a>
+<a href="http://www.dell.co.kr/"><img alt="Dell" src="/.self/legacy/img/dell-logo.png"></a>
 </p>
 
 <h2>통계</h2>
@@ -125,13 +125,13 @@ Various access methods are available: FTP, HTTP, Rsync.
 </p>
 <p>
 This system is running at SPARCS Room, KAIST, Daejeon, Korea, Asia.
-We are operating 18TiB RAID-6 storage on Dell PowerEdge R510 (Xeon
-E5506, 6GiB RAM, 2 x 1Gbps) server. KAIST sponsored hardware and network
+We are operating 72TiB RAID-6 storage on Xeon E5-2620
+, 64GiB RAM, 2 x 1Gbps server. KAIST sponsored hardware and network
 connectivity.  SPARCS operates the whole service.
 </p>
 <p>
 We run our services using robust, free or open source software, including but
-not limited to lighttpd, rsync, and vsftpd on the Debian GNU/Linux operating
+not limited to lighttpd, rsync, and vsftpd on the Ubuntu GNU/Linux operating
 system.
 </p>
 <p>
@@ -146,14 +146,14 @@ Use entirely at your own risk -- no warranty is expressed or implied.
     operators from maintaining reasonable quality of the service.</li>
 </ul>
 <p>
-Contact us <a href="mailto:ftp%20at%20ftp.kaist.ac.kr">via email</a> for any problem or suggestion.
+Contact us <a href="mailto:geoul%20at%20sparcs.org">via email</a> for any problem or suggestion.
 </p>
 
 </div>
-<script type="text/javascript" src=".self/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src=".self/js/blogger.js"></script>
-<script type="text/javascript" src=".self/js/datetime.js"></script>
-<script type="text/javascript" src=".self/js/js.js"></script>
+<script type="text/javascript" src="/.self/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/.self/js/blogger.js"></script>
+<script type="text/javascript" src="/.self/js/datetime.js"></script>
+<script type="text/javascript" src="/.self/js/js.js"></script>
 <script type="text/javascript" src="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kaist_ftp&callback=twitterCallback2&count=7&exclude_replies=true"></script>
 </body>
 </html>
