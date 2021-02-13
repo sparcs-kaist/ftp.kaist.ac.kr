@@ -21,3 +21,4 @@ PATH=/mirror/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # XXX
 51 9	* * *	mirror	exec nice -n 19 analyze-usages
 0 0	* * *	root	exec nice -n 19 update-rsyncd.conf
+0 0	* * 7	mirror	                                                           certbot-renew

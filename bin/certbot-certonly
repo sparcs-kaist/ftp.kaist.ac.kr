@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# certbot-certonly -- Grab new certificates
+#
+# Created: 2020-11-08
+#
+# Written by Khinenw <nenw@sparcs.org>.
+# (C) 2020, Geoul Project. (http://ftp.kaist.ac.kr/geoul)
+
+# There might be missing domains:
+#  * Round robin domains like www.mplayerhq.hu
+#  * Domains only used for rsync like rsync1.kr.gentoo.org
+
+# If some of domains no longer point to us, don't refresh it
+#  using `--allow-subset-of-names`
+
+/mirror/contrib/certbot/certbot-auto certonly \
+	--agree-tos \
+	--cert-name ftp.kaist.ac.kr \
+	--allow-subset-of-names \
+	--webroot-path /mirror/www/well-known/ \
+	-d ftp.kaist.ac.kr \
+	-d geoul.sparcs.org \
+	-d ftp.kr.debian.org \
+	-d ftp2.kr.freebsd.org \
+	-d ftp2.kr.vim.org \
+	-d www.kr.vim.org \
+	-d cjj.kr.distfiles.macports.org \
+	-d www5.mplayerhq.hu
+#	-d 143.248.234.110 Certificate for ip is not allowed
+#	-d 103.22.220.133
+
+#	-d kr.archive.ubuntu.com: It no longer points to us
